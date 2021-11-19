@@ -18,7 +18,7 @@ import cv2
 class TestApiWorkflowUploadDataset(MockedApiWorkflowSetup):
     def setUp(self) -> None:
         MockedApiWorkflowSetup.setUp(self)
-        self.n_data = 100
+        self.n_data = 120
         self.create_fake_dataset()
         self.api_workflow_client.tags_api.no_tags = 0
 
@@ -64,6 +64,14 @@ class TestApiWorkflowUploadDataset(MockedApiWorkflowSetup):
 
     def test_upload_dataset_from_folder(self):
         self.api_workflow_client.upload_dataset(input=self.folder_path)
+        samples_on_server = len(self.api_workflow_client.samples_api.get_samples_by_dataset_id("blub"))
+        self.assertEqual(self.n_data, samples_on_server)
+
+    def test_upload_dataset_from_folder_twice(self):
+        self.api_workflow_client.upload_dataset(input=self.folder_path)
+        self.api_workflow_client.upload_dataset(input=self.folder_path)
+        samples_on_server = len(self.api_workflow_client.samples_api.get_samples_by_dataset_id("blub"))
+        self.assertEqual(self.n_data, samples_on_server)
 
     def test_upload_dataset_from_folder_full(self):
         self.api_workflow_client.upload_dataset(input=self.folder_path, mode="full")
