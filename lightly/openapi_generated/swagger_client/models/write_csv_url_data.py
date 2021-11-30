@@ -32,17 +32,16 @@ class WriteCSVUrlData(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
-        'signed_write_url': 'str',
-        'embedding_id': 'str'
-    }
+    swagger_types = {"signed_write_url": "str", "embedding_id": "str"}
 
     attribute_map = {
-        'signed_write_url': 'signedWriteUrl',
-        'embedding_id': 'embeddingId'
+        "signed_write_url": "signedWriteUrl",
+        "embedding_id": "embeddingId",
     }
 
-    def __init__(self, signed_write_url=None, embedding_id=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self, signed_write_url=None, embedding_id=None, _configuration=None
+    ):  # noqa: E501
         """WriteCSVUrlData - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -74,7 +73,9 @@ class WriteCSVUrlData(object):
         :type: str
         """
         if self._configuration.client_side_validation and signed_write_url is None:
-            raise ValueError("Invalid value for `signed_write_url`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `signed_write_url`, must not be `None`"
+            )  # noqa: E501
 
         self._signed_write_url = signed_write_url
 
@@ -97,7 +98,9 @@ class WriteCSVUrlData(object):
         :type: str
         """
         if self._configuration.client_side_validation and embedding_id is None:
-            raise ValueError("Invalid value for `embedding_id`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `embedding_id`, must not be `None`"
+            )  # noqa: E501
 
         self._embedding_id = embedding_id
 
@@ -108,18 +111,20 @@ class WriteCSVUrlData(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(WriteCSVUrlData, dict):

@@ -6,50 +6,57 @@ import random
 import tempfile
 
 import numpy as np
-from lightly.utils.io import save_embeddings, load_embeddings, INVALID_FILENAME_CHARACTERS
+from lightly.utils.io import (
+    save_embeddings,
+    load_embeddings,
+    INVALID_FILENAME_CHARACTERS,
+)
 
 import lightly
-from tests.api_workflow.mocked_api_workflow_client import \
-    MockedApiWorkflowSetup, N_FILES_ON_SERVER
+from tests.api_workflow.mocked_api_workflow_client import (
+    MockedApiWorkflowSetup,
+    N_FILES_ON_SERVER,
+)
 
 
 class TestApiWorkflowUploadEmbeddings(MockedApiWorkflowSetup):
-
-    def create_fake_embeddings(self,
-                               n_data,
-                               n_data_start: int = 0,
-                               n_dims: int = 32,
-                               special_name_first_sample: bool = False,
-                               special_char_in_first_filename: str = None):
+    def create_fake_embeddings(
+        self,
+        n_data,
+        n_data_start: int = 0,
+        n_dims: int = 32,
+        special_name_first_sample: bool = False,
+        special_char_in_first_filename: str = None,
+    ):
         # create fake embeddings
         self.folder_path = tempfile.mkdtemp()
-        self.path_to_embeddings = os.path.join(
-            self.folder_path,
-            'embeddings.csv'
-        )
+        self.path_to_embeddings = os.path.join(self.folder_path, "embeddings.csv")
 
-        self.sample_names = [f'img_{i}.jpg' for i in range(n_data_start, n_data_start + n_data)]
+        self.sample_names = [
+            f"img_{i}.jpg" for i in range(n_data_start, n_data_start + n_data)
+        ]
         if special_name_first_sample:
             self.sample_names[0] = "bliblablub"
         if special_char_in_first_filename:
-            self.sample_names[0] = f'_{special_char_in_first_filename}' \
-                              f'{self.sample_names[0]}'
+            self.sample_names[0] = (
+                f"_{special_char_in_first_filename}" f"{self.sample_names[0]}"
+            )
         labels = [0] * len(self.sample_names)
         save_embeddings(
             self.path_to_embeddings,
             np.random.randn(n_data, n_dims),
             labels,
-            self.sample_names
+            self.sample_names,
         )
 
-
-    def t_ester_upload_embedding(self,
-                                 n_data,
-                                 n_dims: int = 32,
-                                 special_name_first_sample: bool = False,
-                                 special_char_in_first_filename: str = None,
-                                 name: str = "embedding_xyz"
-                                 ):
+    def t_ester_upload_embedding(
+        self,
+        n_data,
+        n_dims: int = 32,
+        special_name_first_sample: bool = False,
+        special_char_in_first_filename: str = None,
+        name: str = "embedding_xyz",
+    ):
 
         self.create_fake_embeddings(
             n_data,
@@ -59,13 +66,17 @@ class TestApiWorkflowUploadEmbeddings(MockedApiWorkflowSetup):
         )
 
         # perform the workflow to upload the embeddings
-        self.api_workflow_client.upload_embeddings(path_to_embeddings_csv=self.path_to_embeddings, name=name)
+        self.api_workflow_client.upload_embeddings(
+            path_to_embeddings_csv=self.path_to_embeddings, name=name
+        )
         self.api_workflow_client.n_dims_embeddings_on_server = n_dims
 
     def test_upload_success(self):
         n_data = len(self.api_workflow_client.mappings_api.sample_names)
         self.t_ester_upload_embedding(n_data=n_data)
-        filepath_embeddings_sorted = os.path.join(self.folder_path, "embeddings_sorted.csv")
+        filepath_embeddings_sorted = os.path.join(
+            self.folder_path, "embeddings_sorted.csv"
+        )
         self.assertFalse(os.path.isfile(filepath_embeddings_sorted))
 
     def test_upload_wrong_length(self):
@@ -84,8 +95,8 @@ class TestApiWorkflowUploadEmbeddings(MockedApiWorkflowSetup):
             with self.subTest(msg=f"invalid_char: {invalid_char}"):
                 with self.assertRaises(ValueError):
                     self.t_ester_upload_embedding(
-                        n_data=n_data,
-                        special_char_in_first_filename=invalid_char)
+                        n_data=n_data, special_char_in_first_filename=invalid_char
+                    )
 
     def test_set_embedding_id_success(self):
         embedding_name = self.api_workflow_client.embeddings_api.embeddings[0].name
@@ -97,8 +108,11 @@ class TestApiWorkflowUploadEmbeddings(MockedApiWorkflowSetup):
             self.api_workflow_client.set_embedding_id_by_name(embedding_name)
 
     def test_upload_existing_embedding(self):
-        embeddings = self.api_workflow_client.embeddings_api.\
-            get_embeddings_by_dataset_id(self.api_workflow_client.dataset_id)
+        embeddings = (
+            self.api_workflow_client.embeddings_api.get_embeddings_by_dataset_id(
+                self.api_workflow_client.dataset_id
+            )
+        )
 
         embedding_name = embeddings[0].name
 
@@ -109,7 +123,7 @@ class TestApiWorkflowUploadEmbeddings(MockedApiWorkflowSetup):
         self.api_workflow_client.set_embedding_id_by_name()
 
     def test_append_embeddings(self):
-    
+
         # first upload embeddings
         n_data = len(self.api_workflow_client.mappings_api.sample_names)
         self.t_ester_upload_embedding(n_data=n_data)
@@ -122,9 +136,8 @@ class TestApiWorkflowUploadEmbeddings(MockedApiWorkflowSetup):
 
         self.api_workflow_client.append_embeddings(
             self.path_to_embeddings,
-            'embedding_id_xyz_2',
+            "embedding_id_xyz_2",
         )
-
 
     def test_append_embeddings_with_overlap(self):
 
@@ -135,7 +148,9 @@ class TestApiWorkflowUploadEmbeddings(MockedApiWorkflowSetup):
         # create new local embeddings overlapping with server embeddings
         n_data_start_local = n_data_server // 3
         n_data_local = n_data_server * 2
-        self.create_fake_embeddings(n_data=n_data_local, n_data_start=n_data_start_local)
+        self.create_fake_embeddings(
+            n_data=n_data_local, n_data_start=n_data_start_local
+        )
 
         """
         Assumptions:
@@ -159,12 +174,13 @@ class TestApiWorkflowUploadEmbeddings(MockedApiWorkflowSetup):
         # append the local embeddings to the server embeddings
         self.api_workflow_client.append_embeddings(
             self.path_to_embeddings,
-            'embedding_id_xyz_2',
+            "embedding_id_xyz_2",
         )
 
         # load the new (appended) embeddings
-        _, labels_appended, filenames_appended = \
-            load_embeddings(self.path_to_embeddings)
+        _, labels_appended, filenames_appended = load_embeddings(
+            self.path_to_embeddings
+        )
 
         # define the expected filenames and labels
         self.create_fake_embeddings(n_data=n_data_local + n_data_start_local)
@@ -175,7 +191,6 @@ class TestApiWorkflowUploadEmbeddings(MockedApiWorkflowSetup):
         self.assertListEqual(filenames_appended, filenames_expected)
         self.assertListEqual(labels_appended, labels_expected)
 
-
     def test_append_embeddings_different_shape(self):
 
         # first upload embeddings
@@ -183,23 +198,21 @@ class TestApiWorkflowUploadEmbeddings(MockedApiWorkflowSetup):
         self.t_ester_upload_embedding(n_data=n_data)
 
         # create a new set of embeddings
-        self.create_fake_embeddings(10, n_dims=16) # default is 32
+        self.create_fake_embeddings(10, n_dims=16)  # default is 32
 
         self.api_workflow_client.n_dims_embeddings_on_server = 32
 
         with self.assertRaises(RuntimeError):
             self.api_workflow_client.append_embeddings(
                 self.path_to_embeddings,
-                'embedding_id_xyz_2',
+                "embedding_id_xyz_2",
             )
-
 
     def tearDown(self) -> None:
         for filename in ["embeddings.csv", "embeddings_sorted.csv"]:
-            if hasattr(self, 'folder_path'):
+            if hasattr(self, "folder_path"):
                 try:
                     filepath = os.path.join(self.folder_path, filename)
                     os.remove(filepath)
                 except FileNotFoundError:
                     pass
-

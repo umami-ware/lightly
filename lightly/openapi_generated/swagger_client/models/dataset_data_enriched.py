@@ -33,36 +33,51 @@ class DatasetDataEnriched(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'MongoObjectID',
-        'name': 'DatasetName',
-        'type': 'DatasetType',
-        'img_type': 'ImageType',
-        'n_samples': 'int',
-        'size_in_bytes': 'int',
-        'created_at': 'Timestamp',
-        'last_modified_at': 'Timestamp',
-        'meta_data_configuration_id': 'MongoObjectID',
-        'samples': 'list[MongoObjectID]',
-        'n_tags': 'int',
-        'n_embeddings': 'int'
+        "id": "MongoObjectID",
+        "name": "DatasetName",
+        "type": "DatasetType",
+        "img_type": "ImageType",
+        "n_samples": "int",
+        "size_in_bytes": "int",
+        "created_at": "Timestamp",
+        "last_modified_at": "Timestamp",
+        "meta_data_configuration_id": "MongoObjectID",
+        "samples": "list[MongoObjectID]",
+        "n_tags": "int",
+        "n_embeddings": "int",
     }
 
     attribute_map = {
-        'id': 'id',
-        'name': 'name',
-        'type': 'type',
-        'img_type': 'imgType',
-        'n_samples': 'nSamples',
-        'size_in_bytes': 'sizeInBytes',
-        'created_at': 'createdAt',
-        'last_modified_at': 'lastModifiedAt',
-        'meta_data_configuration_id': 'metaDataConfigurationId',
-        'samples': 'samples',
-        'n_tags': 'nTags',
-        'n_embeddings': 'nEmbeddings'
+        "id": "id",
+        "name": "name",
+        "type": "type",
+        "img_type": "imgType",
+        "n_samples": "nSamples",
+        "size_in_bytes": "sizeInBytes",
+        "created_at": "createdAt",
+        "last_modified_at": "lastModifiedAt",
+        "meta_data_configuration_id": "metaDataConfigurationId",
+        "samples": "samples",
+        "n_tags": "nTags",
+        "n_embeddings": "nEmbeddings",
     }
 
-    def __init__(self, id=None, name=None, type=None, img_type=None, n_samples=None, size_in_bytes=None, created_at=None, last_modified_at=None, meta_data_configuration_id=None, samples=None, n_tags=None, n_embeddings=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        id=None,
+        name=None,
+        type=None,
+        img_type=None,
+        n_samples=None,
+        size_in_bytes=None,
+        created_at=None,
+        last_modified_at=None,
+        meta_data_configuration_id=None,
+        samples=None,
+        n_tags=None,
+        n_embeddings=None,
+        _configuration=None,
+    ):  # noqa: E501
         """DatasetDataEnriched - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -139,7 +154,9 @@ class DatasetDataEnriched(object):
         :type: DatasetName
         """
         if self._configuration.client_side_validation and name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -162,7 +179,9 @@ class DatasetDataEnriched(object):
         :type: DatasetType
         """
         if self._configuration.client_side_validation and type is None:
-            raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `type`, must not be `None`"
+            )  # noqa: E501
 
         self._type = type
 
@@ -206,7 +225,9 @@ class DatasetDataEnriched(object):
         :type: int
         """
         if self._configuration.client_side_validation and n_samples is None:
-            raise ValueError("Invalid value for `n_samples`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `n_samples`, must not be `None`"
+            )  # noqa: E501
 
         self._n_samples = n_samples
 
@@ -229,7 +250,9 @@ class DatasetDataEnriched(object):
         :type: int
         """
         if self._configuration.client_side_validation and size_in_bytes is None:
-            raise ValueError("Invalid value for `size_in_bytes`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `size_in_bytes`, must not be `None`"
+            )  # noqa: E501
 
         self._size_in_bytes = size_in_bytes
 
@@ -252,7 +275,9 @@ class DatasetDataEnriched(object):
         :type: Timestamp
         """
         if self._configuration.client_side_validation and created_at is None:
-            raise ValueError("Invalid value for `created_at`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `created_at`, must not be `None`"
+            )  # noqa: E501
 
         self._created_at = created_at
 
@@ -275,7 +300,9 @@ class DatasetDataEnriched(object):
         :type: Timestamp
         """
         if self._configuration.client_side_validation and last_modified_at is None:
-            raise ValueError("Invalid value for `last_modified_at`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `last_modified_at`, must not be `None`"
+            )  # noqa: E501
 
         self._last_modified_at = last_modified_at
 
@@ -319,7 +346,9 @@ class DatasetDataEnriched(object):
         :type: list[MongoObjectID]
         """
         if self._configuration.client_side_validation and samples is None:
-            raise ValueError("Invalid value for `samples`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `samples`, must not be `None`"
+            )  # noqa: E501
 
         self._samples = samples
 
@@ -342,7 +371,9 @@ class DatasetDataEnriched(object):
         :type: int
         """
         if self._configuration.client_side_validation and n_tags is None:
-            raise ValueError("Invalid value for `n_tags`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `n_tags`, must not be `None`"
+            )  # noqa: E501
 
         self._n_tags = n_tags
 
@@ -365,7 +396,9 @@ class DatasetDataEnriched(object):
         :type: int
         """
         if self._configuration.client_side_validation and n_embeddings is None:
-            raise ValueError("Invalid value for `n_embeddings`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `n_embeddings`, must not be `None`"
+            )  # noqa: E501
 
         self._n_embeddings = n_embeddings
 
@@ -376,18 +409,20 @@ class DatasetDataEnriched(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(DatasetDataEnriched, dict):

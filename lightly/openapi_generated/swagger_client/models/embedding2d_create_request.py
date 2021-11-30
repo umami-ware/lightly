@@ -33,20 +33,27 @@ class Embedding2dCreateRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'dimensionality_reduction_method': 'DimensionalityReductionMethod',
-        'coordinates_dimension1': 'Embedding2dCoordinates',
-        'coordinates_dimension2': 'Embedding2dCoordinates'
+        "name": "str",
+        "dimensionality_reduction_method": "DimensionalityReductionMethod",
+        "coordinates_dimension1": "Embedding2dCoordinates",
+        "coordinates_dimension2": "Embedding2dCoordinates",
     }
 
     attribute_map = {
-        'name': 'name',
-        'dimensionality_reduction_method': 'dimensionalityReductionMethod',
-        'coordinates_dimension1': 'coordinatesDimension1',
-        'coordinates_dimension2': 'coordinatesDimension2'
+        "name": "name",
+        "dimensionality_reduction_method": "dimensionalityReductionMethod",
+        "coordinates_dimension1": "coordinatesDimension1",
+        "coordinates_dimension2": "coordinatesDimension2",
     }
 
-    def __init__(self, name=None, dimensionality_reduction_method=None, coordinates_dimension1=None, coordinates_dimension2=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        name=None,
+        dimensionality_reduction_method=None,
+        coordinates_dimension1=None,
+        coordinates_dimension2=None,
+        _configuration=None,
+    ):  # noqa: E501
         """Embedding2dCreateRequest - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -84,7 +91,9 @@ class Embedding2dCreateRequest(object):
         :type: str
         """
         if self._configuration.client_side_validation and name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -106,8 +115,13 @@ class Embedding2dCreateRequest(object):
         :param dimensionality_reduction_method: The dimensionality_reduction_method of this Embedding2dCreateRequest.  # noqa: E501
         :type: DimensionalityReductionMethod
         """
-        if self._configuration.client_side_validation and dimensionality_reduction_method is None:
-            raise ValueError("Invalid value for `dimensionality_reduction_method`, must not be `None`")  # noqa: E501
+        if (
+            self._configuration.client_side_validation
+            and dimensionality_reduction_method is None
+        ):
+            raise ValueError(
+                "Invalid value for `dimensionality_reduction_method`, must not be `None`"
+            )  # noqa: E501
 
         self._dimensionality_reduction_method = dimensionality_reduction_method
 
@@ -129,8 +143,13 @@ class Embedding2dCreateRequest(object):
         :param coordinates_dimension1: The coordinates_dimension1 of this Embedding2dCreateRequest.  # noqa: E501
         :type: Embedding2dCoordinates
         """
-        if self._configuration.client_side_validation and coordinates_dimension1 is None:
-            raise ValueError("Invalid value for `coordinates_dimension1`, must not be `None`")  # noqa: E501
+        if (
+            self._configuration.client_side_validation
+            and coordinates_dimension1 is None
+        ):
+            raise ValueError(
+                "Invalid value for `coordinates_dimension1`, must not be `None`"
+            )  # noqa: E501
 
         self._coordinates_dimension1 = coordinates_dimension1
 
@@ -152,8 +171,13 @@ class Embedding2dCreateRequest(object):
         :param coordinates_dimension2: The coordinates_dimension2 of this Embedding2dCreateRequest.  # noqa: E501
         :type: Embedding2dCoordinates
         """
-        if self._configuration.client_side_validation and coordinates_dimension2 is None:
-            raise ValueError("Invalid value for `coordinates_dimension2`, must not be `None`")  # noqa: E501
+        if (
+            self._configuration.client_side_validation
+            and coordinates_dimension2 is None
+        ):
+            raise ValueError(
+                "Invalid value for `coordinates_dimension2`, must not be `None`"
+            )  # noqa: E501
 
         self._coordinates_dimension2 = coordinates_dimension2
 
@@ -164,18 +188,20 @@ class Embedding2dCreateRequest(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(Embedding2dCreateRequest, dict):

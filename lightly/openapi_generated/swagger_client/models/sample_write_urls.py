@@ -32,15 +32,9 @@ class SampleWriteUrls(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
-        'full': 'str',
-        'thumb': 'str'
-    }
+    swagger_types = {"full": "str", "thumb": "str"}
 
-    attribute_map = {
-        'full': 'full',
-        'thumb': 'thumb'
-    }
+    attribute_map = {"full": "full", "thumb": "thumb"}
 
     def __init__(self, full=None, thumb=None, _configuration=None):  # noqa: E501
         """SampleWriteUrls - a model defined in Swagger"""  # noqa: E501
@@ -74,7 +68,9 @@ class SampleWriteUrls(object):
         :type: str
         """
         if self._configuration.client_side_validation and full is None:
-            raise ValueError("Invalid value for `full`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `full`, must not be `None`"
+            )  # noqa: E501
 
         self._full = full
 
@@ -97,7 +93,9 @@ class SampleWriteUrls(object):
         :type: str
         """
         if self._configuration.client_side_validation and thumb is None:
-            raise ValueError("Invalid value for `thumb`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `thumb`, must not be `None`"
+            )  # noqa: E501
 
         self._thumb = thumb
 
@@ -108,18 +106,20 @@ class SampleWriteUrls(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(SampleWriteUrls, dict):

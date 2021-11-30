@@ -5,7 +5,6 @@ import lightly
 
 
 class TestNestedImports(unittest.TestCase):
-
     def test_nested_imports(self):
         # active learning
         lightly.active_learning.agents.agent.ActiveLearningAgent

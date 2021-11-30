@@ -15,6 +15,7 @@ from lightly.api.utils import getenv
 class LightlyAPITimeoutException(Exception):
     pass
 
+
 class TimeoutDecorator:
     def __init__(self, seconds):
         self.seconds = seconds
@@ -31,21 +32,21 @@ class TimeoutDecorator:
 
 
 def do_version_check(current_version: str):
-    if current_process().name == 'MainProcess':
+    if current_process().name == "MainProcess":
         with TimeoutDecorator(1):
             versioning_api = get_versioning_api()
             current_version: str = versioning_api.get_latest_pip_version(
-                current_version=current_version)
+                current_version=current_version
+            )
             latest_version: str = versioning_api.get_minimum_compatible_pip_version()
             if version_compare(current_version, latest_version) < 0:
                 # local version is behind latest version
                 pretty_print_latest_version(current_version, latest_version)
 
 
-
 def get_versioning_api() -> VersioningApi:
     configuration = Configuration()
-    configuration.host = getenv('LIGHTLY_SERVER_LOCATION', 'https://api.lightly.ai')
+    configuration.host = getenv("LIGHTLY_SERVER_LOCATION", "https://api.lightly.ai")
     api_client = ApiClient(configuration=configuration)
     versioning_api = VersioningApi(api_client)
     return versioning_api
@@ -54,7 +55,9 @@ def get_versioning_api() -> VersioningApi:
 def get_latest_version(current_version: str) -> Tuple[None, str]:
     try:
         versioning_api = get_versioning_api()
-        version_number: str = versioning_api.get_latest_pip_version(current_version=current_version)
+        version_number: str = versioning_api.get_latest_pip_version(
+            current_version=current_version
+        )
         return version_number
     except Exception as e:
         return None
@@ -67,8 +70,8 @@ def get_minimum_compatible_version():
 
 
 def version_compare(v0, v1):
-    v0 = [int(n) for n in v0.split('.')][::-1]
-    v1 = [int(n) for n in v1.split('.')][::-1]
+    v0 = [int(n) for n in v0.split(".")][::-1]
+    v1 = [int(n) for n in v1.split(".")][::-1]
     assert len(v0) == 3
     assert len(v1) == 3
     pairs = list(zip(v0, v1))[::-1]
@@ -81,8 +84,10 @@ def version_compare(v0, v1):
 
 
 def pretty_print_latest_version(current_version, latest_version, width=70):
-    warning = f"You are using lightly version {current_version}. " \
-              f"There is a newer version of the package available. " \
-              f"For compatability reasons, please upgrade your current version: " \
-              f"pip install lightly=={latest_version}"
+    warning = (
+        f"You are using lightly version {current_version}. "
+        f"There is a newer version of the package available. "
+        f"For compatability reasons, please upgrade your current version: "
+        f"pip install lightly=={latest_version}"
+    )
     warnings.warn(Warning(warning))

@@ -64,15 +64,14 @@ class BarlowTwinsProjectionHead(ProjectionHead):
 
     """
 
-    def __init__(self,
-                 input_dim: int,
-                 hidden_dim: int,
-                 output_dim: int):
-        super(BarlowTwinsProjectionHead, self).__init__([
-            (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
-            (hidden_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
-            (hidden_dim, output_dim, None, None),
-        ])
+    def __init__(self, input_dim: int, hidden_dim: int, output_dim: int):
+        super(BarlowTwinsProjectionHead, self).__init__(
+            [
+                (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
+                (hidden_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
+                (hidden_dim, output_dim, None, None),
+            ]
+        )
 
 
 class BYOLProjectionHead(ProjectionHead):
@@ -85,14 +84,14 @@ class BYOLProjectionHead(ProjectionHead):
     [0]: BYOL, 2020, https://arxiv.org/abs/2006.07733
 
     """
-    def __init__(self,
-                 input_dim: int,
-                 hidden_dim: int,
-                 output_dim: int):
-        super(BYOLProjectionHead, self).__init__([
-            (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
-            (hidden_dim, output_dim, None, None),
-        ])
+
+    def __init__(self, input_dim: int, hidden_dim: int, output_dim: int):
+        super(BYOLProjectionHead, self).__init__(
+            [
+                (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
+                (hidden_dim, output_dim, None, None),
+            ]
+        )
 
 
 class MoCoProjectionHead(ProjectionHead):
@@ -105,14 +104,13 @@ class MoCoProjectionHead(ProjectionHead):
 
     """
 
-    def __init__(self,
-                 input_dim: int,
-                 hidden_dim: int,
-                 output_dim: int):
-        super(MoCoProjectionHead, self).__init__([
-            (input_dim, hidden_dim, None, nn.ReLU()),
-            (hidden_dim, output_dim, None, None),
-        ])
+    def __init__(self, input_dim: int, hidden_dim: int, output_dim: int):
+        super(MoCoProjectionHead, self).__init__(
+            [
+                (input_dim, hidden_dim, None, nn.ReLU()),
+                (hidden_dim, output_dim, None, None),
+            ]
+        )
 
 
 class NNCLRProjectionHead(ProjectionHead):
@@ -127,15 +125,15 @@ class NNCLRProjectionHead(ProjectionHead):
     [0]: NNCLR, 2021, https://arxiv.org/abs/2104.14548
 
     """
-    def __init__(self,
-                 input_dim: int,
-                 hidden_dim: int,
-                 output_dim: int):
-        super(NNCLRProjectionHead, self).__init__([
-            (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
-            (hidden_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
-            (hidden_dim, output_dim, nn.BatchNorm1d(output_dim), None),
-        ])
+
+    def __init__(self, input_dim: int, hidden_dim: int, output_dim: int):
+        super(NNCLRProjectionHead, self).__init__(
+            [
+                (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
+                (hidden_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
+                (hidden_dim, output_dim, nn.BatchNorm1d(output_dim), None),
+            ]
+        )
 
 
 class NNCLRPredictionHead(ProjectionHead):
@@ -148,14 +146,14 @@ class NNCLRPredictionHead(ProjectionHead):
     [0]: NNCLR, 2021, https://arxiv.org/abs/2104.14548
 
     """
-    def __init__(self,
-                 input_dim: int,
-                 hidden_dim: int,
-                 output_dim: int):
-        super(NNCLRPredictionHead, self).__init__([
-            (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
-            (hidden_dim, output_dim, None, None),
-        ])
+
+    def __init__(self, input_dim: int, hidden_dim: int, output_dim: int):
+        super(NNCLRPredictionHead, self).__init__(
+            [
+                (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
+                (hidden_dim, output_dim, None, None),
+            ]
+        )
 
 
 class SimCLRProjectionHead(ProjectionHead):
@@ -167,14 +165,14 @@ class SimCLRProjectionHead(ProjectionHead):
     [0] SimCLR, 2020, https://arxiv.org/abs/2002.05709
 
     """
-    def __init__(self,
-                 input_dim: int,
-                 hidden_dim: int,
-                 output_dim: int):
-        super(SimCLRProjectionHead, self).__init__([
-            (input_dim, hidden_dim, None, nn.ReLU()),
-            (hidden_dim, output_dim, None, None),
-        ])
+
+    def __init__(self, input_dim: int, hidden_dim: int, output_dim: int):
+        super(SimCLRProjectionHead, self).__init__(
+            [
+                (input_dim, hidden_dim, None, nn.ReLU()),
+                (hidden_dim, output_dim, None, None),
+            ]
+        )
 
 
 class SimSiamProjectionHead(ProjectionHead):
@@ -187,15 +185,15 @@ class SimSiamProjectionHead(ProjectionHead):
     [0]: SimSiam, 2020, https://arxiv.org/abs/2011.10566
 
     """
-    def __init__(self,
-                 input_dim: int,
-                 hidden_dim: int,
-                 output_dim: int):
-        super(SimSiamProjectionHead, self).__init__([
-            (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
-            (hidden_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
-            (hidden_dim, output_dim, nn.BatchNorm1d(output_dim), None),
-        ])
+
+    def __init__(self, input_dim: int, hidden_dim: int, output_dim: int):
+        super(SimSiamProjectionHead, self).__init__(
+            [
+                (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
+                (hidden_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
+                (hidden_dim, output_dim, nn.BatchNorm1d(output_dim), None),
+            ]
+        )
 
 
 class SimSiamPredictionHead(ProjectionHead):
@@ -207,14 +205,14 @@ class SimSiamPredictionHead(ProjectionHead):
     [0]: SimSiam, 2020, https://arxiv.org/abs/2011.10566
 
     """
-    def __init__(self,
-                 input_dim: int,
-                 hidden_dim: int,
-                 output_dim: int):
-        super(SimSiamPredictionHead, self).__init__([
-            (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
-            (hidden_dim, output_dim, None, None),
-        ])
+
+    def __init__(self, input_dim: int, hidden_dim: int, output_dim: int):
+        super(SimSiamPredictionHead, self).__init__(
+            [
+                (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
+                (hidden_dim, output_dim, None, None),
+            ]
+        )
 
 
 class SwaVProjectionHead(ProjectionHead):
@@ -222,14 +220,14 @@ class SwaVProjectionHead(ProjectionHead):
 
     [0]: SwAV, 2020, https://arxiv.org/abs/2006.09882
     """
-    def __init__(self,
-                 input_dim: int,
-                 hidden_dim: int,
-                 output_dim: int):
-        super(SwaVProjectionHead, self).__init__([
-            (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
-            (hidden_dim, output_dim, None, None),
-        ])
+
+    def __init__(self, input_dim: int, hidden_dim: int, output_dim: int):
+        super(SwaVProjectionHead, self).__init__(
+            [
+                (input_dim, hidden_dim, nn.BatchNorm1d(hidden_dim), nn.ReLU()),
+                (hidden_dim, output_dim, None, None),
+            ]
+        )
 
 
 class SwaVPrototypes(ProjectionHead):
@@ -251,8 +249,7 @@ class SwaVPrototypes(ProjectionHead):
         >>> logits = prototypes(features)
 
     """
-    def __init__(self,
-                 input_dim: int,
-                 n_prototypes: int):
+
+    def __init__(self, input_dim: int, n_prototypes: int):
         super(SwaVPrototypes, self).__init__([])
         self.layers = nn.Linear(input_dim, n_prototypes, bias=False)

@@ -10,6 +10,7 @@ import random
 
 import numpy as np
 from PIL import Image, ImageFilter
+
 # the following two lines are needed because
 # PIL misidentifies certain jpeg images as MPOs
 from PIL import JpegImagePlugin
@@ -39,7 +40,7 @@ def retry(func, *args, **kwargs):
     """
 
     # config
-    backoff = 1. + random.random() * 0.1
+    backoff = 1.0 + random.random() * 0.1
     max_backoff = 32
     max_retries = 5
 
@@ -52,14 +53,14 @@ def retry(func, *args, **kwargs):
             # sleep on failure
             time.sleep(backoff)
             backoff = 2 * backoff if backoff < max_backoff else backoff
-        
+
     # max retries exceeded
-    raise RuntimeError('The connection to the server timed out.')
+    raise RuntimeError("The connection to the server timed out.")
 
 
 def getenv(key: str, default: str):
     """Return the value of the environment variable key if it exists,
-       or default if it doesn’t.
+    or default if it doesn’t.
 
     """
     try:
@@ -73,15 +74,13 @@ def getenv(key: str, default: str):
     return default
 
 
-def PIL_to_bytes(img, ext: str = 'png', quality: int = None):
-    """Return the PIL image as byte stream. Useful to send image via requests.
-
-    """
+def PIL_to_bytes(img, ext: str = "png", quality: int = None):
+    """Return the PIL image as byte stream. Useful to send image via requests."""
     bytes_io = io.BytesIO()
     if quality is not None:
         img.save(bytes_io, format=ext, quality=quality)
     else:
-        subsampling = -1 if ext.lower() in ['jpg', 'jpeg'] else 0
+        subsampling = -1 if ext.lower() in ["jpg", "jpeg"] else 0
         img.save(bytes_io, format=ext, quality=100, subsampling=subsampling)
     bytes_io.seek(0)
     return bytes_io

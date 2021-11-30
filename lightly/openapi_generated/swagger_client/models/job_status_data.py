@@ -33,28 +33,39 @@ class JobStatusData(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'MongoObjectID',
-        'status': 'JobState',
-        'meta': 'JobStatusMeta',
-        'wait_time_till_next_poll': 'int',
-        'created_at': 'Timestamp',
-        'finished_at': 'Timestamp',
-        'error': 'str',
-        'result': 'JobStatusDataResult'
+        "id": "MongoObjectID",
+        "status": "JobState",
+        "meta": "JobStatusMeta",
+        "wait_time_till_next_poll": "int",
+        "created_at": "Timestamp",
+        "finished_at": "Timestamp",
+        "error": "str",
+        "result": "JobStatusDataResult",
     }
 
     attribute_map = {
-        'id': 'id',
-        'status': 'status',
-        'meta': 'meta',
-        'wait_time_till_next_poll': 'waitTimeTillNextPoll',
-        'created_at': 'createdAt',
-        'finished_at': 'finishedAt',
-        'error': 'error',
-        'result': 'result'
+        "id": "id",
+        "status": "status",
+        "meta": "meta",
+        "wait_time_till_next_poll": "waitTimeTillNextPoll",
+        "created_at": "createdAt",
+        "finished_at": "finishedAt",
+        "error": "error",
+        "result": "result",
     }
 
-    def __init__(self, id=None, status=None, meta=None, wait_time_till_next_poll=None, created_at=None, finished_at=None, error=None, result=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        id=None,
+        status=None,
+        meta=None,
+        wait_time_till_next_poll=None,
+        created_at=None,
+        finished_at=None,
+        error=None,
+        result=None,
+        _configuration=None,
+    ):  # noqa: E501
         """JobStatusData - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -125,7 +136,9 @@ class JobStatusData(object):
         :type: JobState
         """
         if self._configuration.client_side_validation and status is None:
-            raise ValueError("Invalid value for `status`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `status`, must not be `None`"
+            )  # noqa: E501
 
         self._status = status
 
@@ -170,8 +183,13 @@ class JobStatusData(object):
         :param wait_time_till_next_poll: The wait_time_till_next_poll of this JobStatusData.  # noqa: E501
         :type: int
         """
-        if self._configuration.client_side_validation and wait_time_till_next_poll is None:
-            raise ValueError("Invalid value for `wait_time_till_next_poll`, must not be `None`")  # noqa: E501
+        if (
+            self._configuration.client_side_validation
+            and wait_time_till_next_poll is None
+        ):
+            raise ValueError(
+                "Invalid value for `wait_time_till_next_poll`, must not be `None`"
+            )  # noqa: E501
 
         self._wait_time_till_next_poll = wait_time_till_next_poll
 
@@ -194,7 +212,9 @@ class JobStatusData(object):
         :type: Timestamp
         """
         if self._configuration.client_side_validation and created_at is None:
-            raise ValueError("Invalid value for `created_at`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `created_at`, must not be `None`"
+            )  # noqa: E501
 
         self._created_at = created_at
 
@@ -268,18 +288,20 @@ class JobStatusData(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(JobStatusData, dict):

@@ -32,13 +32,9 @@ class EmbeddingIdIsProcessedBody(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
-        'row_count': 'float'
-    }
+    swagger_types = {"row_count": "float"}
 
-    attribute_map = {
-        'row_count': 'rowCount'
-    }
+    attribute_map = {"row_count": "rowCount"}
 
     def __init__(self, row_count=None, _configuration=None):  # noqa: E501
         """EmbeddingIdIsProcessedBody - a model defined in Swagger"""  # noqa: E501
@@ -72,7 +68,9 @@ class EmbeddingIdIsProcessedBody(object):
         :type: float
         """
         if self._configuration.client_side_validation and row_count is None:
-            raise ValueError("Invalid value for `row_count`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `row_count`, must not be `None`"
+            )  # noqa: E501
 
         self._row_count = row_count
 
@@ -83,18 +81,20 @@ class EmbeddingIdIsProcessedBody(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(EmbeddingIdIsProcessedBody, dict):

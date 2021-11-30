@@ -12,11 +12,10 @@ from lightly.data import SwaVCollateFunction
 
 
 class TestDataCollate(unittest.TestCase):
-
     def create_batch(self, batch_size=16):
         rnd_images = torchvision.datasets.FakeData(size=batch_size)
 
-        fnames = [f'img_{i}.jpg' for i in range(batch_size)]
+        fnames = [f"img_{i}.jpg" for i in range(batch_size)]
         labels = [random.randint(0, 5) for i in range(batch_size)]
 
         batch = []
@@ -75,7 +74,7 @@ class TestDataCollate(unittest.TestCase):
         batch = self.create_batch()
         for high in range(2, 4):
             for low in range(6):
-                with self.subTest(msg='n_low_res={low}, n_high_res={high}'):
+                with self.subTest(msg="n_low_res={low}, n_high_res={high}"):
                     multi_crop_collate = MultiCropCollateFunction(
                         crop_sizes=[32, 16],
                         crop_counts=[high, low],
@@ -95,7 +94,6 @@ class TestDataCollate(unittest.TestCase):
                             self.assertEqual(crop.shape[-2], 16)
                         self.assertEqual(len(crop), len(labels), len(fnames))
 
-
     def test_swav_collate_init(self):
         swav_collate = SwaVCollateFunction()
 
@@ -105,4 +103,3 @@ class TestDataCollate(unittest.TestCase):
                 crop_sizes=[1],
                 crop_counts=[2, 3],
             )
-                        

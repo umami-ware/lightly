@@ -1,12 +1,15 @@
 from typing import List
 
-from lightly.openapi_generated.swagger_client.models.create_entity_response import CreateEntityResponse
-from lightly.openapi_generated.swagger_client.models.dataset_create_request import DatasetCreateRequest
+from lightly.openapi_generated.swagger_client.models.create_entity_response import (
+    CreateEntityResponse,
+)
+from lightly.openapi_generated.swagger_client.models.dataset_create_request import (
+    DatasetCreateRequest,
+)
 from lightly.openapi_generated.swagger_client.models.dataset_data import DatasetData
 
 
 class _DatasetsMixin:
-
     def set_dataset_id_by_name(self, dataset_name: str):
         """Sets the dataset id given the name of the dataset
 
@@ -18,15 +21,18 @@ class _DatasetsMixin:
         Raises: ValueError
 
         """
-        current_datasets: List[DatasetData] \
-            = self.datasets_api.get_datasets()
+        current_datasets: List[DatasetData] = self.datasets_api.get_datasets()
 
         try:
-            dataset_with_specified_name = next(dataset for dataset in current_datasets if dataset.name == dataset_name)
+            dataset_with_specified_name = next(
+                dataset for dataset in current_datasets if dataset.name == dataset_name
+            )
             self._dataset_id = dataset_with_specified_name.id
         except StopIteration:
-            raise ValueError(f"A dataset with the name {dataset_name} does not exist on the web platform. "
-                             f"Please create it first.")
+            raise ValueError(
+                f"A dataset with the name {dataset_name} does not exist on the web platform. "
+                f"Please create it first."
+            )
 
     def create_dataset(self, dataset_name: str):
         """Creates a dataset on the webplatform
@@ -65,8 +71,7 @@ class _DatasetsMixin:
                 The name of the dataset to be created.
 
         """
-        current_datasets: List[DatasetData] \
-            = self.datasets_api.get_datasets()
+        current_datasets: List[DatasetData] = self.datasets_api.get_datasets()
         current_datasets_names = [dataset.name for dataset in current_datasets]
 
         if dataset_basename not in current_datasets_names:

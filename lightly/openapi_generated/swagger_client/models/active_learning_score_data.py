@@ -33,22 +33,30 @@ class ActiveLearningScoreData(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'MongoObjectID',
-        'tag_id': 'MongoObjectID',
-        'score_type': 'ActiveLearningScoreType',
-        'scores': 'ActiveLearningScores',
-        'created_at': 'Timestamp'
+        "id": "MongoObjectID",
+        "tag_id": "MongoObjectID",
+        "score_type": "ActiveLearningScoreType",
+        "scores": "ActiveLearningScores",
+        "created_at": "Timestamp",
     }
 
     attribute_map = {
-        'id': 'id',
-        'tag_id': 'tagId',
-        'score_type': 'scoreType',
-        'scores': 'scores',
-        'created_at': 'createdAt'
+        "id": "id",
+        "tag_id": "tagId",
+        "score_type": "scoreType",
+        "scores": "scores",
+        "created_at": "createdAt",
     }
 
-    def __init__(self, id=None, tag_id=None, score_type=None, scores=None, created_at=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        id=None,
+        tag_id=None,
+        score_type=None,
+        scores=None,
+        created_at=None,
+        _configuration=None,
+    ):  # noqa: E501
         """ActiveLearningScoreData - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -109,7 +117,9 @@ class ActiveLearningScoreData(object):
         :type: MongoObjectID
         """
         if self._configuration.client_side_validation and tag_id is None:
-            raise ValueError("Invalid value for `tag_id`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `tag_id`, must not be `None`"
+            )  # noqa: E501
 
         self._tag_id = tag_id
 
@@ -132,7 +142,9 @@ class ActiveLearningScoreData(object):
         :type: ActiveLearningScoreType
         """
         if self._configuration.client_side_validation and score_type is None:
-            raise ValueError("Invalid value for `score_type`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `score_type`, must not be `None`"
+            )  # noqa: E501
 
         self._score_type = score_type
 
@@ -155,7 +167,9 @@ class ActiveLearningScoreData(object):
         :type: ActiveLearningScores
         """
         if self._configuration.client_side_validation and scores is None:
-            raise ValueError("Invalid value for `scores`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `scores`, must not be `None`"
+            )  # noqa: E501
 
         self._scores = scores
 
@@ -178,7 +192,9 @@ class ActiveLearningScoreData(object):
         :type: Timestamp
         """
         if self._configuration.client_side_validation and created_at is None:
-            raise ValueError("Invalid value for `created_at`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `created_at`, must not be `None`"
+            )  # noqa: E501
 
         self._created_at = created_at
 
@@ -189,18 +205,20 @@ class ActiveLearningScoreData(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(ActiveLearningScoreData, dict):

@@ -17,8 +17,7 @@ class TestSymNegCosineSimilarityLoss(unittest.TestCase):
             # symmetry
             l1 = loss((z0, p0), (z1, p1))
             l2 = loss((z1, p1), (z0, p0))
-            self.assertAlmostEqual((l1 - l2).pow(2).item(), 0.)
- 
+            self.assertAlmostEqual((l1 - l2).pow(2).item(), 0.0)
 
     def test_forward_pass_cuda(self):
         if not torch.cuda.is_available():
@@ -35,8 +34,7 @@ class TestSymNegCosineSimilarityLoss(unittest.TestCase):
             # symmetry
             l1 = loss((z0, p0), (z1, p1))
             l2 = loss((z1, p1), (z0, p0))
-            self.assertAlmostEqual((l1 - l2).pow(2).item(), 0.)
-
+            self.assertAlmostEqual((l1 - l2).pow(2).item(), 0.0)
 
     def test_neg_cosine_simililarity(self):
         loss = SymNegCosineSimilarityLoss()
@@ -48,7 +46,7 @@ class TestSymNegCosineSimilarityLoss(unittest.TestCase):
             # symmetry
             l1 = loss._neg_cosine_simililarity(x, y)
             l2 = loss._neg_cosine_simililarity(y, x)
-            self.assertAlmostEqual((l1 - l2).pow(2).item(), 0.)
+            self.assertAlmostEqual((l1 - l2).pow(2).item(), 0.0)
 
     def test_neg_cosine_simililarity_cuda(self):
         if not torch.cuda.is_available():
@@ -63,4 +61,4 @@ class TestSymNegCosineSimilarityLoss(unittest.TestCase):
             # symmetry
             l1 = loss._neg_cosine_simililarity(x, y)
             l2 = loss._neg_cosine_simililarity(y, x)
-            self.assertAlmostEqual((l1 - l2).pow(2).item(), 0.)
+            self.assertAlmostEqual((l1 - l2).pow(2).item(), 0.0)

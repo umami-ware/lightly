@@ -56,20 +56,25 @@ class SelfSupervisedEmbedding(BaseEmbedding):
 
     """
 
-    def __init__(self,
-                 model: torch.nn.Module,
-                 criterion: torch.nn.Module,
-                 optimizer: torch.optim.Optimizer,
-                 dataloader: torch.utils.data.DataLoader,
-                 scheduler=None):
+    def __init__(
+        self,
+        model: torch.nn.Module,
+        criterion: torch.nn.Module,
+        optimizer: torch.optim.Optimizer,
+        dataloader: torch.utils.data.DataLoader,
+        scheduler=None,
+    ):
 
         super(SelfSupervisedEmbedding, self).__init__(
-            model, criterion, optimizer, dataloader, scheduler)
+            model, criterion, optimizer, dataloader, scheduler
+        )
 
-    def embed(self,
-              dataloader: torch.utils.data.DataLoader,
-              device: torch.device = None,
-              to_numpy: bool = True):
+    def embed(
+        self,
+        dataloader: torch.utils.data.DataLoader,
+        device: torch.device = None,
+        to_numpy: bool = True,
+    ):
         """Embeds images in a vector space.
 
         Args:
@@ -94,12 +99,13 @@ class SelfSupervisedEmbedding(BaseEmbedding):
         embeddings, labels, fnames = None, None, []
 
         if lightly._is_prefetch_generator_available():
-            pbar = tqdm(BackgroundGenerator(dataloader, max_prefetch=3),
-                        total=len(dataloader))
+            pbar = tqdm(
+                BackgroundGenerator(dataloader, max_prefetch=3), total=len(dataloader)
+            )
         else:
             pbar = tqdm(dataloader, total=len(dataloader))
 
-        efficiency = 0.
+        efficiency = 0.0
         embeddings = []
         labels = []
         with torch.no_grad():
@@ -123,10 +129,8 @@ class SelfSupervisedEmbedding(BaseEmbedding):
 
                 process_time = time.time()
 
-                efficiency = \
-                    (process_time - prepare_time) / (process_time - start_time)
-                pbar.set_description(
-                    "Compute efficiency: {:.2f}".format(efficiency))
+                efficiency = (process_time - prepare_time) / (process_time - start_time)
+                pbar.set_description("Compute efficiency: {:.2f}".format(efficiency))
                 start_time = time.time()
 
             embeddings = torch.cat(embeddings, 0)

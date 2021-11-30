@@ -21,8 +21,9 @@ class LightlySubset(LightlyDataset):
             fname = base_dataset.index_to_filename(self.dataset, index)
             dict_base_dataset_filename_index[fname] = index
 
-        self.mapping_subset_index_to_baseset_index = \
-            [dict_base_dataset_filename_index[filename] for filename in filenames_subset]
+        self.mapping_subset_index_to_baseset_index = [
+            dict_base_dataset_filename_index[filename] for filename in filenames_subset
+        ]
 
     def __getitem__(self, index_subset: int) -> Tuple[object, object, str]:
         """An overwrite for indexing.

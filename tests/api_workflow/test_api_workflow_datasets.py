@@ -4,7 +4,6 @@ from tests.api_workflow.mocked_api_workflow_client import MockedApiWorkflowSetup
 
 
 class TestApiWorkflowDatasets(MockedApiWorkflowSetup):
-
     def test_create_dataset_new(self):
         self.api_workflow_client.datasets_api.reset()
         self.api_workflow_client.create_dataset(dataset_name="dataset_new")
@@ -19,13 +18,20 @@ class TestApiWorkflowDatasets(MockedApiWorkflowSetup):
         self.api_workflow_client.create_dataset(dataset_name="basename")
         n_tries = 3
         for i in range(n_tries):
-            self.api_workflow_client.create_new_dataset_with_unique_name(dataset_basename="basename")
-        assert self.api_workflow_client.datasets_api.datasets[-1].name == f"basename_{n_tries}"
+            self.api_workflow_client.create_new_dataset_with_unique_name(
+                dataset_basename="basename"
+            )
+        assert (
+            self.api_workflow_client.datasets_api.datasets[-1].name
+            == f"basename_{n_tries}"
+        )
 
     def test_create_dataset_with_counter_nonexisting(self):
         self.api_workflow_client.datasets_api.reset()
         self.api_workflow_client.create_dataset(dataset_name="basename")
-        self.api_workflow_client.create_new_dataset_with_unique_name(dataset_basename="baseName")
+        self.api_workflow_client.create_new_dataset_with_unique_name(
+            dataset_basename="baseName"
+        )
         assert self.api_workflow_client.datasets_api.datasets[-1].name == "baseName"
 
     def test_set_dataset_id_success(self):
@@ -41,7 +47,7 @@ class TestApiWorkflowDatasets(MockedApiWorkflowSetup):
     def test_delete_dataset(self):
         self.api_workflow_client.datasets_api.reset()
         self.api_workflow_client.create_dataset(dataset_name="dataset_to_delete")
-        self.api_workflow_client.delete_dataset_by_id(self.api_workflow_client.dataset_id)
+        self.api_workflow_client.delete_dataset_by_id(
+            self.api_workflow_client.dataset_id
+        )
         assert not hasattr(self, "_dataset_id")
-
-

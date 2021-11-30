@@ -22,9 +22,9 @@ class RandomRotate(object):
         angle:
             Angle by which the image is rotated. We recommend multiples of 90
             to prevent rasterization artifacts. If you pick numbers like
-            90, 180, 270 the tensor will be rotated without introducing 
+            90, 180, 270 the tensor will be rotated without introducing
             any artifacts.
-    
+
     """
 
     def __init__(self, prob: float = 0.5, angle: int = 90):
@@ -37,7 +37,7 @@ class RandomRotate(object):
         Args:
             sample:
                 PIL image which will be rotated.
-        
+
         Returns:
             Rotated image or original image.
 

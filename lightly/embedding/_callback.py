@@ -14,7 +14,7 @@ class CustomModelCheckpoint(cb.ModelCheckpoint):
             >>> epoch_10.ckpt
     """
 
-    def __init__(self, checkpoint_fmt: str = 'lightly_epoch_{epoch}.ckpt'):
+    def __init__(self, checkpoint_fmt: str = "lightly_epoch_{epoch}.ckpt"):
         # use default initialization to prevent compatability
         # issues in case pytorch_lightning changes attributes
         super(CustomModelCheckpoint, self).__init__()

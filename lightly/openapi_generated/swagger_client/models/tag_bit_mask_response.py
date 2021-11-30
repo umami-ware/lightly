@@ -32,13 +32,9 @@ class TagBitMaskResponse(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
-        'bit_mask_data': 'TagBitMaskData'
-    }
+    swagger_types = {"bit_mask_data": "TagBitMaskData"}
 
-    attribute_map = {
-        'bit_mask_data': 'bitMaskData'
-    }
+    attribute_map = {"bit_mask_data": "bitMaskData"}
 
     def __init__(self, bit_mask_data=None, _configuration=None):  # noqa: E501
         """TagBitMaskResponse - a model defined in Swagger"""  # noqa: E501
@@ -70,7 +66,9 @@ class TagBitMaskResponse(object):
         :type: TagBitMaskData
         """
         if self._configuration.client_side_validation and bit_mask_data is None:
-            raise ValueError("Invalid value for `bit_mask_data`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `bit_mask_data`, must not be `None`"
+            )  # noqa: E501
 
         self._bit_mask_data = bit_mask_data
 
@@ -81,18 +79,20 @@ class TagBitMaskResponse(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(TagBitMaskResponse, dict):

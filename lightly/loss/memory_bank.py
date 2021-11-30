@@ -6,11 +6,12 @@
 import torch
 import functools
 
+
 class MemoryBankModule(torch.nn.Module):
     """Memory bank implementation
 
     This is a parent class to all loss functions implemented by the lightly
-    Python package. This way, any loss can be used with a memory bank if 
+    Python package. This way, any loss can be used with a memory bank if
     desired.
 
     Attributes:
@@ -42,14 +43,14 @@ class MemoryBankModule(torch.nn.Module):
         super(MemoryBankModule, self).__init__()
 
         if size < 0:
-            msg = f'Illegal memory bank size {size}, must be non-negative.'
+            msg = f"Illegal memory bank size {size}, must be non-negative."
             raise ValueError(msg)
 
         self.size = size
 
         self.bank = None
         self.bank_ptr = None
-    
+
     @torch.no_grad()
     def _init_memory_bank(self, dim: int):
         """Initialize the memory bank if it's empty
@@ -80,16 +81,15 @@ class MemoryBankModule(torch.nn.Module):
         ptr = int(self.bank_ptr)
 
         if ptr + batch_size >= self.size:
-            self.bank[:, ptr:] = batch[:self.size - ptr].T.detach()
+            self.bank[:, ptr:] = batch[: self.size - ptr].T.detach()
             self.bank_ptr[0] = 0
         else:
-            self.bank[:, ptr:ptr + batch_size] = batch.T.detach()
+            self.bank[:, ptr : ptr + batch_size] = batch.T.detach()
             self.bank_ptr[0] = ptr + batch_size
 
-    def forward(self,
-                output: torch.Tensor,
-                labels: torch.Tensor = None,
-                update: bool = False):
+    def forward(
+        self, output: torch.Tensor, labels: torch.Tensor = None, update: bool = False
+    ):
         """Query memory bank for additional negative samples
 
         Args:

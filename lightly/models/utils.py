@@ -8,6 +8,7 @@ import copy
 import torch
 import torch.nn as nn
 
+
 @torch.no_grad()
 def batch_shuffle(batch: torch.Tensor):
     """Returns the shuffled batch and the indices to undo.
@@ -23,6 +24,7 @@ def batch_shuffle(batch: torch.Tensor):
     shuffle = torch.randperm(batch_size, device=batch.device)
     return batch[shuffle], shuffle
 
+
 @torch.no_grad()
 def batch_unshuffle(batch: torch.Tensor, shuffle: torch.Tensor):
     """Returns the unshuffled batch.
@@ -37,9 +39,10 @@ def batch_unshuffle(batch: torch.Tensor, shuffle: torch.Tensor):
     unshuffle = torch.argsort(shuffle)
     return batch[unshuffle]
 
+
 def deactivate_requires_grad(model: nn.Module):
     """Deactivates the requires_grad flag for all parameters of a model.
-    
+
     This has the same effect as permanently executing the model within a `torch.no_grad()`
     context. Use this method to disable gradient computation and therefore
     training for a model.
@@ -50,6 +53,7 @@ def deactivate_requires_grad(model: nn.Module):
     """
     for param in model.parameters():
         param.requires_grad = False
+
 
 def activate_requires_grad(model: nn.Module):
     """Activates the requires_grad flag for all parameters of a model.
@@ -64,10 +68,11 @@ def activate_requires_grad(model: nn.Module):
     for param in model.parameters():
         param.requires_grad = True
 
+
 def update_momentum(model: nn.Module, model_ema: nn.Module, m: float):
     """Updates parameters of `model_ema` with Exponential Moving Average of `model`
 
-    Momentum encoders are a crucial component fo models such as MoCo or BYOL. 
+    Momentum encoders are a crucial component fo models such as MoCo or BYOL.
 
     Examples:
         >>> backbone = resnet18()
@@ -80,12 +85,10 @@ def update_momentum(model: nn.Module, model_ema: nn.Module, m: float):
         >>> update_momentum(projection_head, projection_head_momentum, m=0.999)
     """
     for model_ema, model in zip(model_ema.parameters(), model.parameters()):
-        model_ema.data = model_ema.data * m + model.data * (1. - m)
+        model_ema.data = model_ema.data * m + model.data * (1.0 - m)
 
 
 @torch.no_grad()
 def normalize_weight(weight: nn.Parameter, dim: int = 1, keepdim: bool = True):
-    """Normalizes the weight to unit length along the specified dimension.
-
-    """
+    """Normalizes the weight to unit length along the specified dimension."""
     weight.div_(torch.norm(weight, dim=dim, keepdim=keepdim))

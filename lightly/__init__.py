@@ -74,8 +74,8 @@ The framework is structured into the following modules:
 # Copyright (c) 2020. Lightly AG and its affiliates.
 # All Rights Reserved
 
-__name__ = 'lightly'
-__version__ = '1.1.23'
+__name__ = "lightly"
+__version__ = "1.1.23"
 
 import os
 
@@ -91,7 +91,7 @@ except NameError:
 
 if __LIGHTLY_SETUP__:
     # setting up lightly
-    msg = f'Partial import of {__name__}=={__version__} during build process.' 
+    msg = f"Partial import of {__name__}=={__version__} during build process."
     print(msg)
 else:
     # see if prefetch_generator is available
@@ -115,16 +115,13 @@ else:
     from lightly import openapi_generated
     from lightly import transforms
     from lightly import utils
-    
+
     from lightly.api.version_checking import do_version_check
 
-    if os.getenv('LIGHTLY_DID_VERSION_CHECK', 'False') == 'False':
-        os.environ['LIGHTLY_DID_VERSION_CHECK'] = 'True'
+    if os.getenv("LIGHTLY_DID_VERSION_CHECK", "False") == "False":
+        os.environ["LIGHTLY_DID_VERSION_CHECK"] = "True"
 
         try:
             do_version_check(current_version=__version__)
         except Exception as e:
             pass
-
-
-

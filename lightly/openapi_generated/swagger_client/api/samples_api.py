@@ -49,14 +49,20 @@ class SamplesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.create_sample_by_dataset_id_with_http_info(body, dataset_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.create_sample_by_dataset_id_with_http_info(
+                body, dataset_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.create_sample_by_dataset_id_with_http_info(body, dataset_id, **kwargs)  # noqa: E501
+            (data) = self.create_sample_by_dataset_id_with_http_info(
+                body, dataset_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def create_sample_by_dataset_id_with_http_info(self, body, dataset_id, **kwargs):  # noqa: E501
+    def create_sample_by_dataset_id_with_http_info(
+        self, body, dataset_id, **kwargs
+    ):  # noqa: E501
         """create_sample_by_dataset_id  # noqa: E501
 
         Create a new sample in a dataset  # noqa: E501
@@ -73,35 +79,41 @@ class SamplesApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body', 'dataset_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["body", "dataset_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_sample_by_dataset_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `body` when calling `create_sample_by_dataset_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in params or params["body"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `body` when calling `create_sample_by_dataset_id`"
+            )  # noqa: E501
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `create_sample_by_dataset_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `create_sample_by_dataset_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
 
         query_params = []
 
@@ -111,34 +123,40 @@ class SamplesApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/samples', 'POST',
+            "/v1/datasets/{datasetId}/samples",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='CreateEntityResponse',  # noqa: E501
+            response_type="CreateEntityResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_sample_by_id(self, dataset_id, sample_id, **kwargs):  # noqa: E501
         """get_sample_by_id  # noqa: E501
@@ -156,14 +174,20 @@ class SamplesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_sample_by_id_with_http_info(dataset_id, sample_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_sample_by_id_with_http_info(
+                dataset_id, sample_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_sample_by_id_with_http_info(dataset_id, sample_id, **kwargs)  # noqa: E501
+            (data) = self.get_sample_by_id_with_http_info(
+                dataset_id, sample_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def get_sample_by_id_with_http_info(self, dataset_id, sample_id, **kwargs):  # noqa: E501
+    def get_sample_by_id_with_http_info(
+        self, dataset_id, sample_id, **kwargs
+    ):  # noqa: E501
         """get_sample_by_id  # noqa: E501
 
         Get a specific sample of a dataset  # noqa: E501
@@ -180,37 +204,43 @@ class SamplesApi(object):
                  returns the request thread.
         """
 
-        all_params = ['dataset_id', 'sample_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["dataset_id", "sample_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_sample_by_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `get_sample_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `get_sample_by_id`"
+            )  # noqa: E501
         # verify the required parameter 'sample_id' is set
-        if self.api_client.client_side_validation and ('sample_id' not in params or
-                                                       params['sample_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `sample_id` when calling `get_sample_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "sample_id" not in params or params["sample_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `sample_id` when calling `get_sample_by_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
-        if 'sample_id' in params:
-            path_params['sampleId'] = params['sample_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
+        if "sample_id" in params:
+            path_params["sampleId"] = params["sample_id"]  # noqa: E501
 
         query_params = []
 
@@ -221,29 +251,34 @@ class SamplesApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/samples/{sampleId}', 'GET',
+            "/v1/datasets/{datasetId}/samples/{sampleId}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='SampleData',  # noqa: E501
+            response_type="SampleData",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def get_sample_image_read_url_by_id(self, dataset_id, sample_id, **kwargs):  # noqa: E501
+    def get_sample_image_read_url_by_id(
+        self, dataset_id, sample_id, **kwargs
+    ):  # noqa: E501
         """get_sample_image_read_url_by_id  # noqa: E501
 
         Get the image path of a specific sample of a dataset  # noqa: E501
@@ -260,14 +295,20 @@ class SamplesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_sample_image_read_url_by_id_with_http_info(dataset_id, sample_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_sample_image_read_url_by_id_with_http_info(
+                dataset_id, sample_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_sample_image_read_url_by_id_with_http_info(dataset_id, sample_id, **kwargs)  # noqa: E501
+            (data) = self.get_sample_image_read_url_by_id_with_http_info(
+                dataset_id, sample_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def get_sample_image_read_url_by_id_with_http_info(self, dataset_id, sample_id, **kwargs):  # noqa: E501
+    def get_sample_image_read_url_by_id_with_http_info(
+        self, dataset_id, sample_id, **kwargs
+    ):  # noqa: E501
         """get_sample_image_read_url_by_id  # noqa: E501
 
         Get the image path of a specific sample of a dataset  # noqa: E501
@@ -285,41 +326,47 @@ class SamplesApi(object):
                  returns the request thread.
         """
 
-        all_params = ['dataset_id', 'sample_id', 'type']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["dataset_id", "sample_id", "type"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_sample_image_read_url_by_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `get_sample_image_read_url_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `get_sample_image_read_url_by_id`"
+            )  # noqa: E501
         # verify the required parameter 'sample_id' is set
-        if self.api_client.client_side_validation and ('sample_id' not in params or
-                                                       params['sample_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `sample_id` when calling `get_sample_image_read_url_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "sample_id" not in params or params["sample_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `sample_id` when calling `get_sample_image_read_url_by_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
-        if 'sample_id' in params:
-            path_params['sampleId'] = params['sample_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
+        if "sample_id" in params:
+            path_params["sampleId"] = params["sample_id"]  # noqa: E501
 
         query_params = []
-        if 'type' in params:
-            query_params.append(('type', params['type']))  # noqa: E501
+        if "type" in params:
+            query_params.append(("type", params["type"]))  # noqa: E501
 
         header_params = {}
 
@@ -328,29 +375,34 @@ class SamplesApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/samples/{sampleId}/readurl', 'GET',
+            "/v1/datasets/{datasetId}/samples/{sampleId}/readurl",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='str',  # noqa: E501
+            response_type="str",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def get_sample_image_write_url_by_id(self, dataset_id, sample_id, is_thumbnail, **kwargs):  # noqa: E501
+    def get_sample_image_write_url_by_id(
+        self, dataset_id, sample_id, is_thumbnail, **kwargs
+    ):  # noqa: E501
         """get_sample_image_write_url_by_id  # noqa: E501
 
         Get the signed url to upload an image to for a specific sample of a dataset  # noqa: E501
@@ -367,14 +419,20 @@ class SamplesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_sample_image_write_url_by_id_with_http_info(dataset_id, sample_id, is_thumbnail, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_sample_image_write_url_by_id_with_http_info(
+                dataset_id, sample_id, is_thumbnail, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_sample_image_write_url_by_id_with_http_info(dataset_id, sample_id, is_thumbnail, **kwargs)  # noqa: E501
+            (data) = self.get_sample_image_write_url_by_id_with_http_info(
+                dataset_id, sample_id, is_thumbnail, **kwargs
+            )  # noqa: E501
             return data
 
-    def get_sample_image_write_url_by_id_with_http_info(self, dataset_id, sample_id, is_thumbnail, **kwargs):  # noqa: E501
+    def get_sample_image_write_url_by_id_with_http_info(
+        self, dataset_id, sample_id, is_thumbnail, **kwargs
+    ):  # noqa: E501
         """get_sample_image_write_url_by_id  # noqa: E501
 
         Get the signed url to upload an image to for a specific sample of a dataset  # noqa: E501
@@ -392,45 +450,54 @@ class SamplesApi(object):
                  returns the request thread.
         """
 
-        all_params = ['dataset_id', 'sample_id', 'is_thumbnail']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["dataset_id", "sample_id", "is_thumbnail"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_sample_image_write_url_by_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `get_sample_image_write_url_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `get_sample_image_write_url_by_id`"
+            )  # noqa: E501
         # verify the required parameter 'sample_id' is set
-        if self.api_client.client_side_validation and ('sample_id' not in params or
-                                                       params['sample_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `sample_id` when calling `get_sample_image_write_url_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "sample_id" not in params or params["sample_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `sample_id` when calling `get_sample_image_write_url_by_id`"
+            )  # noqa: E501
         # verify the required parameter 'is_thumbnail' is set
-        if self.api_client.client_side_validation and ('is_thumbnail' not in params or
-                                                       params['is_thumbnail'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `is_thumbnail` when calling `get_sample_image_write_url_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "is_thumbnail" not in params or params["is_thumbnail"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `is_thumbnail` when calling `get_sample_image_write_url_by_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
-        if 'sample_id' in params:
-            path_params['sampleId'] = params['sample_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
+        if "sample_id" in params:
+            path_params["sampleId"] = params["sample_id"]  # noqa: E501
 
         query_params = []
-        if 'is_thumbnail' in params:
-            query_params.append(('isThumbnail', params['is_thumbnail']))  # noqa: E501
+        if "is_thumbnail" in params:
+            query_params.append(("isThumbnail", params["is_thumbnail"]))  # noqa: E501
 
         header_params = {}
 
@@ -439,29 +506,34 @@ class SamplesApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/samples/{sampleId}/writeurl', 'GET',
+            "/v1/datasets/{datasetId}/samples/{sampleId}/writeurl",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='str',  # noqa: E501
+            response_type="str",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
-    def get_sample_image_write_urls_by_id(self, dataset_id, sample_id, **kwargs):  # noqa: E501
+    def get_sample_image_write_urls_by_id(
+        self, dataset_id, sample_id, **kwargs
+    ):  # noqa: E501
         """get_sample_image_write_urls_by_id  # noqa: E501
 
         Get all signed write URLs to upload all images (full image and thumbnail) of a specific sample of a dataset  # noqa: E501
@@ -477,14 +549,20 @@ class SamplesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_sample_image_write_urls_by_id_with_http_info(dataset_id, sample_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_sample_image_write_urls_by_id_with_http_info(
+                dataset_id, sample_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_sample_image_write_urls_by_id_with_http_info(dataset_id, sample_id, **kwargs)  # noqa: E501
+            (data) = self.get_sample_image_write_urls_by_id_with_http_info(
+                dataset_id, sample_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def get_sample_image_write_urls_by_id_with_http_info(self, dataset_id, sample_id, **kwargs):  # noqa: E501
+    def get_sample_image_write_urls_by_id_with_http_info(
+        self, dataset_id, sample_id, **kwargs
+    ):  # noqa: E501
         """get_sample_image_write_urls_by_id  # noqa: E501
 
         Get all signed write URLs to upload all images (full image and thumbnail) of a specific sample of a dataset  # noqa: E501
@@ -501,37 +579,43 @@ class SamplesApi(object):
                  returns the request thread.
         """
 
-        all_params = ['dataset_id', 'sample_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["dataset_id", "sample_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_sample_image_write_urls_by_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `get_sample_image_write_urls_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `get_sample_image_write_urls_by_id`"
+            )  # noqa: E501
         # verify the required parameter 'sample_id' is set
-        if self.api_client.client_side_validation and ('sample_id' not in params or
-                                                       params['sample_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `sample_id` when calling `get_sample_image_write_urls_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "sample_id" not in params or params["sample_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `sample_id` when calling `get_sample_image_write_urls_by_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
-        if 'sample_id' in params:
-            path_params['sampleId'] = params['sample_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
+        if "sample_id" in params:
+            path_params["sampleId"] = params["sample_id"]  # noqa: E501
 
         query_params = []
 
@@ -542,27 +626,30 @@ class SamplesApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/samples/{sampleId}/writeurls', 'GET',
+            "/v1/datasets/{datasetId}/samples/{sampleId}/writeurls",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='SampleWriteUrls',  # noqa: E501
+            response_type="SampleWriteUrls",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_samples_by_dataset_id(self, dataset_id, **kwargs):  # noqa: E501
         """get_samples_by_dataset_id  # noqa: E501
@@ -581,14 +668,20 @@ class SamplesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_samples_by_dataset_id_with_http_info(dataset_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_samples_by_dataset_id_with_http_info(
+                dataset_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_samples_by_dataset_id_with_http_info(dataset_id, **kwargs)  # noqa: E501
+            (data) = self.get_samples_by_dataset_id_with_http_info(
+                dataset_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def get_samples_by_dataset_id_with_http_info(self, dataset_id, **kwargs):  # noqa: E501
+    def get_samples_by_dataset_id_with_http_info(
+        self, dataset_id, **kwargs
+    ):  # noqa: E501
         """get_samples_by_dataset_id  # noqa: E501
 
         Get all samples of a dataset  # noqa: E501
@@ -606,37 +699,40 @@ class SamplesApi(object):
                  returns the request thread.
         """
 
-        all_params = ['dataset_id', 'mode', 'file_name']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["dataset_id", "mode", "file_name"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_samples_by_dataset_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `get_samples_by_dataset_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `get_samples_by_dataset_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
 
         query_params = []
-        if 'mode' in params:
-            query_params.append(('mode', params['mode']))  # noqa: E501
-        if 'file_name' in params:
-            query_params.append(('fileName', params['file_name']))  # noqa: E501
+        if "mode" in params:
+            query_params.append(("mode", params["mode"]))  # noqa: E501
+        if "file_name" in params:
+            query_params.append(("fileName", params["file_name"]))  # noqa: E501
 
         header_params = {}
 
@@ -645,27 +741,30 @@ class SamplesApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/samples', 'GET',
+            "/v1/datasets/{datasetId}/samples",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[SampleData]',  # noqa: E501
+            response_type="list[SampleData]",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def update_sample_by_id(self, body, dataset_id, sample_id, **kwargs):  # noqa: E501
         """update_sample_by_id  # noqa: E501
@@ -685,14 +784,20 @@ class SamplesApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.update_sample_by_id_with_http_info(body, dataset_id, sample_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.update_sample_by_id_with_http_info(
+                body, dataset_id, sample_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.update_sample_by_id_with_http_info(body, dataset_id, sample_id, **kwargs)  # noqa: E501
+            (data) = self.update_sample_by_id_with_http_info(
+                body, dataset_id, sample_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def update_sample_by_id_with_http_info(self, body, dataset_id, sample_id, **kwargs):  # noqa: E501
+    def update_sample_by_id_with_http_info(
+        self, body, dataset_id, sample_id, **kwargs
+    ):  # noqa: E501
         """update_sample_by_id  # noqa: E501
 
         update a specific sample of a dataset  # noqa: E501
@@ -711,45 +816,61 @@ class SamplesApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body', 'dataset_id', 'sample_id', 'enable_dataset_update']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = [
+            "body",
+            "dataset_id",
+            "sample_id",
+            "enable_dataset_update",
+        ]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_sample_by_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `body` when calling `update_sample_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in params or params["body"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `body` when calling `update_sample_by_id`"
+            )  # noqa: E501
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `update_sample_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `update_sample_by_id`"
+            )  # noqa: E501
         # verify the required parameter 'sample_id' is set
-        if self.api_client.client_side_validation and ('sample_id' not in params or
-                                                       params['sample_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `sample_id` when calling `update_sample_by_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "sample_id" not in params or params["sample_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `sample_id` when calling `update_sample_by_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
-        if 'sample_id' in params:
-            path_params['sampleId'] = params['sample_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
+        if "sample_id" in params:
+            path_params["sampleId"] = params["sample_id"]  # noqa: E501
 
         query_params = []
-        if 'enable_dataset_update' in params:
-            query_params.append(('enableDatasetUpdate', params['enable_dataset_update']))  # noqa: E501
+        if "enable_dataset_update" in params:
+            query_params.append(
+                ("enableDatasetUpdate", params["enable_dataset_update"])
+            )  # noqa: E501
 
         header_params = {}
 
@@ -757,21 +878,26 @@ class SamplesApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/samples/{sampleId}', 'PUT',
+            "/v1/datasets/{datasetId}/samples/{sampleId}",
+            "PUT",
             path_params,
             query_params,
             header_params,
@@ -780,8 +906,9 @@ class SamplesApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

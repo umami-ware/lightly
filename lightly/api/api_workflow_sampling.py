@@ -6,18 +6,23 @@ import numpy as np
 from lightly.active_learning.config.sampler_config import SamplerConfig
 from lightly.openapi_generated.swagger_client import ActiveLearningScoreCreateRequest
 from lightly.openapi_generated.swagger_client.models.job_state import JobState
-from lightly.openapi_generated.swagger_client.models.job_status_data import JobStatusData
+from lightly.openapi_generated.swagger_client.models.job_status_data import (
+    JobStatusData,
+)
 from lightly.openapi_generated.swagger_client.models.tag_data import TagData
-from lightly.openapi_generated.swagger_client.models.sampling_config import SamplingConfig
-from lightly.openapi_generated.swagger_client.models.sampling_create_request import SamplingCreateRequest
-from lightly.openapi_generated.swagger_client.models.sampling_config_stopping_condition import \
-    SamplingConfigStoppingCondition
+from lightly.openapi_generated.swagger_client.models.sampling_config import (
+    SamplingConfig,
+)
+from lightly.openapi_generated.swagger_client.models.sampling_create_request import (
+    SamplingCreateRequest,
+)
+from lightly.openapi_generated.swagger_client.models.sampling_config_stopping_condition import (
+    SamplingConfigStoppingCondition,
+)
 
 
 def _parse_active_learning_scores(scores: Union[np.ndarray, List]):
-    """Makes list/np.array of active learning scores serializable.
-
-    """
+    """Makes list/np.array of active learning scores serializable."""
     # the api only accepts float64s
     if isinstance(scores, np.ndarray):
         scores = scores.astype(np.float64)
@@ -27,7 +32,6 @@ def _parse_active_learning_scores(scores: Union[np.ndarray, List]):
 
 
 class _SamplingMixin:
-
     def upload_scores(self, al_scores: Dict[str, np.ndarray], query_tag_id: str = None):
 
         tags = self._get_all_tags()
@@ -38,13 +42,13 @@ class _SamplingMixin:
         # will be the query tag (i.e. query_tag = initial-tag)
         # set the query tag to the initial-tag if necessary
         if query_tag_id is None:
-            query_tag = next(t for t in tags if t.name == 'initial-tag')
+            query_tag = next(t for t in tags if t.name == "initial-tag")
             query_tag_id = query_tag.id
         # iterate over all available score types and upload them
         for score_type, score_values in al_scores.items():
             body = ActiveLearningScoreCreateRequest(
                 score_type=score_type,
-                scores=_parse_active_learning_scores(score_values)
+                scores=_parse_active_learning_scores(score_values),
             )
             self.scores_api.create_or_update_active_learning_score_by_tag_id(
                 body,
@@ -52,8 +56,12 @@ class _SamplingMixin:
                 tag_id=query_tag_id,
             )
 
-    def sampling(self, sampler_config: SamplerConfig, preselected_tag_id: str = None, query_tag_id: str = None) \
-            -> TagData:
+    def sampling(
+        self,
+        sampler_config: SamplerConfig,
+        preselected_tag_id: str = None,
+        query_tag_id: str = None,
+    ) -> TagData:
         """Performs a sampling given the arguments.
 
         Args:
@@ -77,9 +85,11 @@ class _SamplingMixin:
         # make sure the tag name does not exist yet
         tags = self._get_all_tags()
         if sampler_config.name in [tag.name for tag in tags]:
-            raise RuntimeError(f'There already exists a tag with tag_name {sampler_config.name}.')
+            raise RuntimeError(
+                f"There already exists a tag with tag_name {sampler_config.name}."
+            )
         if len(tags) == 0:
-            raise RuntimeError('There exists no initial-tag for this dataset.')
+            raise RuntimeError("There exists no initial-tag for this dataset.")
 
         # make sure we have an embedding id
         try:
@@ -88,9 +98,13 @@ class _SamplingMixin:
             self.set_embedding_id_by_name()
 
         # trigger the sampling
-        payload = self._create_sampling_create_request(sampler_config, preselected_tag_id, query_tag_id)
+        payload = self._create_sampling_create_request(
+            sampler_config, preselected_tag_id, query_tag_id
+        )
         payload.row_count = self._get_all_tags()[0].tot_size
-        response = self.samplings_api.trigger_sampling_by_id(payload, self.dataset_id, self.embedding_id)
+        response = self.samplings_api.trigger_sampling_by_id(
+            payload, self.dataset_id, self.embedding_id
+        )
         job_id = response.job_id
 
         # poll the job status till the job is not running anymore
@@ -98,35 +112,46 @@ class _SamplingMixin:
         job_status_data = None
 
         wait_time_till_next_poll = getattr(self, "wait_time_till_next_poll", 1)
-        while job_status_data is None \
-                or job_status_data.status == JobState.RUNNING \
-                or job_status_data.status == JobState.WAITING \
-                or job_status_data.status == JobState.UNKNOWN:
+        while (
+            job_status_data is None
+            or job_status_data.status == JobState.RUNNING
+            or job_status_data.status == JobState.WAITING
+            or job_status_data.status == JobState.UNKNOWN
+        ):
             # sleep before polling again
             time.sleep(wait_time_till_next_poll)
             # try to read the sleep time until the next poll from the status data
             try:
-                job_status_data: JobStatusData = self.jobs_api.get_job_status_by_id(job_id=job_id)
+                job_status_data: JobStatusData = self.jobs_api.get_job_status_by_id(
+                    job_id=job_id
+                )
                 wait_time_till_next_poll = job_status_data.wait_time_till_next_poll
             except Exception as err:
                 exception_counter += 1
                 if exception_counter == 20:
-                    print(f"Sampling job with job_id {job_id} could not be started because of error: {err}")
+                    print(
+                        f"Sampling job with job_id {job_id} could not be started because of error: {err}"
+                    )
                     raise err
 
         if job_status_data.status == JobState.FAILED:
-            raise RuntimeError(f"Sampling job with job_id {job_id} failed with error {job_status_data.error}")
+            raise RuntimeError(
+                f"Sampling job with job_id {job_id} failed with error {job_status_data.error}"
+            )
 
         # get the new tag from the job status
         new_tag_id = job_status_data.result.data
         if new_tag_id is None:
             raise RuntimeError(f"TagId returned by job with job_id {job_id} is None.")
-        new_tag_data = self.tags_api.get_tag_by_tag_id(self.dataset_id, tag_id=new_tag_id)
+        new_tag_data = self.tags_api.get_tag_by_tag_id(
+            self.dataset_id, tag_id=new_tag_id
+        )
 
         return new_tag_data
 
-    def _create_sampling_create_request(self, sampler_config: SamplerConfig, preselected_tag_id: str, query_tag_id: str
-                                        ) -> SamplingCreateRequest:
+    def _create_sampling_create_request(
+        self, sampler_config: SamplerConfig, preselected_tag_id: str, query_tag_id: str
+    ) -> SamplingCreateRequest:
         """Creates a SamplingCreateRequest
 
         First, it checks how many samples are already labeled by
@@ -140,12 +165,14 @@ class _SamplingMixin:
         sampling_config = SamplingConfig(
             stopping_condition=SamplingConfigStoppingCondition(
                 n_samples=sampler_config.n_samples,
-                min_distance=sampler_config.min_distance
+                min_distance=sampler_config.min_distance,
             )
         )
-        sampling_create_request = SamplingCreateRequest(new_tag_name=sampler_config.name,
-                                                        method=sampler_config.method,
-                                                        config=sampling_config,
-                                                        preselected_tag_id=preselected_tag_id,
-                                                        query_tag_id=query_tag_id)
+        sampling_create_request = SamplingCreateRequest(
+            new_tag_name=sampler_config.name,
+            method=sampler_config.method,
+            config=sampling_config,
+            preselected_tag_id=preselected_tag_id,
+            query_tag_id=query_tag_id,
+        )
         return sampling_create_request

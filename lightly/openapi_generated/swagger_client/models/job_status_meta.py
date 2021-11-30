@@ -33,20 +33,27 @@ class JobStatusMeta(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'total': 'int',
-        'processed': 'int',
-        'upload_method': 'JobStatusUploadMethod',
-        'is_registered': 'bool'
+        "total": "int",
+        "processed": "int",
+        "upload_method": "JobStatusUploadMethod",
+        "is_registered": "bool",
     }
 
     attribute_map = {
-        'total': 'total',
-        'processed': 'processed',
-        'upload_method': 'uploadMethod',
-        'is_registered': 'isRegistered'
+        "total": "total",
+        "processed": "processed",
+        "upload_method": "uploadMethod",
+        "is_registered": "isRegistered",
     }
 
-    def __init__(self, total=None, processed=None, upload_method=None, is_registered=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        total=None,
+        processed=None,
+        upload_method=None,
+        is_registered=None,
+        _configuration=None,
+    ):  # noqa: E501
         """JobStatusMeta - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -84,7 +91,9 @@ class JobStatusMeta(object):
         :type: int
         """
         if self._configuration.client_side_validation and total is None:
-            raise ValueError("Invalid value for `total`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `total`, must not be `None`"
+            )  # noqa: E501
 
         self._total = total
 
@@ -107,7 +116,9 @@ class JobStatusMeta(object):
         :type: int
         """
         if self._configuration.client_side_validation and processed is None:
-            raise ValueError("Invalid value for `processed`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `processed`, must not be `None`"
+            )  # noqa: E501
 
         self._processed = processed
 
@@ -162,18 +173,20 @@ class JobStatusMeta(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(JobStatusMeta, dict):

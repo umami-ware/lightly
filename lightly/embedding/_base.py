@@ -14,17 +14,10 @@ from lightly.embedding._callback import CustomModelCheckpoint
 
 
 class BaseEmbedding(lightning.LightningModule):
-    """All trainable embeddings must inherit from BaseEmbedding.
+    """All trainable embeddings must inherit from BaseEmbedding."""
 
-    """
-
-    def __init__(self,
-                 model,
-                 criterion,
-                 optimizer,
-                 dataloader,
-                 scheduler=None):
-        """ Constructor
+    def __init__(self, model, criterion, optimizer, dataloader, scheduler=None):
+        """Constructor
 
         Args:
             model: (torch.nn.Module)
@@ -58,7 +51,7 @@ class BaseEmbedding(lightning.LightningModule):
         # calculate loss
         loss = self.criterion(y0, y1)
         # log loss and return
-        self.log('loss', loss)
+        self.log("loss", loss)
         return loss
 
     def configure_optimizers(self):
@@ -71,7 +64,7 @@ class BaseEmbedding(lightning.LightningModule):
         return self.dataloader
 
     def train_embedding(self, **kwargs):
-        """ Train the model on the provided dataset.
+        """Train the model on the provided dataset.
 
         Args:
             **kwargs: pylightning_trainer arguments, examples include:
@@ -93,16 +86,12 @@ class BaseEmbedding(lightning.LightningModule):
         self.checkpoint = os.path.join(self.cwd, self.checkpoint)
 
     def embed(self, *args, **kwargs):
-        """Must be implemented by classes which inherit from BaseEmbedding.
-
-        """
+        """Must be implemented by classes which inherit from BaseEmbedding."""
         raise NotImplementedError()
 
-    def init_checkpoint_callback(self,
-                                 save_last=False,
-                                 save_top_k=0,
-                                 monitor='loss',
-                                 dirpath=None):
+    def init_checkpoint_callback(
+        self, save_last=False, save_top_k=0, monitor="loss", dirpath=None
+    ):
         """Initializes the checkpoint callback.
 
         Args:
@@ -117,7 +106,7 @@ class BaseEmbedding(lightning.LightningModule):
 
         """
 
-        if pl.__version__[:3] in ['1.0', '1.1', '1.2']:
+        if pl.__version__[:3] in ["1.0", "1.1", "1.2"]:
             # initialize custom model checkpoint
             self.checkpoint_callback = CustomModelCheckpoint()
             self.checkpoint_callback.save_last = save_last
@@ -129,8 +118,9 @@ class BaseEmbedding(lightning.LightningModule):
         else:
             self.checkpoint_callback = ModelCheckpoint(
                 dirpath=self.cwd if dirpath is None else dirpath,
-                filename='lightly_epoch_{epoch:d}',
+                filename="lightly_epoch_{epoch:d}",
                 save_last=save_last,
                 save_top_k=save_top_k,
                 monitor=monitor,
-                auto_insert_metric_name=False)
+                auto_insert_metric_name=False,
+            )

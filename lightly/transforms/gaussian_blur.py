@@ -10,7 +10,7 @@ from PIL import ImageFilter
 class GaussianBlur(object):
     """Implementation of random Gaussian blur.
 
-    Utilizes the built-in ImageFilter method from PIL to apply a Gaussian 
+    Utilizes the built-in ImageFilter method from PIL to apply a Gaussian
     blur to the input image with a certain probability. The blur is further
     randomized as the kernel size is chosen randomly around a mean specified
     by the user.
@@ -26,8 +26,7 @@ class GaussianBlur(object):
 
     """
 
-    def __init__(self, kernel_size: float, prob: float = 0.5,
-                 scale: float = 0.2):
+    def __init__(self, kernel_size: float, prob: float = 0.5, scale: float = 0.2):
         self.prob = prob
         self.scale = scale
         # limits for random kernel sizes
@@ -41,7 +40,7 @@ class GaussianBlur(object):
         Args:
             sample:
                 PIL image to which blur will be applied.
-        
+
         Returns:
             Blurred image or original image.
 
@@ -55,7 +54,7 @@ class GaussianBlur(object):
             kernel_size = max(self.min_size, kernel_size)
             kernel_size = min(self.max_size, kernel_size)
             radius = int(kernel_size / 2)
-            # return blurred image
+            # return blurred image
             return sample.filter(ImageFilter.GaussianBlur(radius=radius))
         # return original image
         return sample

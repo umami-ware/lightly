@@ -34,9 +34,9 @@ from lightly.cli._helpers import cpu_count
 
 def _embed_cli(cfg, is_cli_call=True):
 
-    checkpoint = cfg['checkpoint']
+    checkpoint = cfg["checkpoint"]
 
-    input_dir = cfg['input_dir']
+    input_dir = cfg["input_dir"]
     if input_dir and is_cli_call:
         input_dir = fix_input_path(input_dir)
 
@@ -44,66 +44,62 @@ def _embed_cli(cfg, is_cli_call=True):
     torch.backends.cudnn.benchmark = False
 
     if torch.cuda.is_available():
-        device = torch.device('cuda')
+        device = torch.device("cuda")
     else:
-        device = torch.device('cpu')
+        device = torch.device("cpu")
 
-    transform = torchvision.transforms.Compose([
-        torchvision.transforms.Resize((cfg['collate']['input_size'],
-                                       cfg['collate']['input_size'])),
-        torchvision.transforms.ToTensor(),
-        torchvision.transforms.Normalize(
-            mean=[0.485, 0.456, 0.406],
-            std=[0.229, 0.224, 0.225])
-    ])
+    transform = torchvision.transforms.Compose(
+        [
+            torchvision.transforms.Resize(
+                (cfg["collate"]["input_size"], cfg["collate"]["input_size"])
+            ),
+            torchvision.transforms.ToTensor(),
+            torchvision.transforms.Normalize(
+                mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+            ),
+        ]
+    )
 
     dataset = LightlyDataset(input_dir, transform=transform)
 
     # disable drop_last and shuffle
-    cfg['loader']['drop_last'] = False
-    cfg['loader']['shuffle'] = False
-    cfg['loader']['batch_size'] = min(
-        cfg['loader']['batch_size'],
-        len(dataset)
-    )
+    cfg["loader"]["drop_last"] = False
+    cfg["loader"]["shuffle"] = False
+    cfg["loader"]["batch_size"] = min(cfg["loader"]["batch_size"], len(dataset))
 
     # determine the number of available cores
-    if cfg['loader']['num_workers'] < 0:
-        cfg['loader']['num_workers'] = cpu_count()
+    if cfg["loader"]["num_workers"] < 0:
+        cfg["loader"]["num_workers"] = cpu_count()
 
-    dataloader = torch.utils.data.DataLoader(dataset, **cfg['loader'])
+    dataloader = torch.utils.data.DataLoader(dataset, **cfg["loader"])
 
-    # load the PyTorch state dictionary and map it to the current device    
+    # load the PyTorch state dictionary and map it to the current device
     state_dict = None
     if not checkpoint:
-        checkpoint, key = get_ptmodel_from_config(cfg['model'])
+        checkpoint, key = get_ptmodel_from_config(cfg["model"])
         if not checkpoint:
-            msg = 'Cannot download checkpoint for key {} '.format(key)
-            msg += 'because it does not exist!'
+            msg = "Cannot download checkpoint for key {} ".format(key)
+            msg += "because it does not exist!"
             raise RuntimeError(msg)
-        state_dict = load_state_dict_from_url(
-            checkpoint, map_location=device
-        )['state_dict']
+        state_dict = load_state_dict_from_url(checkpoint, map_location=device)[
+            "state_dict"
+        ]
     else:
         checkpoint = fix_input_path(checkpoint) if is_cli_call else checkpoint
-        state_dict = torch.load(
-            checkpoint, map_location=device
-        )['state_dict']
+        state_dict = torch.load(checkpoint, map_location=device)["state_dict"]
 
     # load model
-    resnet = ResNetGenerator(cfg['model']['name'], cfg['model']['width'])
+    resnet = ResNetGenerator(cfg["model"]["name"], cfg["model"]["width"])
     last_conv_channels = list(resnet.children())[-1].in_features
     features = nn.Sequential(
         get_norm_layer(3, 0),
         *list(resnet.children())[:-1],
-        nn.Conv2d(last_conv_channels, cfg['model']['num_ftrs'], 1),
+        nn.Conv2d(last_conv_channels, cfg["model"]["num_ftrs"], 1),
         nn.AdaptiveAvgPool2d(1),
     )
 
     model = _SimCLR(
-        features,
-        num_ftrs=cfg['model']['num_ftrs'],
-        out_dim=cfg['model']['out_dim']
+        features, num_ftrs=cfg["model"]["num_ftrs"], out_dim=cfg["model"]["out_dim"]
     ).to(device)
 
     if state_dict is not None:
@@ -113,24 +109,24 @@ def _embed_cli(cfg, is_cli_call=True):
     embeddings, labels, filenames = encoder.embed(dataloader, device=device)
 
     if is_cli_call:
-        path = os.path.join(os.getcwd(), 'embeddings.csv')
+        path = os.path.join(os.getcwd(), "embeddings.csv")
         save_embeddings(path, embeddings, labels, filenames)
-        print(f'Embeddings are stored at {bcolors.OKBLUE}{path}{bcolors.ENDC}')
+        print(f"Embeddings are stored at {bcolors.OKBLUE}{path}{bcolors.ENDC}")
         return path
 
     return embeddings, labels, filenames
 
 
-@hydra.main(config_path='config', config_name='config')
+@hydra.main(config_path="config", config_name="config")
 def embed_cli(cfg):
     """Embed images from the command-line.
 
     Args:
         cfg:
             The default configs are loaded from the config file.
-            To overwrite them please see the section on the config file 
+            To overwrite them please see the section on the config file
             (.config.config.yaml).
-    
+
     Command-Line Args:
         input_dir:
             Path to the input directory where images are stored.

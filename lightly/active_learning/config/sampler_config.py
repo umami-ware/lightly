@@ -1,6 +1,8 @@
 from datetime import datetime
 
-from lightly.openapi_generated.swagger_client.models.sampling_method import SamplingMethod
+from lightly.openapi_generated.swagger_client.models.sampling_method import (
+    SamplingMethod,
+)
 
 
 class SamplerConfig:
@@ -32,8 +34,14 @@ class SamplerConfig:
         >>> config = SamplerConfig(method=SamplingMethod.CORESET, n_samples=-1, min_distance=0.1)
 
     """
-    def __init__(self, method: SamplingMethod = SamplingMethod.CORESET, n_samples: int = 32, min_distance: float = -1,
-                 name: str = None):
+
+    def __init__(
+        self,
+        method: SamplingMethod = SamplingMethod.CORESET,
+        n_samples: int = 32,
+        min_distance: float = -1,
+        name: str = None,
+    ):
 
         self.method = method
         self.n_samples = n_samples
@@ -42,4 +50,3 @@ class SamplerConfig:
             date_time = datetime.now().strftime("%m_%d_%Y__%H_%M_%S")
             name = f"{self.method}_{self.n_samples}_{self.min_distance}_{date_time}"
         self.name = name
-

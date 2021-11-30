@@ -80,8 +80,6 @@ for epoch in range(10):
         optimizer.step()
         optimizer.zero_grad()
         update_momentum(model.backbone, model.backbone_momentum, m=0.99)
-        update_momentum(
-            model.projection_head, model.projection_head_momentum, m=0.99
-        )
+        update_momentum(model.projection_head, model.projection_head_momentum, m=0.99)
     avg_loss = total_loss / len(dataloader)
     print(f"epoch: {epoch:>02}, loss: {avg_loss:.5f}")

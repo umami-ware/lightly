@@ -33,34 +33,48 @@ class TagData(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'MongoObjectID',
-        'dataset_id': 'MongoObjectID',
-        'prev_tag_id': 'str',
-        'query_tag_id': 'MongoObjectID',
-        'preselected_tag_id': 'MongoObjectID',
-        'name': 'TagName',
-        'bit_mask_data': 'TagBitMaskData',
-        'tot_size': 'int',
-        'created_at': 'Timestamp',
-        'last_modified_at': 'Timestamp',
-        'changes': 'TagChangeData'
+        "id": "MongoObjectID",
+        "dataset_id": "MongoObjectID",
+        "prev_tag_id": "str",
+        "query_tag_id": "MongoObjectID",
+        "preselected_tag_id": "MongoObjectID",
+        "name": "TagName",
+        "bit_mask_data": "TagBitMaskData",
+        "tot_size": "int",
+        "created_at": "Timestamp",
+        "last_modified_at": "Timestamp",
+        "changes": "TagChangeData",
     }
 
     attribute_map = {
-        'id': 'id',
-        'dataset_id': 'datasetId',
-        'prev_tag_id': 'prevTagId',
-        'query_tag_id': 'queryTagId',
-        'preselected_tag_id': 'preselectedTagId',
-        'name': 'name',
-        'bit_mask_data': 'bitMaskData',
-        'tot_size': 'totSize',
-        'created_at': 'createdAt',
-        'last_modified_at': 'lastModifiedAt',
-        'changes': 'changes'
+        "id": "id",
+        "dataset_id": "datasetId",
+        "prev_tag_id": "prevTagId",
+        "query_tag_id": "queryTagId",
+        "preselected_tag_id": "preselectedTagId",
+        "name": "name",
+        "bit_mask_data": "bitMaskData",
+        "tot_size": "totSize",
+        "created_at": "createdAt",
+        "last_modified_at": "lastModifiedAt",
+        "changes": "changes",
     }
 
-    def __init__(self, id=None, dataset_id=None, prev_tag_id=None, query_tag_id=None, preselected_tag_id=None, name=None, bit_mask_data=None, tot_size=None, created_at=None, last_modified_at=None, changes=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        id=None,
+        dataset_id=None,
+        prev_tag_id=None,
+        query_tag_id=None,
+        preselected_tag_id=None,
+        name=None,
+        bit_mask_data=None,
+        tot_size=None,
+        created_at=None,
+        last_modified_at=None,
+        changes=None,
+        _configuration=None,
+    ):  # noqa: E501
         """TagData - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -137,7 +151,9 @@ class TagData(object):
         :type: MongoObjectID
         """
         if self._configuration.client_side_validation and dataset_id is None:
-            raise ValueError("Invalid value for `dataset_id`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `dataset_id`, must not be `None`"
+            )  # noqa: E501
 
         self._dataset_id = dataset_id
 
@@ -225,7 +241,9 @@ class TagData(object):
         :type: TagName
         """
         if self._configuration.client_side_validation and name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -248,7 +266,9 @@ class TagData(object):
         :type: TagBitMaskData
         """
         if self._configuration.client_side_validation and bit_mask_data is None:
-            raise ValueError("Invalid value for `bit_mask_data`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `bit_mask_data`, must not be `None`"
+            )  # noqa: E501
 
         self._bit_mask_data = bit_mask_data
 
@@ -271,7 +291,9 @@ class TagData(object):
         :type: int
         """
         if self._configuration.client_side_validation and tot_size is None:
-            raise ValueError("Invalid value for `tot_size`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `tot_size`, must not be `None`"
+            )  # noqa: E501
 
         self._tot_size = tot_size
 
@@ -294,7 +316,9 @@ class TagData(object):
         :type: Timestamp
         """
         if self._configuration.client_side_validation and created_at is None:
-            raise ValueError("Invalid value for `created_at`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `created_at`, must not be `None`"
+            )  # noqa: E501
 
         self._created_at = created_at
 
@@ -347,18 +371,20 @@ class TagData(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(TagData, dict):

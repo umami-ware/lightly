@@ -58,7 +58,7 @@ from lightly.models.utils import batch_unshuffle
 # %%
 # Configuration
 # -------------
-# 
+#
 # We set some configuration parameters for our experiment.
 # Feel free to change them and analyze the effect.
 #
@@ -78,7 +78,7 @@ max_epochs = 100
 # We assume we have a train folder with subfolders
 # for each class and .png images inside.
 #
-# You can download `CIFAR-10 in folders from Kaggle 
+# You can download `CIFAR-10 in folders from Kaggle
 # <https://www.kaggle.com/swaroopkml/cifar10-pngs-in-folders>`_.
 
 # The dataset structure should be like this:
@@ -95,8 +95,8 @@ max_epochs = 100
 #  L horse/
 #  L ship/
 #  L truck/
-path_to_train = '/datasets/cifar10/train/'
-path_to_test = '/datasets/cifar10/test/'
+path_to_train = "/datasets/cifar10/train/"
+path_to_test = "/datasets/cifar10/test/"
 
 # %%
 # Let's set the seed to ensure reproducibility of the experiments
@@ -111,9 +111,9 @@ pl.seed_everything(seed)
 # from the MOCO paper using the collate functions provided by lightly. For MoCo v2,
 # we can use the same augmentations as SimCLR but override the input size and blur.
 # Images from the CIFAR-10 dataset have a resolution of 32x32 pixels. Let's use
-# this resolution to train our model. 
+# this resolution to train our model.
 #
-# .. note::  We could use a higher input resolution to train our model. However, 
+# .. note::  We could use a higher input resolution to train our model. However,
 #   since the original resolution of CIFAR-10 images is low there is no real value
 #   in increasing the resolution. A higher resolution results in higher memory
 #   consumption and to compensate for that we would need to reduce the batch size.
@@ -121,7 +121,7 @@ pl.seed_everything(seed)
 # MoCo v2 uses SimCLR augmentations, additionally, disable blur
 collate_fn = lightly.data.SimCLRCollateFunction(
     input_size=32,
-    gaussian_blur=0.,
+    gaussian_blur=0.0,
 )
 
 # %%
@@ -131,48 +131,48 @@ collate_fn = lightly.data.SimCLRCollateFunction(
 # the same way as we do with the training data.
 
 # Augmentations typically used to train on cifar-10
-train_classifier_transforms = torchvision.transforms.Compose([
-    torchvision.transforms.RandomCrop(32, padding=4),
-    torchvision.transforms.RandomHorizontalFlip(),
-    torchvision.transforms.ToTensor(),
-    torchvision.transforms.Normalize(
-        mean=lightly.data.collate.imagenet_normalize['mean'],
-        std=lightly.data.collate.imagenet_normalize['std'],
-    )
-])
-
-# No additional augmentations for the test set
-test_transforms = torchvision.transforms.Compose([
-    torchvision.transforms.Resize((32, 32)),
-    torchvision.transforms.ToTensor(),
-    torchvision.transforms.Normalize(
-        mean=lightly.data.collate.imagenet_normalize['mean'],
-        std=lightly.data.collate.imagenet_normalize['std'],
-    )
-])
-
-# We use the moco augmentations for training moco
-dataset_train_moco = lightly.data.LightlyDataset(
-    input_dir=path_to_train
+train_classifier_transforms = torchvision.transforms.Compose(
+    [
+        torchvision.transforms.RandomCrop(32, padding=4),
+        torchvision.transforms.RandomHorizontalFlip(),
+        torchvision.transforms.ToTensor(),
+        torchvision.transforms.Normalize(
+            mean=lightly.data.collate.imagenet_normalize["mean"],
+            std=lightly.data.collate.imagenet_normalize["std"],
+        ),
+    ]
 )
 
+# No additional augmentations for the test set
+test_transforms = torchvision.transforms.Compose(
+    [
+        torchvision.transforms.Resize((32, 32)),
+        torchvision.transforms.ToTensor(),
+        torchvision.transforms.Normalize(
+            mean=lightly.data.collate.imagenet_normalize["mean"],
+            std=lightly.data.collate.imagenet_normalize["std"],
+        ),
+    ]
+)
+
+# We use the moco augmentations for training moco
+dataset_train_moco = lightly.data.LightlyDataset(input_dir=path_to_train)
+
 # Since we also train a linear classifier on the pre-trained moco model we
-# reuse the test augmentations here (MoCo augmentations are very strong and 
+# reuse the test augmentations here (MoCo augmentations are very strong and
 # usually reduce accuracy of models which are not used for contrastive learning.
 # Our linear layer will be trained using cross entropy loss and labels provided
 # by the dataset. Therefore we chose light augmentations.)
 dataset_train_classifier = lightly.data.LightlyDataset(
-    input_dir=path_to_train,
-    transform=train_classifier_transforms
+    input_dir=path_to_train, transform=train_classifier_transforms
 )
 
 dataset_test = lightly.data.LightlyDataset(
-    input_dir=path_to_test,
-    transform=test_transforms
+    input_dir=path_to_test, transform=test_transforms
 )
 
 # %%
-# Create the dataloaders to load and preprocess the data 
+# Create the dataloaders to load and preprocess the data
 # in the background.
 
 dataloader_train_moco = torch.utils.data.DataLoader(
@@ -181,7 +181,7 @@ dataloader_train_moco = torch.utils.data.DataLoader(
     shuffle=True,
     collate_fn=collate_fn,
     drop_last=True,
-    num_workers=num_workers
+    num_workers=num_workers,
 )
 
 dataloader_train_classifier = torch.utils.data.DataLoader(
@@ -189,7 +189,7 @@ dataloader_train_classifier = torch.utils.data.DataLoader(
     batch_size=batch_size,
     shuffle=True,
     drop_last=True,
-    num_workers=num_workers
+    num_workers=num_workers,
 )
 
 dataloader_test = torch.utils.data.DataLoader(
@@ -197,7 +197,7 @@ dataloader_test = torch.utils.data.DataLoader(
     batch_size=batch_size,
     shuffle=False,
     drop_last=False,
-    num_workers=num_workers
+    num_workers=num_workers,
 )
 
 # %%
@@ -218,9 +218,9 @@ dataloader_test = torch.utils.data.DataLoader(
 class MocoModel(pl.LightningModule):
     def __init__(self):
         super().__init__()
-        
+
         # create a ResNet backbone and remove the classification head
-        resnet = lightly.models.ResNetGenerator('resnet-18', 1, num_splits=8)
+        resnet = lightly.models.ResNetGenerator("resnet-18", 1, num_splits=8)
         self.backbone = nn.Sequential(
             *list(resnet.children())[:-1],
             nn.AdaptiveAvgPool2d(1),
@@ -235,17 +235,15 @@ class MocoModel(pl.LightningModule):
 
         # create our loss with the optional memory bank
         self.criterion = lightly.loss.NTXentLoss(
-            temperature=0.1,
-            memory_bank_size=memory_bank_size)
+            temperature=0.1, memory_bank_size=memory_bank_size
+        )
 
     def training_step(self, batch, batch_idx):
         (x_q, x_k), _, _ = batch
 
         # update momentum
         update_momentum(self.backbone, self.backbone_momentum, 0.99)
-        update_momentum(
-            self.projection_head, self.projection_head_momentum, 0.99
-        )
+        update_momentum(self.projection_head, self.projection_head_momentum, 0.99)
 
         # get queries
         q = self.backbone(x_q).flatten(start_dim=1)
@@ -268,8 +266,7 @@ class MocoModel(pl.LightningModule):
     # which is useful for debugging.
     def custom_histogram_weights(self):
         for name, params in self.named_parameters():
-            self.logger.experiment.add_histogram(
-                name, params, self.current_epoch)
+            self.logger.experiment.add_histogram(name, params, self.current_epoch)
 
     def configure_optimizers(self):
         optim = torch.optim.SGD(
@@ -278,9 +275,7 @@ class MocoModel(pl.LightningModule):
             momentum=0.9,
             weight_decay=5e-4,
         )
-        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-            optim, max_epochs
-        )
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optim, max_epochs)
         return [optim], [scheduler]
 
 
@@ -289,6 +284,7 @@ class MocoModel(pl.LightningModule):
 # ---------------------------
 # We create a linear classifier using the features we extract using MoCo
 # and train it on the dataset
+
 
 class Classifier(pl.LightningModule):
     def __init__(self, backbone):
@@ -323,9 +319,7 @@ class Classifier(pl.LightningModule):
     # which is useful for debugging.
     def custom_histogram_weights(self):
         for name, params in self.named_parameters():
-            self.logger.experiment.add_histogram(
-                name, params, self.current_epoch
-            )
+            self.logger.experiment.add_histogram(name, params, self.current_epoch)
 
     def validation_step(self, batch, batch_idx):
         x, y, _ = batch
@@ -350,7 +344,7 @@ class Classifier(pl.LightningModule):
             self.log("val_acc", acc, on_epoch=True, prog_bar=True)
 
     def configure_optimizers(self):
-        optim = torch.optim.SGD(self.fc.parameters(), lr=30.)
+        optim = torch.optim.SGD(self.fc.parameters(), lr=30.0)
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optim, max_epochs)
         return [optim], [scheduler]
 
@@ -366,36 +360,27 @@ class Classifier(pl.LightningModule):
 gpus = 1 if torch.cuda.is_available() else 0
 
 model = MocoModel()
-trainer = pl.Trainer(max_epochs=max_epochs, gpus=gpus,
-                     progress_bar_refresh_rate=100)
-trainer.fit(
-    model,
-    dataloader_train_moco
-)
+trainer = pl.Trainer(max_epochs=max_epochs, gpus=gpus, progress_bar_refresh_rate=100)
+trainer.fit(model, dataloader_train_moco)
 
 # %%
 # Train the Classifier
 model.eval()
 classifier = Classifier(model.backbone)
-trainer = pl.Trainer(max_epochs=max_epochs, gpus=gpus,
-                     progress_bar_refresh_rate=100)
-trainer.fit(
-    classifier,
-    dataloader_train_classifier,
-    dataloader_test
-)
+trainer = pl.Trainer(max_epochs=max_epochs, gpus=gpus, progress_bar_refresh_rate=100)
+trainer.fit(classifier, dataloader_train_classifier, dataloader_test)
 
 # %%
 # Checkout the tensorboard logs while the model is training.
 #
 # Run `tensorboard --logdir lightning_logs/` to start tensorboard
-# 
+#
 # .. note:: If you run the code on a remote machine you can't just
 #   access the tensorboard logs. You need to forward the port.
 #   You can do this by using an editor such as Visual Studio Code
 #   which has a port forwarding functionality (make sure
 #   the remote extensions are installed and are connected with your machine).
-#   
+#
 #   Or you can use a shell command similar to this one to forward port
 #   6006 from your remote machine to your local machine:
 #
@@ -411,4 +396,4 @@ trainer.fit(
 # - :ref:`lightly-simclr-tutorial-3`
 # - :ref:`lightly-simsiam-tutorial-4`
 # - :ref:`lightly-custom-augmentation-5`
-# - :ref:`lightly-detectron-tutorial-6`
+# - :ref:`lightly-detectron-tutorial-6`

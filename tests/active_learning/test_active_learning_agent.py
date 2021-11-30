@@ -13,12 +13,23 @@ class TestActiveLearningAgent(MockedApiWorkflowSetup):
         self.api_workflow_client.embedding_id = "embedding_id_xyz"
 
         agent_0 = ActiveLearningAgent(self.api_workflow_client)
-        agent_1 = ActiveLearningAgent(self.api_workflow_client, query_tag_name="query_tag_name_xyz")
-        agent_2 = ActiveLearningAgent(self.api_workflow_client, query_tag_name="query_tag_name_xyz",
-                                      preselected_tag_name="preselected_tag_name_xyz")
-        agent_3 = ActiveLearningAgent(self.api_workflow_client, preselected_tag_name="preselected_tag_name_xyz")
+        agent_1 = ActiveLearningAgent(
+            self.api_workflow_client, query_tag_name="query_tag_name_xyz"
+        )
+        agent_2 = ActiveLearningAgent(
+            self.api_workflow_client,
+            query_tag_name="query_tag_name_xyz",
+            preselected_tag_name="preselected_tag_name_xyz",
+        )
+        agent_3 = ActiveLearningAgent(
+            self.api_workflow_client, preselected_tag_name="preselected_tag_name_xyz"
+        )
 
-        for method in [SamplingMethod.CORAL, SamplingMethod.CORESET, SamplingMethod.RANDOM]:
+        for method in [
+            SamplingMethod.CORAL,
+            SamplingMethod.CORESET,
+            SamplingMethod.RANDOM,
+        ]:
             for agent in [agent_0, agent_1, agent_2, agent_3]:
                 for batch_size in [2, 6]:
                     n_old_labeled = len(agent.labeled_set)
@@ -26,36 +37,52 @@ class TestActiveLearningAgent(MockedApiWorkflowSetup):
 
                     n_samples = len(agent.labeled_set) + batch_size
                     if method == SamplingMethod.CORAL and len(agent.labeled_set) == 0:
-                        sampler_config = SamplerConfig(n_samples=n_samples, method=SamplingMethod.CORESET)
+                        sampler_config = SamplerConfig(
+                            n_samples=n_samples, method=SamplingMethod.CORESET
+                        )
                     else:
-                        sampler_config = SamplerConfig(n_samples=n_samples, method=method)
+                        sampler_config = SamplerConfig(
+                            n_samples=n_samples, method=method
+                        )
 
                     if sampler_config.method == SamplingMethod.CORAL:
-                        predictions = np.random.rand(len(agent.query_set), 10).astype(np.float32)
-                        predictions_normalized = predictions / np.sum(predictions, axis=1)[:, np.newaxis]
+                        predictions = np.random.rand(len(agent.query_set), 10).astype(
+                            np.float32
+                        )
+                        predictions_normalized = (
+                            predictions / np.sum(predictions, axis=1)[:, np.newaxis]
+                        )
                         al_scorer = ScorerClassification(predictions_normalized)
                         agent.query(sampler_config=sampler_config, al_scorer=al_scorer)
                     else:
                         sampler_config = SamplerConfig(n_samples=n_samples)
                         agent.query(sampler_config=sampler_config)
-                    
+
                     labeled_set, added_set = agent.labeled_set, agent.added_set
 
                     self.assertEqual(n_old_labeled + len(added_set), len(labeled_set))
                     self.assertTrue(set(added_set).issubset(labeled_set))
-                    self.assertEqual(len(list(set(agent.labeled_set) & set(agent.unlabeled_set))), 0)
-                    self.assertEqual(n_old_unlabeled - len(added_set), len(agent.unlabeled_set))
+                    self.assertEqual(
+                        len(list(set(agent.labeled_set) & set(agent.unlabeled_set))), 0
+                    )
+                    self.assertEqual(
+                        n_old_unlabeled - len(added_set), len(agent.unlabeled_set)
+                    )
 
     def test_agent_wrong_number_of_scores(self):
         self.api_workflow_client.embedding_id = "embedding_id_xyz"
 
-        agent = ActiveLearningAgent(self.api_workflow_client, preselected_tag_name="preselected_tag_name_xyz")
+        agent = ActiveLearningAgent(
+            self.api_workflow_client, preselected_tag_name="preselected_tag_name_xyz"
+        )
         method = SamplingMethod.CORAL
         n_samples = len(agent.labeled_set) + 2
 
         n_predictions = len(agent.query_set) - 3  # the -3 should cause an error
         predictions = np.random.rand(n_predictions, 10).astype(np.float32)
-        predictions_normalized = predictions / np.sum(predictions, axis=1)[:, np.newaxis]
+        predictions_normalized = (
+            predictions / np.sum(predictions, axis=1)[:, np.newaxis]
+        )
         al_scorer = ScorerClassification(predictions_normalized)
 
         sampler_config = SamplerConfig(n_samples=n_samples, method=method)
@@ -68,14 +95,22 @@ class TestActiveLearningAgent(MockedApiWorkflowSetup):
         height = 32
         no_classes = 13
 
-        agent = ActiveLearningAgent(self.api_workflow_client, preselected_tag_name="preselected_tag_name_xyz")
+        agent = ActiveLearningAgent(
+            self.api_workflow_client, preselected_tag_name="preselected_tag_name_xyz"
+        )
         method = SamplingMethod.CORAL
         n_samples = len(agent.labeled_set) + 2
 
         n_predictions = len(agent.query_set)
-        predictions = np.random.rand(n_predictions, no_classes, width, height).astype(np.float32)
-        predictions_normalized = predictions / np.sum(predictions, axis=1)[:, np.newaxis]
-        predictions_generator = (predictions_normalized[i] for i in range(n_predictions))
+        predictions = np.random.rand(n_predictions, no_classes, width, height).astype(
+            np.float32
+        )
+        predictions_normalized = (
+            predictions / np.sum(predictions, axis=1)[:, np.newaxis]
+        )
+        predictions_generator = (
+            predictions_normalized[i] for i in range(n_predictions)
+        )
         al_scorer = ScorerSemanticSegmentation(predictions_generator)
 
         sampler_config = SamplerConfig(n_samples=n_samples, method=method)
@@ -85,8 +120,7 @@ class TestActiveLearningAgent(MockedApiWorkflowSetup):
 
         self.api_workflow_client.embedding_id = "embedding_id_xyz"
         agent = ActiveLearningAgent(
-            self.api_workflow_client,
-            preselected_tag_name="preselected_tag_name_xyz"
+            self.api_workflow_client, preselected_tag_name="preselected_tag_name_xyz"
         )
 
         agent.query_set
@@ -104,10 +138,7 @@ class TestActiveLearningAgent(MockedApiWorkflowSetup):
         )
 
         # sample 0 samples
-        sampler_config = SamplerConfig(
-            n_samples=0,
-            method=SamplingMethod.RANDOM
-        )
+        sampler_config = SamplerConfig(n_samples=0, method=SamplingMethod.RANDOM)
 
         agent.query(sampler_config)
 
@@ -120,9 +151,9 @@ class TestActiveLearningAgent(MockedApiWorkflowSetup):
 
         n_predictions = len(agent.query_set)
         predictions = np.random.rand(n_predictions, 10).astype(np.float32)
-        predictions_normalized = predictions / np.sum(predictions, axis=1)[:, np.newaxis]
+        predictions_normalized = (
+            predictions / np.sum(predictions, axis=1)[:, np.newaxis]
+        )
         al_scorer = ScorerClassification(predictions_normalized)
 
         agent.upload_scores(al_scorer)
-
-

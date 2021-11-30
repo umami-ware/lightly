@@ -23,66 +23,66 @@ from lightly.data import LightlyDataset
 
 
 def _upload_cli(cfg, is_cli_call=True):
-    input_dir = cfg['input_dir']
+    input_dir = cfg["input_dir"]
     if input_dir and is_cli_call:
         input_dir = fix_input_path(input_dir)
 
-    path_to_embeddings = cfg['embeddings']
+    path_to_embeddings = cfg["embeddings"]
     if path_to_embeddings and is_cli_call:
         path_to_embeddings = fix_input_path(path_to_embeddings)
 
-    dataset_id = cfg['dataset_id']
-    token = cfg['token']
-    new_dataset_name = cfg['new_dataset_name']
+    dataset_id = cfg["dataset_id"]
+    token = cfg["token"]
+    new_dataset_name = cfg["new_dataset_name"]
 
     cli_api_args_wrong = False
     if not token:
-        print_as_warning('Please specify your access token.')
+        print_as_warning("Please specify your access token.")
         cli_api_args_wrong = True
 
     if dataset_id:
         if new_dataset_name:
             print_as_warning(
-                'Please specify either the dataset_id of an existing dataset '
-                'or a new_dataset_name, but not both.'
+                "Please specify either the dataset_id of an existing dataset "
+                "or a new_dataset_name, but not both."
             )
             cli_api_args_wrong = True
         else:
-            api_workflow_client = \
-                ApiWorkflowClient(token=token, dataset_id=dataset_id)
+            api_workflow_client = ApiWorkflowClient(token=token, dataset_id=dataset_id)
     else:
         if new_dataset_name:
             api_workflow_client = ApiWorkflowClient(token=token)
             api_workflow_client.create_dataset(dataset_name=new_dataset_name)
         else:
             print_as_warning(
-                'Please specify either the dataset_id of an existing dataset '
-                'or a new_dataset_name.')
+                "Please specify either the dataset_id of an existing dataset "
+                "or a new_dataset_name."
+            )
             cli_api_args_wrong = True
     # delete the dataset_id as it might be an empty string
     # Use api_workflow_client.dataset_id instead
     del dataset_id
 
     if cli_api_args_wrong:
-        print_as_warning('For help, try: lightly-upload --help')
+        print_as_warning("For help, try: lightly-upload --help")
         return
 
     # potentially load custom metadata
     custom_metadata = None
-    if cfg['custom_metadata']:
-        path_to_custom_metadata = fix_input_path(cfg['custom_metadata'])
+    if cfg["custom_metadata"]:
+        path_to_custom_metadata = fix_input_path(cfg["custom_metadata"])
         print(
-            'Loading custom metadata from '
-            f'{bcolors.OKBLUE}{path_to_custom_metadata}{bcolors.ENDC}'
+            "Loading custom metadata from "
+            f"{bcolors.OKBLUE}{path_to_custom_metadata}{bcolors.ENDC}"
         )
-        with open(path_to_custom_metadata, 'r') as f:
+        with open(path_to_custom_metadata, "r") as f:
             custom_metadata = json.load(f)
 
     # determine the number of available cores
-    if cfg['loader']['num_workers'] < 0:
-        cfg['loader']['num_workers'] = cpu_count()
+    if cfg["loader"]["num_workers"] < 0:
+        cfg["loader"]["num_workers"] = cpu_count()
 
-    size = cfg['resize']
+    size = cfg["resize"]
     if not isinstance(size, int):
         size = tuple(size)
     transform = None
@@ -90,33 +90,31 @@ def _upload_cli(cfg, is_cli_call=True):
         transform = torchvision.transforms.Resize(size)
 
     if input_dir:
-        mode = cfg['upload']
+        mode = cfg["upload"]
         dataset = LightlyDataset(input_dir=input_dir, transform=transform)
         api_workflow_client.upload_dataset(
             input=dataset,
             mode=mode,
-            max_workers=cfg['loader']['num_workers'],
+            max_workers=cfg["loader"]["num_workers"],
             custom_metadata=custom_metadata,
         )
-        print('Finished the upload of the dataset.')
+        print("Finished the upload of the dataset.")
 
     if path_to_embeddings:
-        name = cfg['embedding_name']
-        print('Starting upload of embeddings.')
+        name = cfg["embedding_name"]
+        print("Starting upload of embeddings.")
         try:
-            embeddings = api_workflow_client.embeddings_api \
-                .get_embeddings_by_dataset_id(dataset_id=api_workflow_client.dataset_id)
-            # use latest embedding first
-            embeddings = sorted(
-                embeddings,
-                key=lambda x: x.created_at,
-                reverse=True
+            embeddings = (
+                api_workflow_client.embeddings_api.get_embeddings_by_dataset_id(
+                    dataset_id=api_workflow_client.dataset_id
+                )
             )
+            # use latest embedding first
+            embeddings = sorted(embeddings, key=lambda x: x.created_at, reverse=True)
             # find the latest embedding that starts with the name
             # e.g. default_20211018_12h00m00s
             embedding = next(
-                embedding for embedding in embeddings
-                if embedding.name.startswith(name)
+                embedding for embedding in embeddings if embedding.name.startswith(name)
             )
         except StopIteration:
             embedding = None
@@ -124,32 +122,31 @@ def _upload_cli(cfg, is_cli_call=True):
         if embedding is not None:
 
             # -> append rows from server
-            print('Appending embeddings from server.')
+            print("Appending embeddings from server.")
             api_workflow_client.append_embeddings(
                 path_to_embeddings,
                 embedding.id,
             )
-            now = datetime.now().strftime('%Y%m%d_%Hh%Mm%Ss')
-            name = f'{name}_{now}'
+            now = datetime.now().strftime("%Y%m%d_%Hh%Mm%Ss")
+            name = f"{name}_{now}"
 
         api_workflow_client.upload_embeddings(
             path_to_embeddings_csv=path_to_embeddings, name=name
         )
-        print('Finished upload of embeddings.')
+        print("Finished upload of embeddings.")
 
     if custom_metadata is not None and not input_dir:
         # upload custom metadata separately
-        api_workflow_client.upload_custom_metadata(
-            custom_metadata,
-            verbose=True
-        )
+        api_workflow_client.upload_custom_metadata(custom_metadata, verbose=True)
 
     if new_dataset_name:
-        print(f'The dataset_id of the newly created dataset is '
-              f'{bcolors.OKBLUE}{api_workflow_client.dataset_id}{bcolors.ENDC}')
+        print(
+            f"The dataset_id of the newly created dataset is "
+            f"{bcolors.OKBLUE}{api_workflow_client.dataset_id}{bcolors.ENDC}"
+        )
 
 
-@hydra.main(config_path='config', config_name='config')
+@hydra.main(config_path="config", config_name="config")
 def upload_cli(cfg):
     """Upload images/embeddings from the command-line to the Lightly platform.
 

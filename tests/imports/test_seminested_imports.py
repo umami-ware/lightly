@@ -5,9 +5,9 @@ import lightly
 
 
 class TestSemiNestedImports(unittest.TestCase):
-
     def test_seminested_imports(self):
         from lightly import active_learning
+
         # active learning (commented out don't work)
         active_learning.agents.ActiveLearningAgent
         active_learning.config.SamplerConfig
@@ -16,11 +16,13 @@ class TestSemiNestedImports(unittest.TestCase):
 
         # api imports
         from lightly import api
+
         api.api_workflow_client.ApiWorkflowClient
         api.bitmask.BitMask
 
         # data imports
         from lightly import data
+
         data.LightlyDataset
         data.dataset.LightlyDataset
         data.BaseCollateFunction
@@ -36,6 +38,7 @@ class TestSemiNestedImports(unittest.TestCase):
 
         # embedding imports
         from lightly import embedding
+
         embedding.BaseEmbedding
         embedding._base.BaseEmbedding
         embedding.SelfSupervisedEmbedding
@@ -43,6 +46,7 @@ class TestSemiNestedImports(unittest.TestCase):
 
         # loss imports
         from lightly import loss
+
         loss.NTXentLoss
         loss.ntx_ent_loss.NTXentLoss
         loss.SymNegCosineSimilarityLoss
@@ -50,11 +54,13 @@ class TestSemiNestedImports(unittest.TestCase):
         loss.memory_bank.MemoryBankModule
 
         from lightly.loss import regularizer
+
         regularizer.CO2Regularizer
         regularizer.co2.CO2Regularizer
 
         # models imports
         from lightly import models
+
         models.ResNetGenerator
         models.resnet.ResNetGenerator
         models.SimCLR
@@ -71,6 +77,7 @@ class TestSemiNestedImports(unittest.TestCase):
 
         # transforms imports
         from lightly import transforms
+
         transforms.GaussianBlur
         transforms.gaussian_blur.GaussianBlur
         transforms.RandomRotate
@@ -78,6 +85,7 @@ class TestSemiNestedImports(unittest.TestCase):
 
         # utils imports
         from lightly import utils
+
         utils.save_embeddings
         utils.io.save_embeddings
         utils.load_embeddings

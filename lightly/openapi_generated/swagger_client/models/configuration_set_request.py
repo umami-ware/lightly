@@ -32,15 +32,9 @@ class ConfigurationSetRequest(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
-        'name': 'str',
-        'configs': 'list[ConfigurationEntry]'
-    }
+    swagger_types = {"name": "str", "configs": "list[ConfigurationEntry]"}
 
-    attribute_map = {
-        'name': 'name',
-        'configs': 'configs'
-    }
+    attribute_map = {"name": "name", "configs": "configs"}
 
     def __init__(self, name=None, configs=None, _configuration=None):  # noqa: E501
         """ConfigurationSetRequest - a model defined in Swagger"""  # noqa: E501
@@ -74,7 +68,9 @@ class ConfigurationSetRequest(object):
         :type: str
         """
         if self._configuration.client_side_validation and name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -97,7 +93,9 @@ class ConfigurationSetRequest(object):
         :type: list[ConfigurationEntry]
         """
         if self._configuration.client_side_validation and configs is None:
-            raise ValueError("Invalid value for `configs`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `configs`, must not be `None`"
+            )  # noqa: E501
 
         self._configs = configs
 
@@ -108,18 +106,20 @@ class ConfigurationSetRequest(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(ConfigurationSetRequest, dict):

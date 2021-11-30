@@ -5,7 +5,6 @@ import lightly
 
 
 class TestFromImports(unittest.TestCase):
-
     def test_from_imports(self):
         # active learning (commented out don't work)
         from lightly.active_learning.config.sampler_config import SamplerConfig
@@ -18,9 +17,9 @@ class TestFromImports(unittest.TestCase):
 
         # data imports
         from lightly.data import LightlyDataset
-        from lightly.data.dataset  import LightlyDataset
-        from lightly.data  import BaseCollateFunction
-        from lightly.data.collate  import BaseCollateFunction
+        from lightly.data.dataset import LightlyDataset
+        from lightly.data import BaseCollateFunction
+        from lightly.data.collate import BaseCollateFunction
         from lightly.data import ImageCollateFunction
         from lightly.data.collate import ImageCollateFunction
         from lightly.data import MoCoCollateFunction

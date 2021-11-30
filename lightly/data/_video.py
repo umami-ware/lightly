@@ -15,25 +15,26 @@ from torchvision import io
 
 try:
     import av
+
     AV_AVAILABLE = True
 except ImportError:
     AV_AVAILABLE = False
 
 if io._HAS_VIDEO_OPT:
-    torchvision.set_video_backend('video_reader')
+    torchvision.set_video_backend("video_reader")
 
 
-class VideoLoader():
+class VideoLoader:
     """Implementation of VideoLoader.
 
     The VideoLoader is a wrapper around the torchvision video interface. With
     the VideoLoader you can read specific frames or the next frames of a video.
     It automatically switches to the `video_loader` backend if available. Reading
-    sequential frames is significantly faster since it uses the VideoReader 
+    sequential frames is significantly faster since it uses the VideoReader
     class from torchvision.
 
     The video loader automatically detects if you read out subsequent frames and
-    will use the fast read method if possible. 
+    will use the fast read method if possible.
 
     Attributes:
         path:
@@ -64,29 +65,32 @@ class VideoLoader():
         >>> # get next frame
         >>> frame = video_loader.read_frame()
     """
-    def __init__(self, path: str, timestamps: List[float], backend: str = 'video_reader'):
+
+    def __init__(
+        self, path: str, timestamps: List[float], backend: str = "video_reader"
+    ):
         self.path = path
         self.timestamps = timestamps
         self.current_timestamp_idx = 0
         self.last_timestamp_idx = 0
-        self.pts_unit='sec'
+        self.pts_unit = "sec"
         self.backend = backend
 
-        has_video_reader = io._HAS_VIDEO_OPT and hasattr(io, 'VideoReader')
+        has_video_reader = io._HAS_VIDEO_OPT and hasattr(io, "VideoReader")
 
-        if has_video_reader and self.backend == 'video_reader':
-            self.reader = io.VideoReader(path = self.path)
+        if has_video_reader and self.backend == "video_reader":
+            self.reader = io.VideoReader(path=self.path)
         else:
             self.reader = None
-    
-    def read_frame(self, timestamp = None):
+
+    def read_frame(self, timestamp=None):
         """Reads the next frame or from timestamp.
 
         If no timestamp is provided this method just returns the next frame from
-        the video. This is significantly (up to 10x) faster if the `video_loader` 
+        the video. This is significantly (up to 10x) faster if the `video_loader`
         backend is available. If a timestamp is provided we first have to seek
         to the right position and then load the frame.
-        
+
         Args:
             timestamp: Specific timestamp of frame in seconds or None (default: None)
 
@@ -108,22 +112,23 @@ class VideoLoader():
                     self.reader.seek(timestamp)
 
             # make sure we have the tensor in correct shape (we want H x W x C)
-            frame = next(self.reader)['data'].permute(1,2,0)
+            frame = next(self.reader)["data"].permute(1, 2, 0)
             self.last_timestamp_idx = self.current_timestamp_idx
 
-        else: # fallback on pyav
+        else:  # fallback on pyav
             if timestamp is None:
                 # read next frame if no timestamp is provided
                 timestamp = self.timestamps[self.current_timestamp_idx]
-            frame, _, _ = io.read_video(self.path,
-                                        start_pts=timestamp,
-                                        end_pts=timestamp,
-                                        pts_unit=self.pts_unit)    
-            self.last_timestamp_idx = self.timestamps.index(timestamp)    
-        
-        
+            frame, _, _ = io.read_video(
+                self.path,
+                start_pts=timestamp,
+                end_pts=timestamp,
+                pts_unit=self.pts_unit,
+            )
+            self.last_timestamp_idx = self.timestamps.index(timestamp)
+
         if len(frame.shape) < 3:
-            raise ValueError('Unexpected error during loading of frame')
+            raise ValueError("Unexpected error during loading of frame")
 
         # sometimes torchvision returns multiple frames for one timestamp (bug?)
         if len(frame.shape) > 3 and frame.shape[0] > 1:
@@ -137,10 +142,8 @@ class VideoLoader():
         image = Image.fromarray(frame.numpy())
         return image
 
-def _make_dataset(directory,
-                  extensions=None,
-                  is_valid_file=None,
-                  pts_unit='sec'):
+
+def _make_dataset(directory, extensions=None, is_valid_file=None, pts_unit="sec"):
     """Returns a list of all video files, timestamps, and offsets.
 
     Args:
@@ -160,15 +163,18 @@ def _make_dataset(directory,
 
     if extensions is None:
         if is_valid_file is None:
-            ValueError('Both extensions and is_valid_file cannot be None')
+            ValueError("Both extensions and is_valid_file cannot be None")
         else:
             _is_valid_file = is_valid_file
     else:
+
         def is_valid_file_extension(filepath):
             return filepath.lower().endswith(extensions)
+
         if is_valid_file is None:
             _is_valid_file = is_valid_file_extension
         else:
+
             def _is_valid_file(filepath):
                 return is_valid_file_extension(filepath) and is_valid_file(filepath)
 
@@ -187,20 +193,22 @@ def _make_dataset(directory,
 
     # get timestamps
     timestamps, fpss = [], []
-    for instance in video_instances[:]: # video_instances[:] creates a copy
+    for instance in video_instances[:]:  # video_instances[:] creates a copy
 
-        if AV_AVAILABLE and torchvision.get_video_backend() == 'pyav':
+        if AV_AVAILABLE and torchvision.get_video_backend() == "pyav":
             # This is a hacky solution to estimate the timestamps.
-            # When using the video_reader this approach fails because the 
+            # When using the video_reader this approach fails because the
             # estimated timestamps are not correct.
             with av.open(instance) as av_video:
                 stream = av_video.streams.video[0]
 
                 # check if we can extract the video duration
                 if not stream.duration:
-                    print(f'Video {instance} has no timestamp and will be skipped...')
-                    video_instances.remove(instance) # remove from original list (not copy)
-                    continue # skip this broken video
+                    print(f"Video {instance} has no timestamp and will be skipped...")
+                    video_instances.remove(
+                        instance
+                    )  # remove from original list (not copy)
+                    continue  # skip this broken video
 
                 duration = stream.duration * stream.time_base
                 fps = stream.base_rate
@@ -217,7 +225,7 @@ def _make_dataset(directory,
     offsets = [len(ts) for ts in timestamps]
     offsets = [0] + offsets[:-1]
     for i in range(1, len(offsets)):
-        offsets[i] = offsets[i-1] + offsets[i] # cumsum
+        offsets[i] = offsets[i - 1] + offsets[i]  # cumsum
 
     return video_instances, timestamps, offsets, fpss
 
@@ -242,38 +250,40 @@ class VideoDataset(datasets.VisionDataset):
 
     """
 
-    def __init__(self,
-                 root,
-                 extensions=None,
-                 transform=None,
-                 target_transform=None,
-                 is_valid_file=None):
-        
-        super(VideoDataset, self).__init__(root,
-                                           transform=transform,
-                                           target_transform=target_transform)
+    def __init__(
+        self,
+        root,
+        extensions=None,
+        transform=None,
+        target_transform=None,
+        is_valid_file=None,
+    ):
+
+        super(VideoDataset, self).__init__(
+            root, transform=transform, target_transform=target_transform
+        )
 
         videos, video_timestamps, offsets, fps = _make_dataset(
-            self.root, extensions, is_valid_file)
-        
+            self.root, extensions, is_valid_file
+        )
+
         if len(videos) == 0:
-            msg = 'Found 0 videos in folder: {}\n'.format(self.root)
+            msg = "Found 0 videos in folder: {}\n".format(self.root)
             if extensions is not None:
-                msg += 'Supported extensions are: {}'.format(
-                    ','.join(extensions))
+                msg += "Supported extensions are: {}".format(",".join(extensions))
             raise RuntimeError(msg)
 
         self.extensions = extensions
 
         backend = torchvision.get_video_backend()
-        self.video_loaders = \
-            [VideoLoader(video, timestamps, backend=backend) for video, timestamps in zip(videos, video_timestamps)]
+        self.video_loaders = [
+            VideoLoader(video, timestamps, backend=backend)
+            for video, timestamps in zip(videos, video_timestamps)
+        ]
 
         self.videos = videos
         self.video_timestamps = video_timestamps
-        self._length = sum((
-            len(ts) for ts in self.video_timestamps
-        ))
+        self._length = sum((len(ts) for ts in self.video_timestamps))
         # offsets[i] indicates the index of the first frame of the i-th video.
         # e.g. for two videos of length 10 and 20, the offsets will be [0, 10].
         self.offsets = offsets
@@ -282,7 +292,7 @@ class VideoDataset(datasets.VisionDataset):
     def __getitem__(self, index):
         """Returns item at index.
 
-        Finds the video of the frame at index with the help of the frame 
+        Finds the video of the frame at index with the help of the frame
         offsets. Then, loads the frame from the video, applies the transforms,
         and returns the frame along with the index of the video (as target).
 
@@ -311,14 +321,16 @@ class VideoDataset(datasets.VisionDataset):
 
         """
         if index < 0 or index >= self.__len__():
-            raise IndexError(f'Index {index} is out of bounds for VideoDataset'
-                             f' of size {self.__len__()}.')
+            raise IndexError(
+                f"Index {index} is out of bounds for VideoDataset"
+                f" of size {self.__len__()}."
+            )
 
         # each sample belongs to a video, to load the sample at index, we need
         # to find the video to which the sample belongs and then read the frame
         # from this video on the disk.
         i = len(self.offsets) - 1
-        while (self.offsets[i] > index):
+        while self.offsets[i] > index:
             i = i - 1
 
         # find and return the frame as PIL image
@@ -346,30 +358,32 @@ class VideoDataset(datasets.VisionDataset):
         """Returns a filename for the frame at index.
 
         The filename is created from the video filename, the frame number, and
-        the video format. The frame number will be zero padded to make sure 
+        the video format. The frame number will be zero padded to make sure
         all filenames have the same length and can easily be sorted.
         E.g. when retrieving a sample from the video
         `my_video.mp4` at frame 153, the filename will be:
 
         >>> my_video-153-mp4.png
-    
+
         Args:
             index:
                 Index of the frame to retrieve.
 
         Returns:
             The filename of the frame as described above.
-                
+
         """
         if index < 0 or index >= self.__len__():
-            raise IndexError(f'Index {index} is out of bounds for VideoDataset'
-                             f' of size {self.__len__()}.')
-    
+            raise IndexError(
+                f"Index {index} is out of bounds for VideoDataset"
+                f" of size {self.__len__()}."
+            )
+
         # each sample belongs to a video, to load the sample at index, we need
         # to find the video to which the sample belongs and then read the frame
         # from this video on the disk.
         i = len(self.offsets) - 1
-        while (self.offsets[i] > index):
+        while self.offsets[i] > index:
             i = i - 1
 
         # get filename of the video file
@@ -377,15 +391,15 @@ class VideoDataset(datasets.VisionDataset):
         filename = os.path.relpath(filename, self.root)
 
         # get video format and video name
-        splits = filename.split('.')
+        splits = filename.split(".")
         video_format = splits[-1]
-        video_name = '.'.join(splits[:-1])
+        video_name = ".".join(splits[:-1])
 
         # get frame number
         frame_number = index - self.offsets[i]
         if i < len(self.offsets) - 1:
-            n_frames = self.offsets[i+1] - self.offsets[i]
+            n_frames = self.offsets[i + 1] - self.offsets[i]
         else:
             n_frames = self.__len__() - self.offsets[i]
-        
-        return f'{video_name}-{frame_number:0{len(str(n_frames))}}-{video_format}.png'
+
+        return f"{video_name}-{frame_number:0{len(str(n_frames))}}-{video_format}.png"

@@ -147,17 +147,17 @@ from lightly.openapi_generated.swagger_client import SamplingMethod
 
 class CSVEmbeddingDataset:
     def __init__(self, path_to_embeddings_csv: str):
-        with open(path_to_embeddings_csv, 'r') as f:
+        with open(path_to_embeddings_csv, "r") as f:
             data = csv.reader(f)
 
             rows = list(data)
             header_row = rows[0]
             rows_without_header = rows[1:]
 
-            index_filenames = header_row.index('filenames')
+            index_filenames = header_row.index("filenames")
             filenames = [row[index_filenames] for row in rows_without_header]
 
-            index_labels = header_row.index('labels')
+            index_labels = header_row.index("labels")
             labels = [row[index_labels] for row in rows_without_header]
 
             embeddings = rows_without_header
@@ -167,9 +167,12 @@ class CSVEmbeddingDataset:
                     del embedding_row[index_to_delete]
 
         # create the dataset as a dictionary mapping from the filename to a tuple of the embedding and the label
-        self.dataset: Dict[str, Tuple[np.ndarray, int]] = \
-            dict([(filename, (np.array(embedding_row, dtype=float), int(label)))
-                  for filename, embedding_row, label in zip(filenames, embeddings, labels)])
+        self.dataset: Dict[str, Tuple[np.ndarray, int]] = dict(
+            [
+                (filename, (np.array(embedding_row, dtype=float), int(label)))
+                for filename, embedding_row, label in zip(filenames, embeddings, labels)
+            ]
+        )
 
     def get_features(self, filenames: List[str]) -> np.ndarray:
         features_array = np.array([self.dataset[filename][0] for filename in filenames])
@@ -183,7 +186,9 @@ class CSVEmbeddingDataset:
 # %%
 # First we read the variables we set before as environment variables via the console
 token = os.getenv("LIGHTLY_TOKEN", default="YOUR_TOKEN")
-path_to_embeddings_csv = os.getenv("LIGHTLY_EMBEDDINGS_CSV", default="path_to_your_embeddings_csv")
+path_to_embeddings_csv = os.getenv(
+    "LIGHTLY_EMBEDDINGS_CSV", default="path_to_your_embeddings_csv"
+)
 
 # We define the client to the Lightly Platform API
 api_workflow_client = ApiWorkflowClient(token=token)
@@ -199,7 +204,9 @@ agent = ActiveLearningAgent(api_workflow_client=api_workflow_client)
 # 1. Choose an initial subset of your dataset.
 # We want to start with 200 samples and use the CORESET sampler for sampling them.
 print("Starting the initial sampling")
-sampler_config = SamplerConfig(n_samples=200, method=SamplingMethod.CORESET, name='initial-selection')
+sampler_config = SamplerConfig(
+    n_samples=200, method=SamplingMethod.CORESET, name="initial-selection"
+)
 agent.query(sampler_config=sampler_config)
 print(f"There are {len(agent.labeled_set)} samples in the labeled set.")
 
@@ -221,7 +228,9 @@ active_learning_scorer = ScorerClassification(model_output=predictions)
 # %%
 # 5. Use an active learning agent to choose the next samples to be labeled based on the active learning scores.
 # We want to sample another 100 samples to have 300 samples in total and use the active learning sampler CORAL for it.
-sampler_config = SamplerConfig(n_samples=300, method=SamplingMethod.CORAL, name='al-iteration-1')
+sampler_config = SamplerConfig(
+    n_samples=300, method=SamplingMethod.CORAL, name="al-iteration-1"
+)
 agent.query(sampler_config=sampler_config, al_scorer=active_learning_scorer)
 print(f"There are {len(agent.labeled_set)} samples in the labeled set.")
 
@@ -240,5 +249,7 @@ classifier.fit(X=labeled_set_features, y=labeled_set_labels)
 # evaluate on unlabeled set
 unlabeled_set_features = dataset.get_features(agent.unlabeled_set)
 unlabeled_set_labels = dataset.get_labels(agent.unlabeled_set)
-accuracy_on_unlabeled_set = classifier.score(X=unlabeled_set_features, y=unlabeled_set_labels)
+accuracy_on_unlabeled_set = classifier.score(
+    X=unlabeled_set_features, y=unlabeled_set_labels
+)
 print(f"accuracy on unlabeled set: {accuracy_on_unlabeled_set}")

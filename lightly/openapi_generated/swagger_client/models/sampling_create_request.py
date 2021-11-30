@@ -33,24 +33,33 @@ class SamplingCreateRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'new_tag_name': 'TagName',
-        'method': 'SamplingMethod',
-        'config': 'SamplingConfig',
-        'preselected_tag_id': 'MongoObjectID',
-        'query_tag_id': 'MongoObjectID',
-        'row_count': 'float'
+        "new_tag_name": "TagName",
+        "method": "SamplingMethod",
+        "config": "SamplingConfig",
+        "preselected_tag_id": "MongoObjectID",
+        "query_tag_id": "MongoObjectID",
+        "row_count": "float",
     }
 
     attribute_map = {
-        'new_tag_name': 'newTagName',
-        'method': 'method',
-        'config': 'config',
-        'preselected_tag_id': 'preselectedTagId',
-        'query_tag_id': 'queryTagId',
-        'row_count': 'rowCount'
+        "new_tag_name": "newTagName",
+        "method": "method",
+        "config": "config",
+        "preselected_tag_id": "preselectedTagId",
+        "query_tag_id": "queryTagId",
+        "row_count": "rowCount",
     }
 
-    def __init__(self, new_tag_name=None, method=None, config=None, preselected_tag_id=None, query_tag_id=None, row_count=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        new_tag_name=None,
+        method=None,
+        config=None,
+        preselected_tag_id=None,
+        query_tag_id=None,
+        row_count=None,
+        _configuration=None,
+    ):  # noqa: E501
         """SamplingCreateRequest - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -93,7 +102,9 @@ class SamplingCreateRequest(object):
         :type: TagName
         """
         if self._configuration.client_side_validation and new_tag_name is None:
-            raise ValueError("Invalid value for `new_tag_name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `new_tag_name`, must not be `None`"
+            )  # noqa: E501
 
         self._new_tag_name = new_tag_name
 
@@ -116,7 +127,9 @@ class SamplingCreateRequest(object):
         :type: SamplingMethod
         """
         if self._configuration.client_side_validation and method is None:
-            raise ValueError("Invalid value for `method`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `method`, must not be `None`"
+            )  # noqa: E501
 
         self._method = method
 
@@ -139,7 +152,9 @@ class SamplingCreateRequest(object):
         :type: SamplingConfig
         """
         if self._configuration.client_side_validation and config is None:
-            raise ValueError("Invalid value for `config`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `config`, must not be `None`"
+            )  # noqa: E501
 
         self._config = config
 
@@ -215,18 +230,20 @@ class SamplingCreateRequest(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(SamplingCreateRequest, dict):

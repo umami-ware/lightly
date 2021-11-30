@@ -33,28 +33,39 @@ class Embedding2dData(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'MongoObjectID',
-        'dataset_id': 'MongoObjectID',
-        'embedding_id': 'MongoObjectID',
-        'name': 'str',
-        'created_at': 'Timestamp',
-        'dimensionality_reduction_method': 'DimensionalityReductionMethod',
-        'coordinates_dimension1': 'Embedding2dCoordinates',
-        'coordinates_dimension2': 'Embedding2dCoordinates'
+        "id": "MongoObjectID",
+        "dataset_id": "MongoObjectID",
+        "embedding_id": "MongoObjectID",
+        "name": "str",
+        "created_at": "Timestamp",
+        "dimensionality_reduction_method": "DimensionalityReductionMethod",
+        "coordinates_dimension1": "Embedding2dCoordinates",
+        "coordinates_dimension2": "Embedding2dCoordinates",
     }
 
     attribute_map = {
-        'id': 'id',
-        'dataset_id': 'datasetId',
-        'embedding_id': 'embeddingId',
-        'name': 'name',
-        'created_at': 'createdAt',
-        'dimensionality_reduction_method': 'dimensionalityReductionMethod',
-        'coordinates_dimension1': 'coordinatesDimension1',
-        'coordinates_dimension2': 'coordinatesDimension2'
+        "id": "id",
+        "dataset_id": "datasetId",
+        "embedding_id": "embeddingId",
+        "name": "name",
+        "created_at": "createdAt",
+        "dimensionality_reduction_method": "dimensionalityReductionMethod",
+        "coordinates_dimension1": "coordinatesDimension1",
+        "coordinates_dimension2": "coordinatesDimension2",
     }
 
-    def __init__(self, id=None, dataset_id=None, embedding_id=None, name=None, created_at=None, dimensionality_reduction_method=None, coordinates_dimension1=None, coordinates_dimension2=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        id=None,
+        dataset_id=None,
+        embedding_id=None,
+        name=None,
+        created_at=None,
+        dimensionality_reduction_method=None,
+        coordinates_dimension1=None,
+        coordinates_dimension2=None,
+        _configuration=None,
+    ):  # noqa: E501
         """Embedding2dData - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -123,7 +134,9 @@ class Embedding2dData(object):
         :type: MongoObjectID
         """
         if self._configuration.client_side_validation and dataset_id is None:
-            raise ValueError("Invalid value for `dataset_id`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `dataset_id`, must not be `None`"
+            )  # noqa: E501
 
         self._dataset_id = dataset_id
 
@@ -146,7 +159,9 @@ class Embedding2dData(object):
         :type: MongoObjectID
         """
         if self._configuration.client_side_validation and embedding_id is None:
-            raise ValueError("Invalid value for `embedding_id`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `embedding_id`, must not be `None`"
+            )  # noqa: E501
 
         self._embedding_id = embedding_id
 
@@ -171,7 +186,9 @@ class Embedding2dData(object):
         :type: str
         """
         if self._configuration.client_side_validation and name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -194,7 +211,9 @@ class Embedding2dData(object):
         :type: Timestamp
         """
         if self._configuration.client_side_validation and created_at is None:
-            raise ValueError("Invalid value for `created_at`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `created_at`, must not be `None`"
+            )  # noqa: E501
 
         self._created_at = created_at
 
@@ -216,8 +235,13 @@ class Embedding2dData(object):
         :param dimensionality_reduction_method: The dimensionality_reduction_method of this Embedding2dData.  # noqa: E501
         :type: DimensionalityReductionMethod
         """
-        if self._configuration.client_side_validation and dimensionality_reduction_method is None:
-            raise ValueError("Invalid value for `dimensionality_reduction_method`, must not be `None`")  # noqa: E501
+        if (
+            self._configuration.client_side_validation
+            and dimensionality_reduction_method is None
+        ):
+            raise ValueError(
+                "Invalid value for `dimensionality_reduction_method`, must not be `None`"
+            )  # noqa: E501
 
         self._dimensionality_reduction_method = dimensionality_reduction_method
 
@@ -270,18 +294,20 @@ class Embedding2dData(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(Embedding2dData, dict):

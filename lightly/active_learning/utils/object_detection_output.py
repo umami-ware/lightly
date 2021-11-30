@@ -45,17 +45,22 @@ class ObjectDetectionOutput:
 
     """
 
-    def __init__(self,
-                 boxes: List[BoundingBox],
-                 object_probabilities: List[float],
-                 class_probabilities: List[List[float]]):
+    def __init__(
+        self,
+        boxes: List[BoundingBox],
+        object_probabilities: List[float],
+        class_probabilities: List[List[float]],
+    ):
 
-        if len(boxes) != len(object_probabilities) or \
-            len(object_probabilities) != len(class_probabilities):
-            raise ValueError('Boxes, object and class probabilities must be of '
-                             f'same length but are {len(boxes)}, '
-                             f'{len(object_probabilities)}, and '
-                             f'{len(class_probabilities)}')
+        if len(boxes) != len(object_probabilities) or len(object_probabilities) != len(
+            class_probabilities
+        ):
+            raise ValueError(
+                "Boxes, object and class probabilities must be of "
+                f"same length but are {len(boxes)}, "
+                f"{len(object_probabilities)}, and "
+                f"{len(class_probabilities)}"
+            )
 
         scores = []
         labels = []
@@ -72,12 +77,10 @@ class ObjectDetectionOutput:
         self.object_probabilities = object_probabilities
         self.class_probabilities = class_probabilities
 
-
     @classmethod
-    def from_scores(cls,
-                    boxes: List[BoundingBox],
-                    scores: List[float],
-                    labels: List[int]):
+    def from_scores(
+        cls, boxes: List[BoundingBox], scores: List[float], labels: List[int]
+    ):
         """Helper to convert from output format with scores.
 
         We advise not using this method if you want to use the uncertainty
@@ -116,13 +119,13 @@ class ObjectDetectionOutput:
         """
 
         if any([score > 1 for score in scores]):
-            raise ValueError('Scores must be smaller than or equal to one!')
+            raise ValueError("Scores must be smaller than or equal to one!")
 
         if any([score < 0 for score in scores]):
-            raise ValueError('Scores must be larger than or equal to zero!')
+            raise ValueError("Scores must be larger than or equal to zero!")
 
         if not all([isinstance(label, int) for label in labels]):
-            raise ValueError('Labels must be list of integers.')
+            raise ValueError("Labels must be list of integers.")
 
         # create fake object probabilities
         object_probabilities = [s for s in scores]

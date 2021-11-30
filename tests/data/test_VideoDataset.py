@@ -12,15 +12,16 @@ import cv2
 
 try:
     import av
+
     PYAV_AVAILABLE = True
 except ModuleNotFoundError:
     PYAV_AVAILABLE = False
 
-class TestVideoDataset(unittest.TestCase):
 
+class TestVideoDataset(unittest.TestCase):
     def setUp(self):
         if not PYAV_AVAILABLE:
-            self.skipTest('PyAV not available')
+            self.skipTest("PyAV not available")
 
     def ensure_dir(self, path_to_folder: str):
         if not os.path.exists(path_to_folder):
@@ -30,14 +31,16 @@ class TestVideoDataset(unittest.TestCase):
 
         self.n_videos = n_videos
         self.n_frames_per_video = n_frames_per_video
-    
+
         self.input_dir = tempfile.mkdtemp()
         self.ensure_dir(self.input_dir)
-        self.frames = (np.random.randn(n_frames_per_video, w, h, c) * 255).astype(np.uint8)
-        self.extensions = ('.avi')
+        self.frames = (np.random.randn(n_frames_per_video, w, h, c) * 255).astype(
+            np.uint8
+        )
+        self.extensions = ".avi"
 
         for i in range(n_videos):
-            path = os.path.join(self.input_dir, f'output-{i}.avi')
+            path = os.path.join(self.input_dir, f"output-{i}.avi")
             print(path)
             out = cv2.VideoWriter(path, 0, 1, (w, h))
             for frame in self.frames:
@@ -53,15 +56,16 @@ class TestVideoDataset(unittest.TestCase):
         backends = []
 
         # iterate through different backends
-        for backend in ['pyav', 'video_reader']:
+        for backend in ["pyav", "video_reader"]:
             torchvision.set_video_backend(backend)
 
-            _, video_timestamps, video_offsets, _ = \
-                _make_dataset(self.input_dir, extensions=self.extensions)
+            _, video_timestamps, video_offsets, _ = _make_dataset(
+                self.input_dir, extensions=self.extensions
+            )
             timestamps.append(video_timestamps)
             offsets.append(video_offsets)
             backends.append(backend)
-        
+
         # make sure backends don't match (sanity check)
         self.assertNotEqual(backends[0], backends[1])
 
@@ -71,19 +75,17 @@ class TestVideoDataset(unittest.TestCase):
 
         shutil.rmtree(self.input_dir)
 
-
     def test_video_dataset_from_folder(self):
-
 
         self.create_dataset()
 
         # iterate through different backends
-        for backend in ['pyav', 'video_reader']:
+        for backend in ["pyav", "video_reader"]:
             torchvision.set_video_backend(backend)
 
             # create dataset
             dataset = VideoDataset(self.input_dir, extensions=self.extensions)
-            
+
             # __len__
             self.assertEqual(len(dataset), self.n_frames_per_video * self.n_videos)
 
@@ -99,10 +101,7 @@ class TestVideoDataset(unittest.TestCase):
                 filename = dataset.get_filename(i)
                 print(filename)
                 self.assertTrue(
-                    filename.endswith(
-                        f"-{(i % self.n_frames_per_video):02d}-avi.png"
-                    )
+                    filename.endswith(f"-{(i % self.n_frames_per_video):02d}-avi.png")
                 )
-        
-        shutil.rmtree(self.input_dir)
 
+        shutil.rmtree(self.input_dir)

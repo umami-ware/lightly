@@ -13,8 +13,7 @@ from lightly.models.utils import normalize_weight
 
 
 def has_grad(model: nn.Module):
-    """Helper method to check if a model has `requires_grad` set to True
-    """
+    """Helper method to check if a model has `requires_grad` set to True"""
     has_grad_ = False
     for param in model.parameters():
         if param.requires_grad == True:
@@ -24,9 +23,8 @@ def has_grad(model: nn.Module):
 
 
 class TestModelUtils(unittest.TestCase):
-
     def test_batch_shuffle(self):
-        x1 = torch.rand((4, 3,64,64))
+        x1 = torch.rand((4, 3, 64, 64))
         x1_shuffled, shuffle = batch_shuffle(x1)
         out1 = batch_unshuffle(x1_shuffled, shuffle)
         self.assertTrue(torch.equal(x1, out1))
@@ -34,7 +32,7 @@ class TestModelUtils(unittest.TestCase):
 
     def test_activate_requires_grad(self):
         model = nn.Sequential(
-            nn.Linear(32,32),
+            nn.Linear(32, 32),
             nn.ReLU(),
         )
         self.assertTrue(has_grad(model))
@@ -42,10 +40,10 @@ class TestModelUtils(unittest.TestCase):
         self.assertFalse(has_grad(model))
         activate_requires_grad(model)
         self.assertTrue(has_grad(model))
-    
+
     def test_momentum_works(self):
         model = nn.Sequential(
-            nn.Linear(32,32),
+            nn.Linear(32, 32),
             nn.ReLU(),
         )
         model_momentum = copy.deepcopy(model)

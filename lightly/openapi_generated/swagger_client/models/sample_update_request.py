@@ -33,22 +33,30 @@ class SampleUpdateRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'file_name': 'str',
-        'thumb_name': 'str',
-        'exif': 'dict(str, object)',
-        'meta_data': 'SampleMetaData',
-        'custom_meta_data': 'CustomSampleMetaData'
+        "file_name": "str",
+        "thumb_name": "str",
+        "exif": "dict(str, object)",
+        "meta_data": "SampleMetaData",
+        "custom_meta_data": "CustomSampleMetaData",
     }
 
     attribute_map = {
-        'file_name': 'fileName',
-        'thumb_name': 'thumbName',
-        'exif': 'exif',
-        'meta_data': 'metaData',
-        'custom_meta_data': 'customMetaData'
+        "file_name": "fileName",
+        "thumb_name": "thumbName",
+        "exif": "exif",
+        "meta_data": "metaData",
+        "custom_meta_data": "customMetaData",
     }
 
-    def __init__(self, file_name=None, thumb_name=None, exif=None, meta_data=None, custom_meta_data=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        file_name=None,
+        thumb_name=None,
+        exif=None,
+        meta_data=None,
+        custom_meta_data=None,
+        _configuration=None,
+    ):  # noqa: E501
         """SampleUpdateRequest - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -184,18 +192,20 @@ class SampleUpdateRequest(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(SampleUpdateRequest, dict):

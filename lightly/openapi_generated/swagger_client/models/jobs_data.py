@@ -33,24 +33,33 @@ class JobsData(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'MongoObjectID',
-        'job_id': 'str',
-        'job_type': 'JobResultType',
-        'status': 'JobState',
-        'finished_at': 'Timestamp',
-        'created_at': 'Timestamp'
+        "id": "MongoObjectID",
+        "job_id": "str",
+        "job_type": "JobResultType",
+        "status": "JobState",
+        "finished_at": "Timestamp",
+        "created_at": "Timestamp",
     }
 
     attribute_map = {
-        'id': 'id',
-        'job_id': 'jobId',
-        'job_type': 'jobType',
-        'status': 'status',
-        'finished_at': 'finishedAt',
-        'created_at': 'createdAt'
+        "id": "id",
+        "job_id": "jobId",
+        "job_type": "jobType",
+        "status": "status",
+        "finished_at": "finishedAt",
+        "created_at": "createdAt",
     }
 
-    def __init__(self, id=None, job_id=None, job_type=None, status=None, finished_at=None, created_at=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        id=None,
+        job_id=None,
+        job_type=None,
+        status=None,
+        finished_at=None,
+        created_at=None,
+        _configuration=None,
+    ):  # noqa: E501
         """JobsData - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -114,7 +123,9 @@ class JobsData(object):
         :type: str
         """
         if self._configuration.client_side_validation and job_id is None:
-            raise ValueError("Invalid value for `job_id`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `job_id`, must not be `None`"
+            )  # noqa: E501
 
         self._job_id = job_id
 
@@ -137,7 +148,9 @@ class JobsData(object):
         :type: JobResultType
         """
         if self._configuration.client_side_validation and job_type is None:
-            raise ValueError("Invalid value for `job_type`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `job_type`, must not be `None`"
+            )  # noqa: E501
 
         self._job_type = job_type
 
@@ -160,7 +173,9 @@ class JobsData(object):
         :type: JobState
         """
         if self._configuration.client_side_validation and status is None:
-            raise ValueError("Invalid value for `status`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `status`, must not be `None`"
+            )  # noqa: E501
 
         self._status = status
 
@@ -204,7 +219,9 @@ class JobsData(object):
         :type: Timestamp
         """
         if self._configuration.client_side_validation and created_at is None:
-            raise ValueError("Invalid value for `created_at`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `created_at`, must not be `None`"
+            )  # noqa: E501
 
         self._created_at = created_at
 
@@ -215,18 +232,20 @@ class JobsData(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(JobsData, dict):

@@ -32,19 +32,13 @@ class EmbeddingData(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
-        'id': 'MongoObjectID',
-        'dataset': 'MongoObjectID',
-        'name': 'str'
-    }
+    swagger_types = {"id": "MongoObjectID", "dataset": "MongoObjectID", "name": "str"}
 
-    attribute_map = {
-        'id': 'id',
-        'dataset': 'dataset',
-        'name': 'name'
-    }
+    attribute_map = {"id": "id", "dataset": "dataset", "name": "name"}
 
-    def __init__(self, id=None, dataset=None, name=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self, id=None, dataset=None, name=None, _configuration=None
+    ):  # noqa: E501
         """EmbeddingData - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -101,7 +95,9 @@ class EmbeddingData(object):
         :type: MongoObjectID
         """
         if self._configuration.client_side_validation and dataset is None:
-            raise ValueError("Invalid value for `dataset`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `dataset`, must not be `None`"
+            )  # noqa: E501
 
         self._dataset = dataset
 
@@ -124,7 +120,9 @@ class EmbeddingData(object):
         :type: str
         """
         if self._configuration.client_side_validation and name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -135,18 +133,20 @@ class EmbeddingData(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(EmbeddingData, dict):

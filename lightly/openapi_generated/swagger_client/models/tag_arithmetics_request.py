@@ -33,22 +33,30 @@ class TagArithmeticsRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'tag_id1': 'MongoObjectID',
-        'tag_id2': 'MongoObjectID',
-        'operation': 'TagArithmeticsOperation',
-        'new_tag_name': 'TagName',
-        'creator': 'TagCreator'
+        "tag_id1": "MongoObjectID",
+        "tag_id2": "MongoObjectID",
+        "operation": "TagArithmeticsOperation",
+        "new_tag_name": "TagName",
+        "creator": "TagCreator",
     }
 
     attribute_map = {
-        'tag_id1': 'tagId1',
-        'tag_id2': 'tagId2',
-        'operation': 'operation',
-        'new_tag_name': 'newTagName',
-        'creator': 'creator'
+        "tag_id1": "tagId1",
+        "tag_id2": "tagId2",
+        "operation": "operation",
+        "new_tag_name": "newTagName",
+        "creator": "creator",
     }
 
-    def __init__(self, tag_id1=None, tag_id2=None, operation=None, new_tag_name=None, creator=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        tag_id1=None,
+        tag_id2=None,
+        operation=None,
+        new_tag_name=None,
+        creator=None,
+        _configuration=None,
+    ):  # noqa: E501
         """TagArithmeticsRequest - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -88,7 +96,9 @@ class TagArithmeticsRequest(object):
         :type: MongoObjectID
         """
         if self._configuration.client_side_validation and tag_id1 is None:
-            raise ValueError("Invalid value for `tag_id1`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `tag_id1`, must not be `None`"
+            )  # noqa: E501
 
         self._tag_id1 = tag_id1
 
@@ -111,7 +121,9 @@ class TagArithmeticsRequest(object):
         :type: MongoObjectID
         """
         if self._configuration.client_side_validation and tag_id2 is None:
-            raise ValueError("Invalid value for `tag_id2`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `tag_id2`, must not be `None`"
+            )  # noqa: E501
 
         self._tag_id2 = tag_id2
 
@@ -134,7 +146,9 @@ class TagArithmeticsRequest(object):
         :type: TagArithmeticsOperation
         """
         if self._configuration.client_side_validation and operation is None:
-            raise ValueError("Invalid value for `operation`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `operation`, must not be `None`"
+            )  # noqa: E501
 
         self._operation = operation
 
@@ -187,18 +201,20 @@ class TagArithmeticsRequest(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(TagArithmeticsRequest, dict):

@@ -32,17 +32,16 @@ class TagUpsizeRequest(object):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
-        'upsize_tag_name': 'TagName',
-        'upsize_tag_creator': 'TagCreator'
-    }
+    swagger_types = {"upsize_tag_name": "TagName", "upsize_tag_creator": "TagCreator"}
 
     attribute_map = {
-        'upsize_tag_name': 'upsizeTagName',
-        'upsize_tag_creator': 'upsizeTagCreator'
+        "upsize_tag_name": "upsizeTagName",
+        "upsize_tag_creator": "upsizeTagCreator",
     }
 
-    def __init__(self, upsize_tag_name=None, upsize_tag_creator=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self, upsize_tag_name=None, upsize_tag_creator=None, _configuration=None
+    ):  # noqa: E501
         """TagUpsizeRequest - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -74,7 +73,9 @@ class TagUpsizeRequest(object):
         :type: TagName
         """
         if self._configuration.client_side_validation and upsize_tag_name is None:
-            raise ValueError("Invalid value for `upsize_tag_name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `upsize_tag_name`, must not be `None`"
+            )  # noqa: E501
 
         self._upsize_tag_name = upsize_tag_name
 
@@ -97,7 +98,9 @@ class TagUpsizeRequest(object):
         :type: TagCreator
         """
         if self._configuration.client_side_validation and upsize_tag_creator is None:
-            raise ValueError("Invalid value for `upsize_tag_creator`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `upsize_tag_creator`, must not be `None`"
+            )  # noqa: E501
 
         self._upsize_tag_creator = upsize_tag_creator
 
@@ -108,18 +111,20 @@ class TagUpsizeRequest(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(TagUpsizeRequest, dict):

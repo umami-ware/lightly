@@ -15,7 +15,9 @@ class TestApiWorkflowSampling(MockedApiWorkflowSetup):
     def test_runtime_error_on_existing_tag_name(self):
         self.api_workflow_client.embedding_id = "embedding_id_xyz"
 
-        sampler_config = SamplerConfig(name='initial-tag')
+        sampler_config = SamplerConfig(name="initial-tag")
 
         with self.assertRaises(RuntimeError):
-            new_tag_data = self.api_workflow_client.sampling(sampler_config=sampler_config)
+            new_tag_data = self.api_workflow_client.sampling(
+                sampler_config=sampler_config
+            )

@@ -30,12 +30,14 @@ from lightly.openapi_generated.swagger_client.configuration import Configuration
 from lightly.openapi_generated.swagger_client.models.dataset_data import DatasetData
 
 
-class ApiWorkflowClient(_UploadEmbeddingsMixin,
-                        _SamplingMixin,
-                        _UploadDatasetMixin,
-                        _DownloadDatasetMixin,
-                        _DatasetsMixin,
-                        _UploadCustomMetadataMixin):
+class ApiWorkflowClient(
+    _UploadEmbeddingsMixin,
+    _SamplingMixin,
+    _UploadDatasetMixin,
+    _DownloadDatasetMixin,
+    _DatasetsMixin,
+    _UploadCustomMetadataMixin,
+):
     """Provides a uniform interface to communicate with the api 
     
     The APIWorkflowClient is used to communicaate with the Lightly API. The client
@@ -60,8 +62,8 @@ class ApiWorkflowClient(_UploadEmbeddingsMixin,
         self.check_version_compatibility()
 
         configuration = Configuration()
-        configuration.host = getenv('LIGHTLY_SERVER_LOCATION', 'https://api.lightly.ai')
-        configuration.api_key = {'token': token}
+        configuration.host = getenv("LIGHTLY_SERVER_LOCATION", "https://api.lightly.ai")
+        configuration.api_key = {"token": token}
         api_client = ApiClient(configuration=configuration)
         self.api_client = api_client
 
@@ -84,34 +86,41 @@ class ApiWorkflowClient(_UploadEmbeddingsMixin,
     def check_version_compatibility(self):
         minimum_version = get_minimum_compatible_version()
         if version_compare(__version__, minimum_version) < 0:
-            raise ValueError(f"Incompatible Version of lightly pip package. "
-                             f"Please upgrade to at least version {minimum_version} "
-                             f"to be able to access the api and webapp")
+            raise ValueError(
+                f"Incompatible Version of lightly pip package. "
+                f"Please upgrade to at least version {minimum_version} "
+                f"to be able to access the api and webapp"
+            )
 
     @property
     def dataset_id(self) -> str:
-        '''The current dataset_id.
+        """The current dataset_id.
 
         If the dataset_id is set, it is returned.
         If it is not set, then the dataset_id of the last modified dataset is selected.
-        ''' 
+        """
         try:
             return self._dataset_id
         except AttributeError:
             all_datasets: List[DatasetData] = self.datasets_api.get_datasets()
-            datasets_sorted = sorted(all_datasets, key=lambda dataset: dataset.last_modified_at)
+            datasets_sorted = sorted(
+                all_datasets, key=lambda dataset: dataset.last_modified_at
+            )
             last_modified_dataset = datasets_sorted[-1]
             self._dataset_id = last_modified_dataset.id
-            warnings.warn(UserWarning(f"Dataset has not been specified, "
-                                      f"taking the last modified dataset {last_modified_dataset.name} as default dataset."))
+            warnings.warn(
+                UserWarning(
+                    f"Dataset has not been specified, "
+                    f"taking the last modified dataset {last_modified_dataset.name} as default dataset."
+                )
+            )
             return self._dataset_id
 
     def _get_all_tags(self) -> List[TagData]:
         return self.tags_api.get_tags_by_dataset_id(self.dataset_id)
 
     def _order_list_by_filenames(
-            self, filenames_for_list: List[str],
-            list_to_order: List[object]
+        self, filenames_for_list: List[str], list_to_order: List[object]
     ) -> List[object]:
         """Orders a list such that it is in the order of the filenames specified on the server.
 
@@ -129,8 +138,9 @@ class ApiWorkflowClient(_UploadEmbeddingsMixin,
             filenames_for_list.
 
         """
-        if len(filenames_for_list) != len(list_to_order) or \
-                len(filenames_for_list) != len(self.filenames_on_server):
+        if len(filenames_for_list) != len(list_to_order) or len(
+            filenames_for_list
+        ) != len(self.filenames_on_server):
             raise ValueError(
                 f"All inputs (filenames_for_list,  list_to_order and "
                 f"self.filenames_on_server) must have the same length, "
@@ -138,21 +148,22 @@ class ApiWorkflowClient(_UploadEmbeddingsMixin,
                 f"{len(list_to_order)} and {len(self.filenames_on_server)})."
             )
         dict_by_filenames = dict(zip(filenames_for_list, list_to_order))
-        list_ordered = [dict_by_filenames[filename] for filename in self.filenames_on_server]
+        list_ordered = [
+            dict_by_filenames[filename] for filename in self.filenames_on_server
+        ]
         return list_ordered
 
     @property
     def filenames_on_server(self):
-        """The list of the filenames in the dataset.
-        
-        """
-        self._filenames_on_server = self.mappings_api. \
-            get_sample_mappings_by_dataset_id(dataset_id=self.dataset_id, field="fileName")
+        """The list of the filenames in the dataset."""
+        self._filenames_on_server = self.mappings_api.get_sample_mappings_by_dataset_id(
+            dataset_id=self.dataset_id, field="fileName"
+        )
         return self._filenames_on_server
 
-    def upload_file_with_signed_url(self,
-                                    file: IOBase,
-                                    signed_write_url: str) -> Response:
+    def upload_file_with_signed_url(
+        self, file: IOBase, signed_write_url: str
+    ) -> Response:
         """Uploads a file to a url via a put request.
 
         Args:
@@ -170,8 +181,8 @@ class ApiWorkflowClient(_UploadEmbeddingsMixin,
         response = requests.put(signed_write_url, data=file)
 
         if response.status_code != 200:
-            msg = f'Failed PUT request to {signed_write_url} with status_code'
-            msg += f'{response.status__code}!'
+            msg = f"Failed PUT request to {signed_write_url} with status_code"
+            msg += f"{response.status__code}!"
             raise RuntimeError(msg)
 
         return response

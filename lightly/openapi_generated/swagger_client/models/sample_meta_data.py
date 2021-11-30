@@ -33,32 +33,45 @@ class SampleMetaData(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'custom': 'dict(str, object)',
-        'dynamic': 'dict(str, object)',
-        'sharpness': 'float',
-        'size_in_bytes': 'int',
-        'snr': 'float',
-        'mean': 'list[float]',
-        'shape': 'list[int]',
-        'std': 'list[float]',
-        'sum_of_squares': 'list[float]',
-        'sum_of_values': 'list[float]'
+        "custom": "dict(str, object)",
+        "dynamic": "dict(str, object)",
+        "sharpness": "float",
+        "size_in_bytes": "int",
+        "snr": "float",
+        "mean": "list[float]",
+        "shape": "list[int]",
+        "std": "list[float]",
+        "sum_of_squares": "list[float]",
+        "sum_of_values": "list[float]",
     }
 
     attribute_map = {
-        'custom': 'custom',
-        'dynamic': 'dynamic',
-        'sharpness': 'sharpness',
-        'size_in_bytes': 'sizeInBytes',
-        'snr': 'snr',
-        'mean': 'mean',
-        'shape': 'shape',
-        'std': 'std',
-        'sum_of_squares': 'sumOfSquares',
-        'sum_of_values': 'sumOfValues'
+        "custom": "custom",
+        "dynamic": "dynamic",
+        "sharpness": "sharpness",
+        "size_in_bytes": "sizeInBytes",
+        "snr": "snr",
+        "mean": "mean",
+        "shape": "shape",
+        "std": "std",
+        "sum_of_squares": "sumOfSquares",
+        "sum_of_values": "sumOfValues",
     }
 
-    def __init__(self, custom=None, dynamic=None, sharpness=None, size_in_bytes=None, snr=None, mean=None, shape=None, std=None, sum_of_squares=None, sum_of_values=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        custom=None,
+        dynamic=None,
+        sharpness=None,
+        size_in_bytes=None,
+        snr=None,
+        mean=None,
+        shape=None,
+        std=None,
+        sum_of_squares=None,
+        sum_of_values=None,
+        _configuration=None,
+    ):  # noqa: E501
         """SampleMetaData - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -314,18 +327,20 @@ class SampleMetaData(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(SampleMetaData, dict):

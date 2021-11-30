@@ -33,28 +33,39 @@ class TagCreateRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'TagName',
-        'prev_tag_id': 'MongoObjectID',
-        'query_tag_id': 'MongoObjectID',
-        'preselected_tag_id': 'MongoObjectID',
-        'bit_mask_data': 'TagBitMaskData',
-        'tot_size': 'int',
-        'creator': 'TagCreator',
-        'changes': 'TagChangeData'
+        "name": "TagName",
+        "prev_tag_id": "MongoObjectID",
+        "query_tag_id": "MongoObjectID",
+        "preselected_tag_id": "MongoObjectID",
+        "bit_mask_data": "TagBitMaskData",
+        "tot_size": "int",
+        "creator": "TagCreator",
+        "changes": "TagChangeData",
     }
 
     attribute_map = {
-        'name': 'name',
-        'prev_tag_id': 'prevTagId',
-        'query_tag_id': 'queryTagId',
-        'preselected_tag_id': 'preselectedTagId',
-        'bit_mask_data': 'bitMaskData',
-        'tot_size': 'totSize',
-        'creator': 'creator',
-        'changes': 'changes'
+        "name": "name",
+        "prev_tag_id": "prevTagId",
+        "query_tag_id": "queryTagId",
+        "preselected_tag_id": "preselectedTagId",
+        "bit_mask_data": "bitMaskData",
+        "tot_size": "totSize",
+        "creator": "creator",
+        "changes": "changes",
     }
 
-    def __init__(self, name=None, prev_tag_id=None, query_tag_id=None, preselected_tag_id=None, bit_mask_data=None, tot_size=None, creator=None, changes=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        name=None,
+        prev_tag_id=None,
+        query_tag_id=None,
+        preselected_tag_id=None,
+        bit_mask_data=None,
+        tot_size=None,
+        creator=None,
+        changes=None,
+        _configuration=None,
+    ):  # noqa: E501
         """TagCreateRequest - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -102,7 +113,9 @@ class TagCreateRequest(object):
         :type: TagName
         """
         if self._configuration.client_side_validation and name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -125,7 +138,9 @@ class TagCreateRequest(object):
         :type: MongoObjectID
         """
         if self._configuration.client_side_validation and prev_tag_id is None:
-            raise ValueError("Invalid value for `prev_tag_id`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `prev_tag_id`, must not be `None`"
+            )  # noqa: E501
 
         self._prev_tag_id = prev_tag_id
 
@@ -190,7 +205,9 @@ class TagCreateRequest(object):
         :type: TagBitMaskData
         """
         if self._configuration.client_side_validation and bit_mask_data is None:
-            raise ValueError("Invalid value for `bit_mask_data`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `bit_mask_data`, must not be `None`"
+            )  # noqa: E501
 
         self._bit_mask_data = bit_mask_data
 
@@ -213,7 +230,9 @@ class TagCreateRequest(object):
         :type: int
         """
         if self._configuration.client_side_validation and tot_size is None:
-            raise ValueError("Invalid value for `tot_size`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `tot_size`, must not be `None`"
+            )  # noqa: E501
 
         self._tot_size = tot_size
 
@@ -266,18 +285,20 @@ class TagCreateRequest(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(TagCreateRequest, dict):

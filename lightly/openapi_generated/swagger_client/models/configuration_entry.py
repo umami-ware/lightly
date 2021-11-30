@@ -33,20 +33,27 @@ class ConfigurationEntry(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'name': 'str',
-        'path': 'str',
-        'default_value': 'Object',
-        'value_data_type': 'ConfigurationValueDataType'
+        "name": "str",
+        "path": "str",
+        "default_value": "Object",
+        "value_data_type": "ConfigurationValueDataType",
     }
 
     attribute_map = {
-        'name': 'name',
-        'path': 'path',
-        'default_value': 'defaultValue',
-        'value_data_type': 'valueDataType'
+        "name": "name",
+        "path": "path",
+        "default_value": "defaultValue",
+        "value_data_type": "valueDataType",
     }
 
-    def __init__(self, name=None, path=None, default_value=None, value_data_type=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        name=None,
+        path=None,
+        default_value=None,
+        value_data_type=None,
+        _configuration=None,
+    ):  # noqa: E501
         """ConfigurationEntry - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -84,7 +91,9 @@ class ConfigurationEntry(object):
         :type: str
         """
         if self._configuration.client_side_validation and name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -109,7 +118,9 @@ class ConfigurationEntry(object):
         :type: str
         """
         if self._configuration.client_side_validation and path is None:
-            raise ValueError("Invalid value for `path`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `path`, must not be `None`"
+            )  # noqa: E501
 
         self._path = path
 
@@ -134,7 +145,9 @@ class ConfigurationEntry(object):
         :type: Object
         """
         if self._configuration.client_side_validation and default_value is None:
-            raise ValueError("Invalid value for `default_value`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `default_value`, must not be `None`"
+            )  # noqa: E501
 
         self._default_value = default_value
 
@@ -157,7 +170,9 @@ class ConfigurationEntry(object):
         :type: ConfigurationValueDataType
         """
         if self._configuration.client_side_validation and value_data_type is None:
-            raise ValueError("Invalid value for `value_data_type`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `value_data_type`, must not be `None`"
+            )  # noqa: E501
 
         self._value_data_type = value_data_type
 
@@ -168,18 +183,20 @@ class ConfigurationEntry(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(ConfigurationEntry, dict):

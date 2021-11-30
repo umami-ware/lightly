@@ -33,22 +33,30 @@ class ConfigurationData(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'MongoObjectID',
-        'name': 'str',
-        'configs': 'list[ConfigurationEntry]',
-        'created_at': 'Timestamp',
-        'last_modified_at': 'Timestamp'
+        "id": "MongoObjectID",
+        "name": "str",
+        "configs": "list[ConfigurationEntry]",
+        "created_at": "Timestamp",
+        "last_modified_at": "Timestamp",
     }
 
     attribute_map = {
-        'id': 'id',
-        'name': 'name',
-        'configs': 'configs',
-        'created_at': 'createdAt',
-        'last_modified_at': 'lastModifiedAt'
+        "id": "id",
+        "name": "name",
+        "configs": "configs",
+        "created_at": "createdAt",
+        "last_modified_at": "lastModifiedAt",
     }
 
-    def __init__(self, id=None, name=None, configs=None, created_at=None, last_modified_at=None, _configuration=None):  # noqa: E501
+    def __init__(
+        self,
+        id=None,
+        name=None,
+        configs=None,
+        created_at=None,
+        last_modified_at=None,
+        _configuration=None,
+    ):  # noqa: E501
         """ConfigurationData - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -109,7 +117,9 @@ class ConfigurationData(object):
         :type: str
         """
         if self._configuration.client_side_validation and name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -132,7 +142,9 @@ class ConfigurationData(object):
         :type: list[ConfigurationEntry]
         """
         if self._configuration.client_side_validation and configs is None:
-            raise ValueError("Invalid value for `configs`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `configs`, must not be `None`"
+            )  # noqa: E501
 
         self._configs = configs
 
@@ -155,7 +167,9 @@ class ConfigurationData(object):
         :type: Timestamp
         """
         if self._configuration.client_side_validation and created_at is None:
-            raise ValueError("Invalid value for `created_at`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `created_at`, must not be `None`"
+            )  # noqa: E501
 
         self._created_at = created_at
 
@@ -178,7 +192,9 @@ class ConfigurationData(object):
         :type: Timestamp
         """
         if self._configuration.client_side_validation and last_modified_at is None:
-            raise ValueError("Invalid value for `last_modified_at`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `last_modified_at`, must not be `None`"
+            )  # noqa: E501
 
         self._last_modified_at = last_modified_at
 
@@ -189,18 +205,20 @@ class ConfigurationData(object):
         for attr, _ in six.iteritems(self.swagger_types):
             value = getattr(self, attr)
             if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
+                result[attr] = list(
+                    map(lambda x: x.to_dict() if hasattr(x, "to_dict") else x, value)
+                )
             elif hasattr(value, "to_dict"):
                 result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
+                result[attr] = dict(
+                    map(
+                        lambda item: (item[0], item[1].to_dict())
+                        if hasattr(item[1], "to_dict")
+                        else item,
+                        value.items(),
+                    )
+                )
             else:
                 result[attr] = value
         if issubclass(ConfigurationData, dict):

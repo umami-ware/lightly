@@ -8,18 +8,19 @@ from urllib.request import Request, urlopen
 from PIL import Image
 
 from lightly.openapi_generated.swagger_client import TagCreator
-from lightly.openapi_generated.swagger_client.models.sample_create_request import SampleCreateRequest
+from lightly.openapi_generated.swagger_client.models.sample_create_request import (
+    SampleCreateRequest,
+)
 from lightly.api.bitmask import BitMask
-from lightly.openapi_generated.swagger_client.models.initial_tag_create_request import InitialTagCreateRequest
+from lightly.openapi_generated.swagger_client.models.initial_tag_create_request import (
+    InitialTagCreateRequest,
+)
 from lightly.openapi_generated.swagger_client.models.image_type import ImageType
 from lightly.data.dataset import LightlyDataset
 
 
-
 def _make_dir_and_save_image(output_dir: str, filename: str, img: Image):
-    """Saves the images and creates necessary subdirectories.
-
-    """
+    """Saves the images and creates necessary subdirectories."""
     path = os.path.join(output_dir, filename)
 
     head = os.path.split(path)[0]
@@ -31,10 +32,8 @@ def _make_dir_and_save_image(output_dir: str, filename: str, img: Image):
 
 
 def _get_image_from_read_url(read_url: str):
-    """Makes a get request to the signed read url and returns the image.
-
-    """
-    request = Request(read_url, method='GET')
+    """Makes a get request to the signed read url and returns the image."""
+    request = Request(read_url, method="GET")
     with urlopen(request) as response:
         blob = response.read()
         img = Image.open(io.BytesIO(blob))
@@ -42,11 +41,9 @@ def _get_image_from_read_url(read_url: str):
 
 
 class _DownloadDatasetMixin:
-
-    def download_dataset(self,
-                         output_dir: str,
-                         tag_name: str = 'initial-tag',
-                         verbose: bool = True):
+    def download_dataset(
+        self, output_dir: str, tag_name: str = "initial-tag", verbose: bool = True
+    ):
         """Downloads images from the web-app and stores them in output_dir.
 
         Args:
@@ -82,8 +79,7 @@ class _DownloadDatasetMixin:
 
         # get sample ids
         sample_ids = self.mappings_api.get_sample_mappings_by_dataset_id(
-            self.dataset_id,
-            field='_id'
+            self.dataset_id, field="_id"
         )
 
         indices = BitMask.from_hex(tag.bit_mask_data).to_indices()
@@ -91,13 +87,13 @@ class _DownloadDatasetMixin:
         filenames = [self.filenames_on_server[i] for i in indices]
 
         if verbose:
-            print(f'Downloading {len(sample_ids)} images:', flush=True)
-            pbar = tqdm.tqdm(unit='imgs', total=len(sample_ids))
+            print(f"Downloading {len(sample_ids)} images:", flush=True)
+            pbar = tqdm.tqdm(unit="imgs", total=len(sample_ids))
 
         # download images
         for sample_id, filename in zip(sample_ids, filenames):
             read_url = self.samples_api.get_sample_image_read_url_by_id(
-                self.dataset_id, 
+                self.dataset_id,
                 sample_id,
                 type="full",
             )

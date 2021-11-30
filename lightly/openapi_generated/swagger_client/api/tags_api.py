@@ -33,7 +33,9 @@ class TagsApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-    def create_initial_tag_by_dataset_id(self, body, dataset_id, **kwargs):  # noqa: E501
+    def create_initial_tag_by_dataset_id(
+        self, body, dataset_id, **kwargs
+    ):  # noqa: E501
         """create_initial_tag_by_dataset_id  # noqa: E501
 
         create the intitial tag for a dataset which then locks the dataset  # noqa: E501
@@ -49,14 +51,20 @@ class TagsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.create_initial_tag_by_dataset_id_with_http_info(body, dataset_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.create_initial_tag_by_dataset_id_with_http_info(
+                body, dataset_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.create_initial_tag_by_dataset_id_with_http_info(body, dataset_id, **kwargs)  # noqa: E501
+            (data) = self.create_initial_tag_by_dataset_id_with_http_info(
+                body, dataset_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def create_initial_tag_by_dataset_id_with_http_info(self, body, dataset_id, **kwargs):  # noqa: E501
+    def create_initial_tag_by_dataset_id_with_http_info(
+        self, body, dataset_id, **kwargs
+    ):  # noqa: E501
         """create_initial_tag_by_dataset_id  # noqa: E501
 
         create the intitial tag for a dataset which then locks the dataset  # noqa: E501
@@ -73,35 +81,41 @@ class TagsApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body', 'dataset_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["body", "dataset_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_initial_tag_by_dataset_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `body` when calling `create_initial_tag_by_dataset_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in params or params["body"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `body` when calling `create_initial_tag_by_dataset_id`"
+            )  # noqa: E501
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `create_initial_tag_by_dataset_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `create_initial_tag_by_dataset_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
 
         query_params = []
 
@@ -111,34 +125,40 @@ class TagsApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/tags/initial', 'POST',
+            "/v1/datasets/{datasetId}/tags/initial",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='CreateEntityResponse',  # noqa: E501
+            response_type="CreateEntityResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def create_tag_by_dataset_id(self, body, dataset_id, **kwargs):  # noqa: E501
         """create_tag_by_dataset_id  # noqa: E501
@@ -156,14 +176,20 @@ class TagsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.create_tag_by_dataset_id_with_http_info(body, dataset_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.create_tag_by_dataset_id_with_http_info(
+                body, dataset_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.create_tag_by_dataset_id_with_http_info(body, dataset_id, **kwargs)  # noqa: E501
+            (data) = self.create_tag_by_dataset_id_with_http_info(
+                body, dataset_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def create_tag_by_dataset_id_with_http_info(self, body, dataset_id, **kwargs):  # noqa: E501
+    def create_tag_by_dataset_id_with_http_info(
+        self, body, dataset_id, **kwargs
+    ):  # noqa: E501
         """create_tag_by_dataset_id  # noqa: E501
 
         create new tag for dataset  # noqa: E501
@@ -180,35 +206,41 @@ class TagsApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body', 'dataset_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["body", "dataset_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method create_tag_by_dataset_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `body` when calling `create_tag_by_dataset_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in params or params["body"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `body` when calling `create_tag_by_dataset_id`"
+            )  # noqa: E501
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `create_tag_by_dataset_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `create_tag_by_dataset_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
 
         query_params = []
 
@@ -218,34 +250,40 @@ class TagsApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/tags', 'POST',
+            "/v1/datasets/{datasetId}/tags",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='CreateEntityResponse',  # noqa: E501
+            response_type="CreateEntityResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def delete_tag_by_tag_id(self, dataset_id, tag_id, **kwargs):  # noqa: E501
         """delete_tag_by_tag_id  # noqa: E501
@@ -263,14 +301,20 @@ class TagsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.delete_tag_by_tag_id_with_http_info(dataset_id, tag_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.delete_tag_by_tag_id_with_http_info(
+                dataset_id, tag_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.delete_tag_by_tag_id_with_http_info(dataset_id, tag_id, **kwargs)  # noqa: E501
+            (data) = self.delete_tag_by_tag_id_with_http_info(
+                dataset_id, tag_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def delete_tag_by_tag_id_with_http_info(self, dataset_id, tag_id, **kwargs):  # noqa: E501
+    def delete_tag_by_tag_id_with_http_info(
+        self, dataset_id, tag_id, **kwargs
+    ):  # noqa: E501
         """delete_tag_by_tag_id  # noqa: E501
 
         delete a specific tag if its a leaf-tag (e.g is not a dependency of another tag)  # noqa: E501
@@ -287,37 +331,43 @@ class TagsApi(object):
                  returns the request thread.
         """
 
-        all_params = ['dataset_id', 'tag_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["dataset_id", "tag_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method delete_tag_by_tag_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `delete_tag_by_tag_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `delete_tag_by_tag_id`"
+            )  # noqa: E501
         # verify the required parameter 'tag_id' is set
-        if self.api_client.client_side_validation and ('tag_id' not in params or
-                                                       params['tag_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `tag_id` when calling `delete_tag_by_tag_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "tag_id" not in params or params["tag_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `tag_id` when calling `delete_tag_by_tag_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
-        if 'tag_id' in params:
-            path_params['tagId'] = params['tag_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
+        if "tag_id" in params:
+            path_params["tagId"] = params["tag_id"]  # noqa: E501
 
         query_params = []
 
@@ -328,14 +378,16 @@ class TagsApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/tags/{tagId}', 'DELETE',
+            "/v1/datasets/{datasetId}/tags/{tagId}",
+            "DELETE",
             path_params,
             query_params,
             header_params,
@@ -344,11 +396,12 @@ class TagsApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_filenames_by_tag_id(self, dataset_id, tag_id, **kwargs):  # noqa: E501
         """get_filenames_by_tag_id  # noqa: E501
@@ -366,14 +419,20 @@ class TagsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_filenames_by_tag_id_with_http_info(dataset_id, tag_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_filenames_by_tag_id_with_http_info(
+                dataset_id, tag_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_filenames_by_tag_id_with_http_info(dataset_id, tag_id, **kwargs)  # noqa: E501
+            (data) = self.get_filenames_by_tag_id_with_http_info(
+                dataset_id, tag_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def get_filenames_by_tag_id_with_http_info(self, dataset_id, tag_id, **kwargs):  # noqa: E501
+    def get_filenames_by_tag_id_with_http_info(
+        self, dataset_id, tag_id, **kwargs
+    ):  # noqa: E501
         """get_filenames_by_tag_id  # noqa: E501
 
         Get list of filenames by tag  # noqa: E501
@@ -390,37 +449,43 @@ class TagsApi(object):
                  returns the request thread.
         """
 
-        all_params = ['dataset_id', 'tag_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["dataset_id", "tag_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_filenames_by_tag_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `get_filenames_by_tag_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `get_filenames_by_tag_id`"
+            )  # noqa: E501
         # verify the required parameter 'tag_id' is set
-        if self.api_client.client_side_validation and ('tag_id' not in params or
-                                                       params['tag_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `tag_id` when calling `get_filenames_by_tag_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "tag_id" not in params or params["tag_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `tag_id` when calling `get_filenames_by_tag_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
-        if 'tag_id' in params:
-            path_params['tagId'] = params['tag_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
+        if "tag_id" in params:
+            path_params["tagId"] = params["tag_id"]  # noqa: E501
 
         query_params = []
 
@@ -431,27 +496,30 @@ class TagsApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/tags/{tagId}/filenames', 'GET',
+            "/v1/datasets/{datasetId}/tags/{tagId}/filenames",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='TagFilenamesData',  # noqa: E501
+            response_type="TagFilenamesData",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_tag_by_tag_id(self, dataset_id, tag_id, **kwargs):  # noqa: E501
         """get_tag_by_tag_id  # noqa: E501
@@ -469,14 +537,20 @@ class TagsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_tag_by_tag_id_with_http_info(dataset_id, tag_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_tag_by_tag_id_with_http_info(
+                dataset_id, tag_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_tag_by_tag_id_with_http_info(dataset_id, tag_id, **kwargs)  # noqa: E501
+            (data) = self.get_tag_by_tag_id_with_http_info(
+                dataset_id, tag_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def get_tag_by_tag_id_with_http_info(self, dataset_id, tag_id, **kwargs):  # noqa: E501
+    def get_tag_by_tag_id_with_http_info(
+        self, dataset_id, tag_id, **kwargs
+    ):  # noqa: E501
         """get_tag_by_tag_id  # noqa: E501
 
         Get information about a specific tag  # noqa: E501
@@ -493,37 +567,43 @@ class TagsApi(object):
                  returns the request thread.
         """
 
-        all_params = ['dataset_id', 'tag_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["dataset_id", "tag_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_tag_by_tag_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `get_tag_by_tag_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `get_tag_by_tag_id`"
+            )  # noqa: E501
         # verify the required parameter 'tag_id' is set
-        if self.api_client.client_side_validation and ('tag_id' not in params or
-                                                       params['tag_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `tag_id` when calling `get_tag_by_tag_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "tag_id" not in params or params["tag_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `tag_id` when calling `get_tag_by_tag_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
-        if 'tag_id' in params:
-            path_params['tagId'] = params['tag_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
+        if "tag_id" in params:
+            path_params["tagId"] = params["tag_id"]  # noqa: E501
 
         query_params = []
 
@@ -534,27 +614,30 @@ class TagsApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/tags/{tagId}', 'GET',
+            "/v1/datasets/{datasetId}/tags/{tagId}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='TagData',  # noqa: E501
+            response_type="TagData",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def get_tags_by_dataset_id(self, dataset_id, **kwargs):  # noqa: E501
         """get_tags_by_dataset_id  # noqa: E501
@@ -571,11 +654,15 @@ class TagsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_tags_by_dataset_id_with_http_info(dataset_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.get_tags_by_dataset_id_with_http_info(
+                dataset_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.get_tags_by_dataset_id_with_http_info(dataset_id, **kwargs)  # noqa: E501
+            (data) = self.get_tags_by_dataset_id_with_http_info(
+                dataset_id, **kwargs
+            )  # noqa: E501
             return data
 
     def get_tags_by_dataset_id_with_http_info(self, dataset_id, **kwargs):  # noqa: E501
@@ -594,31 +681,34 @@ class TagsApi(object):
                  returns the request thread.
         """
 
-        all_params = ['dataset_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["dataset_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_tags_by_dataset_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `get_tags_by_dataset_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `get_tags_by_dataset_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
 
         query_params = []
 
@@ -629,27 +719,30 @@ class TagsApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/tags', 'GET',
+            "/v1/datasets/{datasetId}/tags",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='list[TagData]',  # noqa: E501
+            response_type="list[TagData]",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def perform_tag_arithmetics(self, body, dataset_id, **kwargs):  # noqa: E501
         """perform_tag_arithmetics  # noqa: E501
@@ -667,14 +760,20 @@ class TagsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.perform_tag_arithmetics_with_http_info(body, dataset_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.perform_tag_arithmetics_with_http_info(
+                body, dataset_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.perform_tag_arithmetics_with_http_info(body, dataset_id, **kwargs)  # noqa: E501
+            (data) = self.perform_tag_arithmetics_with_http_info(
+                body, dataset_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def perform_tag_arithmetics_with_http_info(self, body, dataset_id, **kwargs):  # noqa: E501
+    def perform_tag_arithmetics_with_http_info(
+        self, body, dataset_id, **kwargs
+    ):  # noqa: E501
         """perform_tag_arithmetics  # noqa: E501
 
         performs tag arithmetics to compute a new bitmask out of two existing and optionally create a tag for it  # noqa: E501
@@ -691,35 +790,41 @@ class TagsApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body', 'dataset_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["body", "dataset_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method perform_tag_arithmetics" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `body` when calling `perform_tag_arithmetics`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in params or params["body"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `body` when calling `perform_tag_arithmetics`"
+            )  # noqa: E501
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `perform_tag_arithmetics`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `perform_tag_arithmetics`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
 
         query_params = []
 
@@ -729,34 +834,40 @@ class TagsApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/tags/arithmetics', 'POST',
+            "/v1/datasets/{datasetId}/tags/arithmetics",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='CreateEntityResponse',  # noqa: E501
+            response_type="CreateEntityResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def update_tag_by_tag_id(self, body, dataset_id, tag_id, **kwargs):  # noqa: E501
         """update_tag_by_tag_id  # noqa: E501
@@ -775,14 +886,20 @@ class TagsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.update_tag_by_tag_id_with_http_info(body, dataset_id, tag_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.update_tag_by_tag_id_with_http_info(
+                body, dataset_id, tag_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.update_tag_by_tag_id_with_http_info(body, dataset_id, tag_id, **kwargs)  # noqa: E501
+            (data) = self.update_tag_by_tag_id_with_http_info(
+                body, dataset_id, tag_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def update_tag_by_tag_id_with_http_info(self, body, dataset_id, tag_id, **kwargs):  # noqa: E501
+    def update_tag_by_tag_id_with_http_info(
+        self, body, dataset_id, tag_id, **kwargs
+    ):  # noqa: E501
         """update_tag_by_tag_id  # noqa: E501
 
         update information about a specific tag  # noqa: E501
@@ -800,41 +917,50 @@ class TagsApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body', 'dataset_id', 'tag_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["body", "dataset_id", "tag_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method update_tag_by_tag_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `body` when calling `update_tag_by_tag_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in params or params["body"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `body` when calling `update_tag_by_tag_id`"
+            )  # noqa: E501
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `update_tag_by_tag_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `update_tag_by_tag_id`"
+            )  # noqa: E501
         # verify the required parameter 'tag_id' is set
-        if self.api_client.client_side_validation and ('tag_id' not in params or
-                                                       params['tag_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `tag_id` when calling `update_tag_by_tag_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "tag_id" not in params or params["tag_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `tag_id` when calling `update_tag_by_tag_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
-        if 'tag_id' in params:
-            path_params['tagId'] = params['tag_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
+        if "tag_id" in params:
+            path_params["tagId"] = params["tag_id"]  # noqa: E501
 
         query_params = []
 
@@ -844,21 +970,26 @@ class TagsApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/tags/{tagId}', 'PUT',
+            "/v1/datasets/{datasetId}/tags/{tagId}",
+            "PUT",
             path_params,
             query_params,
             header_params,
@@ -867,11 +998,12 @@ class TagsApi(object):
             files=local_var_files,
             response_type=None,  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )
 
     def upsize_tags_by_dataset_id(self, body, dataset_id, **kwargs):  # noqa: E501
         """upsize_tags_by_dataset_id  # noqa: E501
@@ -889,14 +1021,20 @@ class TagsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.upsize_tags_by_dataset_id_with_http_info(body, dataset_id, **kwargs)  # noqa: E501
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
+            return self.upsize_tags_by_dataset_id_with_http_info(
+                body, dataset_id, **kwargs
+            )  # noqa: E501
         else:
-            (data) = self.upsize_tags_by_dataset_id_with_http_info(body, dataset_id, **kwargs)  # noqa: E501
+            (data) = self.upsize_tags_by_dataset_id_with_http_info(
+                body, dataset_id, **kwargs
+            )  # noqa: E501
             return data
 
-    def upsize_tags_by_dataset_id_with_http_info(self, body, dataset_id, **kwargs):  # noqa: E501
+    def upsize_tags_by_dataset_id_with_http_info(
+        self, body, dataset_id, **kwargs
+    ):  # noqa: E501
         """upsize_tags_by_dataset_id  # noqa: E501
 
         Upsize all tags for the dataset to the current size of the dataset. Use this after adding more samples to a dataset with an initial-tag. | Creates a new tag holding all samples which are not yet in the initial-tag.   # noqa: E501
@@ -913,35 +1051,41 @@ class TagsApi(object):
                  returns the request thread.
         """
 
-        all_params = ['body', 'dataset_id']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["body", "dataset_id"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method upsize_tags_by_dataset_id" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'body' is set
-        if self.api_client.client_side_validation and ('body' not in params or
-                                                       params['body'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `body` when calling `upsize_tags_by_dataset_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "body" not in params or params["body"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `body` when calling `upsize_tags_by_dataset_id`"
+            )  # noqa: E501
         # verify the required parameter 'dataset_id' is set
-        if self.api_client.client_side_validation and ('dataset_id' not in params or
-                                                       params['dataset_id'] is None):  # noqa: E501
-            raise ValueError("Missing the required parameter `dataset_id` when calling `upsize_tags_by_dataset_id`")  # noqa: E501
+        if self.api_client.client_side_validation and (
+            "dataset_id" not in params or params["dataset_id"] is None
+        ):  # noqa: E501
+            raise ValueError(
+                "Missing the required parameter `dataset_id` when calling `upsize_tags_by_dataset_id`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'dataset_id' in params:
-            path_params['datasetId'] = params['dataset_id']  # noqa: E501
+        if "dataset_id" in params:
+            path_params["datasetId"] = params["dataset_id"]  # noqa: E501
 
         query_params = []
 
@@ -951,31 +1095,37 @@ class TagsApi(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
+        if "body" in params:
+            body_params = params["body"]
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
-            ['application/json'])  # noqa: E501
+        header_params[
+            "Content-Type"
+        ] = self.api_client.select_header_content_type(  # noqa: E501
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['ApiKeyAuth', 'auth0Bearer']  # noqa: E501
+        auth_settings = ["ApiKeyAuth", "auth0Bearer"]  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/datasets/{datasetId}/tags/upsize', 'POST',
+            "/v1/datasets/{datasetId}/tags/upsize",
+            "POST",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='CreateEntityResponse',  # noqa: E501
+            response_type="CreateEntityResponse",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

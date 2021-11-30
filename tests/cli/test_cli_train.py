@@ -7,31 +7,40 @@ import torchvision
 from hydra.experimental import compose, initialize
 
 import lightly
-from tests.api_workflow.mocked_api_workflow_client import MockedApiWorkflowSetup, MockedApiWorkflowClient
+from tests.api_workflow.mocked_api_workflow_client import (
+    MockedApiWorkflowSetup,
+    MockedApiWorkflowClient,
+)
 
 
 class TestCLITrain(MockedApiWorkflowSetup):
-
     @classmethod
     def setUpClass(cls) -> None:
-        sys.modules["lightly.cli.upload_cli"].ApiWorkflowClient = MockedApiWorkflowClient
+        sys.modules[
+            "lightly.cli.upload_cli"
+        ].ApiWorkflowClient = MockedApiWorkflowClient
 
     def setUp(self):
         MockedApiWorkflowSetup.setUp(self)
         self.create_fake_dataset()
         with initialize(config_path="../../lightly/cli/config", job_name="test_app"):
-            self.cfg = compose(config_name="config", overrides=[
-                "token='123'",
-                f"input_dir={self.folder_path}",
-                "trainer.max_epochs=0"
-            ])
+            self.cfg = compose(
+                config_name="config",
+                overrides=[
+                    "token='123'",
+                    f"input_dir={self.folder_path}",
+                    "trainer.max_epochs=0",
+                ],
+            )
 
     def create_fake_dataset(self):
         n_data = 5
-        self.dataset = torchvision.datasets.FakeData(size=n_data, image_size=(3, 32, 32))
+        self.dataset = torchvision.datasets.FakeData(
+            size=n_data, image_size=(3, 32, 32)
+        )
 
         self.folder_path = tempfile.mkdtemp()
-        sample_names = [f'img_{i}.jpg' for i in range(n_data)]
+        sample_names = [f"img_{i}.jpg" for i in range(n_data)]
         self.sample_names = sample_names
         for sample_idx in range(n_data):
             data = self.dataset[sample_idx]
@@ -45,11 +54,11 @@ class TestCLITrain(MockedApiWorkflowSetup):
         dict_keys = cli_words[0::2]
         dict_values = cli_words[1::2]
         for key, value in zip(dict_keys, dict_values):
-            value = value.strip('\"')
-            value = value.strip('\'')
+            value = value.strip('"')
+            value = value.strip("'")
             key_parts = key.split(".")
             if len(key_parts) == 1:
-                self.cfg[key_parts[0]]= value
+                self.cfg[key_parts[0]] = value
             elif len(key_parts) == 2:
                 self.cfg[key_parts[0]][key_parts[1]] = value
             else:
@@ -58,7 +67,7 @@ class TestCLITrain(MockedApiWorkflowSetup):
     def test_parse_cli_string(self):
         cli_string = "lightly-train trainer.weights_summary=top"
         self.parse_cli_string(cli_string)
-        assert self.cfg["trainer"]["weights_summary"] == 'top'
+        assert self.cfg["trainer"]["weights_summary"] == "top"
 
     def test_train_weights_summary(self):
         for weights_summary in ["None", "top", "full"]:
