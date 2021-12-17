@@ -125,4 +125,5 @@ from lightly.openapi_generated.swagger_client.models.tag_upsize_request import T
 from lightly.openapi_generated.swagger_client.models.timestamp import Timestamp
 from lightly.openapi_generated.swagger_client.models.trigger2d_embedding_job_request import Trigger2dEmbeddingJobRequest
 from lightly.openapi_generated.swagger_client.models.version_number import VersionNumber
+from lightly.openapi_generated.swagger_client.models.video_frame_data import VideoFrameData
 from lightly.openapi_generated.swagger_client.models.write_csv_url_data import WriteCSVUrlData

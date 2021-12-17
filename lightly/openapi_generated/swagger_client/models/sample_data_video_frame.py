@@ -33,103 +33,45 @@ class SampleDataVideoFrame(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'source_video': 'str',
-        'source_video_frame_index': 'float',
-        'source_video_frame_timestamp': 'float'
+        'video_frame_data': 'VideoFrameData'
     }
 
     attribute_map = {
-        'source_video': 'sourceVideo',
-        'source_video_frame_index': 'sourceVideoFrameIndex',
-        'source_video_frame_timestamp': 'sourceVideoFrameTimestamp'
+        'video_frame_data': 'videoFrameData'
     }
 
-    def __init__(self, source_video=None, source_video_frame_index=None, source_video_frame_timestamp=None, _configuration=None):  # noqa: E501
+    def __init__(self, video_frame_data=None, _configuration=None):  # noqa: E501
         """SampleDataVideoFrame - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
         self._configuration = _configuration
 
-        self._source_video = None
-        self._source_video_frame_index = None
-        self._source_video_frame_timestamp = None
+        self._video_frame_data = None
         self.discriminator = None
 
-        if source_video is not None:
-            self.source_video = source_video
-        if source_video_frame_index is not None:
-            self.source_video_frame_index = source_video_frame_index
-        if source_video_frame_timestamp is not None:
-            self.source_video_frame_timestamp = source_video_frame_timestamp
+        if video_frame_data is not None:
+            self.video_frame_data = video_frame_data
 
     @property
-    def source_video(self):
-        """Gets the source_video of this SampleDataVideoFrame.  # noqa: E501
+    def video_frame_data(self):
+        """Gets the video_frame_data of this SampleDataVideoFrame.  # noqa: E501
 
-        Name of the source video.  # noqa: E501
 
-        :return: The source_video of this SampleDataVideoFrame.  # noqa: E501
-        :rtype: str
+        :return: The video_frame_data of this SampleDataVideoFrame.  # noqa: E501
+        :rtype: VideoFrameData
         """
-        return self._source_video
+        return self._video_frame_data
 
-    @source_video.setter
-    def source_video(self, source_video):
-        """Sets the source_video of this SampleDataVideoFrame.
+    @video_frame_data.setter
+    def video_frame_data(self, video_frame_data):
+        """Sets the video_frame_data of this SampleDataVideoFrame.
 
-        Name of the source video.  # noqa: E501
 
-        :param source_video: The source_video of this SampleDataVideoFrame.  # noqa: E501
-        :type: str
+        :param video_frame_data: The video_frame_data of this SampleDataVideoFrame.  # noqa: E501
+        :type: VideoFrameData
         """
 
-        self._source_video = source_video
-
-    @property
-    def source_video_frame_index(self):
-        """Gets the source_video_frame_index of this SampleDataVideoFrame.  # noqa: E501
-
-        Index of the frame in the source video.  # noqa: E501
-
-        :return: The source_video_frame_index of this SampleDataVideoFrame.  # noqa: E501
-        :rtype: float
-        """
-        return self._source_video_frame_index
-
-    @source_video_frame_index.setter
-    def source_video_frame_index(self, source_video_frame_index):
-        """Sets the source_video_frame_index of this SampleDataVideoFrame.
-
-        Index of the frame in the source video.  # noqa: E501
-
-        :param source_video_frame_index: The source_video_frame_index of this SampleDataVideoFrame.  # noqa: E501
-        :type: float
-        """
-
-        self._source_video_frame_index = source_video_frame_index
-
-    @property
-    def source_video_frame_timestamp(self):
-        """Gets the source_video_frame_timestamp of this SampleDataVideoFrame.  # noqa: E501
-
-        Timestamp of the frame in the source video.  # noqa: E501
-
-        :return: The source_video_frame_timestamp of this SampleDataVideoFrame.  # noqa: E501
-        :rtype: float
-        """
-        return self._source_video_frame_timestamp
-
-    @source_video_frame_timestamp.setter
-    def source_video_frame_timestamp(self, source_video_frame_timestamp):
-        """Sets the source_video_frame_timestamp of this SampleDataVideoFrame.
-
-        Timestamp of the frame in the source video.  # noqa: E501
-
-        :param source_video_frame_timestamp: The source_video_frame_timestamp of this SampleDataVideoFrame.  # noqa: E501
-        :type: float
-        """
-
-        self._source_video_frame_timestamp = source_video_frame_timestamp
+        self._video_frame_data = video_frame_data
 
     def to_dict(self):
         """Returns the model properties as a dict"""
