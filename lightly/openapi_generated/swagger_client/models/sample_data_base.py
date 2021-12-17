@@ -34,7 +34,7 @@ class SampleDataBase(object):
     """
     swagger_types = {
         'id': 'MongoObjectID',
-        'type': 'SampleType',
+        'type': 'str',
         'dataset_id': 'MongoObjectID',
         'file_name': 'str',
         'thumb_name': 'str',
@@ -131,9 +131,10 @@ class SampleDataBase(object):
     def type(self):
         """Gets the type of this SampleDataBase.  # noqa: E501
 
+        Type of the sample (Image vs VideoFrame). Determined by the API!  # noqa: E501
 
         :return: The type of this SampleDataBase.  # noqa: E501
-        :rtype: SampleType
+        :rtype: str
         """
         return self._type
 
@@ -141,9 +142,10 @@ class SampleDataBase(object):
     def type(self, type):
         """Sets the type of this SampleDataBase.
 
+        Type of the sample (Image vs VideoFrame). Determined by the API!  # noqa: E501
 
         :param type: The type of this SampleDataBase.  # noqa: E501
-        :type: SampleType
+        :type: str
         """
         if self._configuration.client_side_validation and type is None:
             raise ValueError("Invalid value for `type`, must not be `None`")  # noqa: E501

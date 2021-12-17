@@ -82,7 +82,6 @@ from lightly.openapi_generated.swagger_client.models.sample_data_base import Sam
 from lightly.openapi_generated.swagger_client.models.sample_data_image import SampleDataImage
 from lightly.openapi_generated.swagger_client.models.sample_data_video_frame import SampleDataVideoFrame
 from lightly.openapi_generated.swagger_client.models.sample_meta_data import SampleMetaData
-from lightly.openapi_generated.swagger_client.models.sample_type import SampleType
 from lightly.openapi_generated.swagger_client.models.sample_update_request import SampleUpdateRequest
 from lightly.openapi_generated.swagger_client.models.sample_write_urls import SampleWriteUrls
 from lightly.openapi_generated.swagger_client.models.sampling_config import SamplingConfig

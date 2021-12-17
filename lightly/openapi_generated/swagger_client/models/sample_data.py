@@ -47,7 +47,7 @@ class SampleData(object):
         if _configuration is None:
             _configuration = Configuration()
         self._configuration = _configuration
-        self.discriminator = 'Discriminator{propertyName&#x3D;&#39;type&#39;, mapping&#x3D;{Image&#x3D;#/components/schemas/SampleDataImage, VideoFrame&#x3D;#/components/schemas/SampleDataVideoFrame}}'
+        self.discriminator = 'Discriminator{propertyName&#x3D;&#39;type&#39;, mapping&#x3D;{IMAGE&#x3D;#/components/schemas/SampleDataImage, VIDEO_FRAME&#x3D;#/components/schemas/SampleDataVideoFrame}}'
 
     def get_real_child_model(self, data):
         """Returns the real base class specified by the discriminator"""

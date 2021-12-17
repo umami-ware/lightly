@@ -37,7 +37,10 @@ class SampleCreateRequest(object):
         'thumb_name': 'str',
         'exif': 'dict(str, object)',
         'meta_data': 'SampleMetaData',
-        'custom_meta_data': 'CustomSampleMetaData'
+        'custom_meta_data': 'CustomSampleMetaData',
+        'source_video': 'str',
+        'source_video_frame_index': 'float',
+        'source_video_frame_timestamp': 'float'
     }
 
     attribute_map = {
@@ -45,10 +48,13 @@ class SampleCreateRequest(object):
         'thumb_name': 'thumbName',
         'exif': 'exif',
         'meta_data': 'metaData',
-        'custom_meta_data': 'customMetaData'
+        'custom_meta_data': 'customMetaData',
+        'source_video': 'sourceVideo',
+        'source_video_frame_index': 'sourceVideoFrameIndex',
+        'source_video_frame_timestamp': 'sourceVideoFrameTimestamp'
     }
 
-    def __init__(self, file_name=None, thumb_name=None, exif=None, meta_data=None, custom_meta_data=None, _configuration=None):  # noqa: E501
+    def __init__(self, file_name=None, thumb_name=None, exif=None, meta_data=None, custom_meta_data=None, source_video=None, source_video_frame_index=None, source_video_frame_timestamp=None, _configuration=None):  # noqa: E501
         """SampleCreateRequest - a model defined in Swagger"""  # noqa: E501
         if _configuration is None:
             _configuration = Configuration()
@@ -59,6 +65,9 @@ class SampleCreateRequest(object):
         self._exif = None
         self._meta_data = None
         self._custom_meta_data = None
+        self._source_video = None
+        self._source_video_frame_index = None
+        self._source_video_frame_timestamp = None
         self.discriminator = None
 
         self.file_name = file_name
@@ -70,6 +79,12 @@ class SampleCreateRequest(object):
             self.meta_data = meta_data
         if custom_meta_data is not None:
             self.custom_meta_data = custom_meta_data
+        if source_video is not None:
+            self.source_video = source_video
+        if source_video_frame_index is not None:
+            self.source_video_frame_index = source_video_frame_index
+        if source_video_frame_timestamp is not None:
+            self.source_video_frame_timestamp = source_video_frame_timestamp
 
     @property
     def file_name(self):
@@ -177,6 +192,75 @@ class SampleCreateRequest(object):
         """
 
         self._custom_meta_data = custom_meta_data
+
+    @property
+    def source_video(self):
+        """Gets the source_video of this SampleCreateRequest.  # noqa: E501
+
+        Name of the source video.  # noqa: E501
+
+        :return: The source_video of this SampleCreateRequest.  # noqa: E501
+        :rtype: str
+        """
+        return self._source_video
+
+    @source_video.setter
+    def source_video(self, source_video):
+        """Sets the source_video of this SampleCreateRequest.
+
+        Name of the source video.  # noqa: E501
+
+        :param source_video: The source_video of this SampleCreateRequest.  # noqa: E501
+        :type: str
+        """
+
+        self._source_video = source_video
+
+    @property
+    def source_video_frame_index(self):
+        """Gets the source_video_frame_index of this SampleCreateRequest.  # noqa: E501
+
+        Index of the frame in the source video.  # noqa: E501
+
+        :return: The source_video_frame_index of this SampleCreateRequest.  # noqa: E501
+        :rtype: float
+        """
+        return self._source_video_frame_index
+
+    @source_video_frame_index.setter
+    def source_video_frame_index(self, source_video_frame_index):
+        """Sets the source_video_frame_index of this SampleCreateRequest.
+
+        Index of the frame in the source video.  # noqa: E501
+
+        :param source_video_frame_index: The source_video_frame_index of this SampleCreateRequest.  # noqa: E501
+        :type: float
+        """
+
+        self._source_video_frame_index = source_video_frame_index
+
+    @property
+    def source_video_frame_timestamp(self):
+        """Gets the source_video_frame_timestamp of this SampleCreateRequest.  # noqa: E501
+
+        Timestamp of the frame in the source video.  # noqa: E501
+
+        :return: The source_video_frame_timestamp of this SampleCreateRequest.  # noqa: E501
+        :rtype: float
+        """
+        return self._source_video_frame_timestamp
+
+    @source_video_frame_timestamp.setter
+    def source_video_frame_timestamp(self, source_video_frame_timestamp):
+        """Sets the source_video_frame_timestamp of this SampleCreateRequest.
+
+        Timestamp of the frame in the source video.  # noqa: E501
+
+        :param source_video_frame_timestamp: The source_video_frame_timestamp of this SampleCreateRequest.  # noqa: E501
+        :type: float
+        """
+
+        self._source_video_frame_timestamp = source_video_frame_timestamp
 
     def to_dict(self):
         """Returns the model properties as a dict"""
