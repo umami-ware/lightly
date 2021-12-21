@@ -9,6 +9,7 @@ from fractions import Fraction
 
 from PIL import Image
 
+import torch
 import torchvision
 from torchvision import datasets
 from torchvision import io
@@ -265,10 +266,10 @@ class VideoDataset(datasets.VisionDataset):
 
         self.extensions = extensions
 
-        backend = torchvision.get_video_backend()
-        self.video_loaders = \
-            [VideoLoader(video, timestamps, backend=backend) for video, timestamps in zip(videos, video_timestamps)]
-
+        self.backend = torchvision.get_video_backend()
+        # self.video_loaders = [VideoLoader(video, timestamps, backend=self.backend) for video, timestamps in zip(videos, video_timestamps)]
+        self._video_loaders = dict()
+        
         self.videos = videos
         self.video_timestamps = video_timestamps
         self._length = sum((
@@ -278,6 +279,32 @@ class VideoDataset(datasets.VisionDataset):
         # e.g. for two videos of length 10 and 20, the offsets will be [0, 10].
         self.offsets = offsets
         self.fps = fps
+
+    def video_loader(self, index):
+        """Returns video loader for video at given video index.
+
+        This keeps one loader open for every dataloader worker.
+        
+        """
+        # return self.video_loaders[index]
+        # get current worker
+        worker_info = torch.utils.data.get_worker_info()
+        if worker_info is not None:
+            worker_id = worker_info.id
+        else:
+            worker_id = -1
+        
+        (video_index, video_loader) = self._video_loaders.get(worker_id, (None, None))
+        
+        if video_index != worker_id:
+            video_loader = VideoLoader(
+                path=self.videos[index],
+                timestamps=self.video_timestamps[index],
+                backend=self.backend,
+            )
+            self._video_loaders[worker_id] = (index, video_loader)
+        
+        return video_loader
 
     def __getitem__(self, index):
         """Returns item at index.
@@ -324,7 +351,7 @@ class VideoDataset(datasets.VisionDataset):
         # find and return the frame as PIL image
         timestamp_idx = index - self.offsets[i]
         frame_timestamp = self.video_timestamps[i][timestamp_idx]
-        sample = self.video_loaders[i].read_frame(frame_timestamp)
+        sample = self.video_loader(i).read_frame(frame_timestamp)
 
         target = i
         if self.transform is not None:
