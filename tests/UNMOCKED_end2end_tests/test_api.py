@@ -79,6 +79,7 @@ def create_new_dataset_with_embeddings(path_to_dataset: str,
         f"dataset_id={api_workflow_client.dataset_id}"
         ])
     upload_cli(cfg)
+    upload_cli(cfg)
 
     # calculate and save the embeddings
     path_to_embeddings_csv = f"{path_to_dataset}/embeddings.csv"
@@ -157,12 +158,14 @@ def t_est_api_with_matrix(path_to_dataset: str,
                           token: str, dataset_name: str = "test_api_from_pip"):
 
     no_samples = len(LightlyDataset(input_dir=path_to_dataset).dataset.samples)
-    assert no_samples >= 100, "Test needs at least 100 samples in the dataset!"
+    #assert no_samples >= 100, "Test needs at least 100 samples in the dataset!"
 
     api_workflow_client = create_new_dataset_with_embeddings(
         path_to_dataset=path_to_dataset, token=token,
         dataset_name=dataset_name
     )
+
+    assert no_samples >= 100, "Test needs at least 100 samples in the dataset!"
 
     for method in [SamplingMethod.CORAL, SamplingMethod.CORESET, SamplingMethod.RANDOM]:
         for query_tag_name in ['initial-tag', "query_tag_name_xyz"]:

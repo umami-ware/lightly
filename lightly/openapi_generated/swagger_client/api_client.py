@@ -155,6 +155,8 @@ class ApiClient(object):
         url = self.configuration.host + resource_path
 
         # perform request and return response
+        if url.startswith('https://api-dev.lightly.ai/v1/datasets/'):
+            i=0
         response_data = self.request(
             method, url, query_params=query_params, headers=header_params,
             post_params=post_params, body=body,
@@ -251,6 +253,9 @@ class ApiClient(object):
         """
         if data is None:
             return None
+
+        if klass == 'SampleData':
+            i = 0
 
         if type(klass) == str:
             if klass.startswith('list['):
@@ -611,8 +616,8 @@ class ApiClient(object):
         :return: model object.
         """
 
-        if (not klass.swagger_types and
-                not self.__hasattr(klass, 'get_real_child_model')):
+
+        if (not klass.swagger_types and not hasattr(klass, 'get_real_child_model')):
             return data
 
         kwargs = {}
@@ -632,6 +637,10 @@ class ApiClient(object):
             for key, value in data.items():
                 if key not in klass.swagger_types:
                     instance[key] = value
+
+        if klass == 'SampleData':
+            i = 0
+        
         if self.__hasattr(instance, 'get_real_child_model'):
             klass_name = instance.get_real_child_model(data)
             if klass_name:
